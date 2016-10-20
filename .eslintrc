@@ -2,12 +2,12 @@
   "parser": "babel-eslint",
   "env": {
     "browser": true,
-    "node": true
+    "node": true,
+    "mocha": true
   },
   "extends": ["airbnb"],
   "plugins": [
-    "react",
-    "react/recommended"
+    "react"
   ],
   "rules": {
     no-shadow: ["error", {"allow": ["store"] }]
