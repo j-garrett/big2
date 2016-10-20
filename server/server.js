@@ -7,6 +7,10 @@ const middleware = require('./config/middleware');
 const app = express();
 middleware(app, express);
 
+if (app.get('env') === 'development') {
+  console.log('app environment set to development');
+}
+
 const home = path.join(__dirname, './../dist/index.html');
 app.get('/*', (req, res) => {
   res.sendFile(home);

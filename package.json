@@ -4,7 +4,8 @@
   "description": "Big 2 - The Card Game",
   "main": "app.jsx",
   "scripts": {
-    "dev": "webpack-dev-server --inline --hot --output-public-path=/dist/",
+    "dev:front": "webpack-dev-server --inline --hot --output-public-path=/dist/",
+    "dev:back": "nodemon ./server/server.js",
     "test": "mocha test/.setup.js test/**/*-test.js",
     "postinstall": "webpack -p",
     "start": "node server/server.js"
@@ -54,6 +55,7 @@
     "eslint-plugin-jsx-a11y": "^2.2.3",
     "eslint-plugin-react": "^6.4.1",
     "jsdom": "^9.8.0",
+    "nodemon": "^1.11.0",
     "react-addons-test-utils": "^15.3.2",
     "webpack-dev-server": "^1.16.2"
   }
