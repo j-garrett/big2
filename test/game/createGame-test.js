@@ -13,10 +13,10 @@ describe('New game instance', () => {
     expect(game).to.be.an('object');
   });
   it('should have hands for each player', () => {
-    expect(game.p1).to.be.an('array');
-    expect(game.p2).to.be.an('array');
-    expect(game.p3).to.be.an('array');
-    expect(game.p4).to.be.an('array');
+    expect(game.player1).to.be.instanceOf(Array);
+    expect(game.player2).to.be.instanceOf(Array);
+    expect(game.player3).to.be.instanceOf(Array);
+    expect(game.player4).to.be.instanceOf(Array);
   });
   it('should have a pot object to track rounds', () => {
     expect(game.pot).to.be.an('array');
