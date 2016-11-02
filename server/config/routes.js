@@ -1,2 +1,3 @@
+const routes = require('express').Router;
 
-module.exports = {};
+module.exports = routes;
