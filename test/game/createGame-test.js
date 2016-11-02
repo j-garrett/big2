@@ -19,8 +19,8 @@ describe('New game instance', () => {
     expect(game.player4).to.be.instanceOf(Array);
   });
   it('should have a pot object to track rounds', () => {
-    expect(game.pot).to.be.an('array');
-    expect(game.pot.r1).to.be.an('array');
+    expect(game.pot).to.be.an('object');
+    expect(game.pot.r1).to.be.instanceOf(Array);
   });
   it('should track whose turn it is', () => {
     expect(game.turn).to.be.a('string');

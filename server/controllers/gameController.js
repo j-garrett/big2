@@ -16,8 +16,15 @@ const gameController = {
 
   createGame() {
     const deck = deckController.shuffleCardDeck();
-    const game = dealCards(deck, 4);
-    return game;
+    const hands = dealCards(deck, 4);
+    return {
+      hands,
+      pot: {
+        r1: [],
+      },
+      turn: 'player1',
+      roundStartedBy: 'player1',
+    };
   },
 
 };
