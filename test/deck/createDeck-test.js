@@ -2,9 +2,9 @@
 
 import { expect } from 'chai';
 
-import deckController from '../../server/controllers/deckController';
+import helpers from '../../server/config/helpers';
 
-const createCardDeck = deckController.createCardDeck;
+const createCardDeck = helpers.createCardDeck;
 
 describe('Playing card\'s deck createer', () => {
   it('should be a function', () => {

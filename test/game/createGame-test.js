@@ -1,8 +1,8 @@
 import { expect } from 'chai';
 
-import gameController from '../../server/controllers/gameController';
+import helpers from '../../server/config/helpers';
 
-const createGame = gameController.createGame;
+const createGame = helpers.createGame;
 
 describe('New game instance', () => {
   const game = createGame();

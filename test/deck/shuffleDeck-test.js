@@ -1,9 +1,9 @@
 import { expect } from 'chai';
 
-import deckController from '../../server/controllers/deckController';
+import helpers from '../../server/config/helpers';
 
-const createCardDeck = deckController.createCardDeck;
-const shuffleCardDeck = deckController.shuffleCardDeck;
+const createCardDeck = helpers.createCardDeck;
+const shuffleCardDeck = helpers.shuffleCardDeck;
 const checkCards = (deck) => {
   const controlDeck = createCardDeck();
   for (let i = 0; i < deck.length; i += 1) {
