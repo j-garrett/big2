@@ -9,6 +9,7 @@ const io = require('socket.io')(server);
 
 const middleware = require('./config/middleware');
 const routes = require('./config/routes');
+const big2 = require('./config/sockets');
 
 const home = path.join(__dirname, './../dist/index.html');
 const port = process.env.PORT || 3000;
@@ -25,13 +26,4 @@ app.use('/cards', routes);
 app.get('/*', (req, res) => {
   res.sendFile(home);
 });
-
-io
-  .of('big2')
-  .on('connection', (socket) => {
-    console.log('new big2 game socket connected');
-    socket.emit('connected', { hello: 'world' });
-    socket.on('other event', (data) => {
-      console.log('other event socket data: ', data);
-    });
-  });
+big2(io);

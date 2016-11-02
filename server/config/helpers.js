@@ -1,4 +1,3 @@
-
 const createCardDeck = () => {
   const deck = [];
   const suits = ['♥', '♣', '♠', '♦'];
@@ -47,11 +46,9 @@ const createGame = () => {
   };
 };
 
-const helpers = {
+module.exports = {
   createCardDeck,
   shuffleCardDeck,
   dealCards,
   createGame,
 };
-
-export default helpers;
