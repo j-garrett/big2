@@ -37,6 +37,9 @@ const createGame = () => {
   const deck = shuffleCardDeck();
   const hands = dealCards(deck, 4);
   return {
+    players: {
+
+    },
     hands,
     pot: {
       r1: [],
