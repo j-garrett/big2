@@ -34,6 +34,14 @@ export class GameRoom extends React.Component {
               this.props.addCardToSelection(event);
             }}
           />
+          <h4>Selected Cards</h4>
+          <PlayerHand
+            cards={this.props.selectedCards}
+            onCardClick={(event) => {
+              console.log('onCardClick event: ', event);
+              this.props.addCardToSelection(event);
+            }}
+          />
         </div>
         <div>
           <h4>Cards Played</h4>
