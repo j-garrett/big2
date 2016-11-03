@@ -11,11 +11,11 @@ const PlayerHand = ({ cards, onCardClick }) => (
       />
     )}
   </ul>
-)
+);
 
 PlayerHand.propTypes = {
-  onClick: PropTypes.func,
+  onCardClick: PropTypes.func,
   cards: PropTypes.array.isRequired,
-}
+};
 
 export default PlayerHand;

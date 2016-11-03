@@ -20,9 +20,7 @@ const mapDispatchToProps = dispatch => ({
 
 // Export class so it can be tested w/o store
 export class GameRoom extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+
   render() {
     return (
       <div>

@@ -19,7 +19,15 @@ const playerHand = (state = m.playerHandInitialState, action) => {
 
 const selectedCards = (state = m.selectedCardsInitialState, action) => {
   if (action.type === t.ADD_CARD_TO_SELECTED) {
-    return [...state, action.card];
+    console.log('state: ', state);
+    const cardIndex = state.indexOf(action.card);
+    if (cardIndex === -1) {
+      return [...state, action.card];
+    }
+    return [
+      ...state.slice(0, cardIndex),
+      ...state.slice(cardIndex + 1),
+    ];
   }
   return state;
 };
