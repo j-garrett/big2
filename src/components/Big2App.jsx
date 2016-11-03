@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
 import * as a from './../actions';
+import GameRoomContainer from './GameRoom';
 
 const mapStateToProps = state => ({
   username: state.username,
@@ -12,6 +12,7 @@ const mapDispatchToProps = dispatch => ({
   ),
 });
 
+// Export class so it can be tested w/o store
 export class Big2App extends React.Component {
   constructor(props) {
     super(props);
@@ -22,7 +23,10 @@ export class Big2App extends React.Component {
   }
   render() {
     return (
-      <h2>Hi {this.state.username}</h2>
+      <div>
+        <h2>Hi {this.state.username}</h2>
+        <GameRoomContainer />
+      </div>
     );
   }
 }
