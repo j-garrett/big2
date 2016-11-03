@@ -1,3 +1,7 @@
 export const usernameInitialState = 'Jon';
-
-export const example = 'example';
+export const potInitialState = {
+  currentRound: [],
+  previousRound:[],
+};
+export const playerHandInitialState = [];
+export const selectedCardsInitialState = [];

@@ -1,3 +1,4 @@
 export const USERNAME_CHANGE = 'USERNAME_CHANGE';
-
-export const example = 'example';
+export const ADD_ROUND_TO_POT = 'ADD_ROUND_TO_POT';
+export const UPDATE_PLAYER_HAND = 'UPDATE_PLAYER_HAND';
+export const ADD_CARD_TO_SELECTED = 'ADD_CARD_TO_SELECTED';

@@ -12,21 +12,41 @@ const cards = ['4 of clubs'];
 // TODO: these socket emitters will be contained in actions
 // That will link them to the client side
 big2.emit('connect to room', room, user);
-big2.emit('play cards', room, user, cards);
 
-big2.on('player cards', (data) => {
-  console.log('cards dealt: ', data);
-});
-big2.on('client id', (data) => {
-  console.log('client id: ', data);
-});
-big2.on('Room is full', (message) => {
-  console.log(message);
-});
+/*------------ SOCKET LISTENERS ---------------*/
+// These will dispatch actions
+export const socketDispatchers = (store) => {
+  big2.on('player cards', (cards) => {
+    console.log('cards dealt: ', cards);
+    store.dispatch(updatePlayerHand(cards));
+  });
+  big2.on('client id', (data) => {
+    console.log('client id: ', data);
+  });
+  big2.on('Room is full', (message) => {
+    console.log(message);
+  });
+}
+
+/*------------ SOCKET EMITTERS ---------------*/
+
+export const playSelectedCards = cards => (
+  big2.emit('play cards', room, user, cards)
+);
+
+/*------------ REGULAR ACTIONS ---------------*/
 
 export const changeUsername = username => ({
   type: t.USERNAME_CHANGE,
   username,
 });
 
-export const example = 'example';
+export const addCardToSelection = card => ({
+  type: t.ADD_CARD_TO_SELECTED,
+  card,
+})
+
+export const updatePlayerHand = cards => ({
+  type: t.UPDATE_PLAYER_HAND,
+  cards,
+});

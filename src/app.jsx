@@ -6,8 +6,15 @@ import { createStore } from 'redux';
 
 import cardReducers from './reducers';
 import Big2AppContainer from './components/Big2App';
+import { socketDispatchers } from './actions';
 
-const store = createStore(cardReducers);
+const store = createStore(
+  cardReducers,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
+
+// Pass reference to the store to sockets for proper dispatch
+socketDispatchers(store);
 
 const Root = () => (
   <Provider store={store}>

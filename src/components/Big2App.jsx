@@ -7,11 +7,12 @@ const mapStateToProps = state => ({
   username: state.username,
 });
 const mapDispatchToProps = dispatch => ({
-  changeUsername: newUsername =>
-    dispatch(a.changeUsername(newUsername)),
+  changeUsername: newUsername => (
+    dispatch(a.changeUsername(newUsername))
+  ),
 });
 
-class Big2App extends React.Component {
+export class Big2App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
