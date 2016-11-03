@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
 import * as a from './../actions';
+import PlayerHand from './PlayerHand';
 
 const mapStateToProps = state => ({
   pot: state.pot,
@@ -28,9 +29,12 @@ export class GameRoom extends React.Component {
         <h3>Big 2</h3>
         <div>
           <h4>Player Hand</h4>
-          <ul>
-            <li>FAKE CARD</li>
-          </ul>
+          <PlayerHand
+            cards={this.props.playerHand}
+            onCardClick={(event) => {
+              console.log('onCardClick event: ', event);
+            }}
+          />
         </div>
         <div>
           <h4>Cards Played</h4>
@@ -44,9 +48,9 @@ export class GameRoom extends React.Component {
 }
 
 GameRoom.propTypes = {
-  pot: React.PropTypes.array,
-  playerHand: React.PropTypes.array,
-  selectedCards: React.PropTypes.array,
+  pot: PropTypes.array,
+  playerHand: PropTypes.array,
+  selectedCards: PropTypes.array,
 }
 
 const GameRoomContainer = connect(

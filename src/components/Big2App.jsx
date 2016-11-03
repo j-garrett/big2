@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import * as a from './../actions';
 import GameRoomContainer from './GameRoom';
@@ -32,8 +32,8 @@ export class Big2App extends React.Component {
 }
 
 Big2App.propTypes = {
-  username: React.PropTypes.string,
-  changeUsername: React.PropTypes.func,
+  username: PropTypes.string,
+  changeUsername: PropTypes.func,
 };
 
 const Big2AppContainer = connect(

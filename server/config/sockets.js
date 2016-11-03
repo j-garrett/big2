@@ -1,6 +1,7 @@
 const helpers = require('./helpers');
 const big2Rooms = require('./big2Rooms');
 
+// This is looking like some spaghetti
 module.exports = (io) => {
   io
     .of('big2')
@@ -31,6 +32,8 @@ module.exports = (io) => {
         }
       });
       socket.on('play cards', (room, user, cards) => {
+        const roomKey = big2Rooms[room];
+        socket.emit('player cards', roomKey.hands[roomKey.players[user]]);
         socket.to(room).emit('cards played', cards);
       });
       socket.on('disconnect', () => {
