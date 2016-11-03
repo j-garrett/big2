@@ -33,6 +33,7 @@ export class GameRoom extends React.Component {
             cards={this.props.playerHand}
             onCardClick={(event) => {
               console.log('onCardClick event: ', event);
+              this.props.addCardToSelection(event);
             }}
           />
         </div>

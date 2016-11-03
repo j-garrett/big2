@@ -15,9 +15,17 @@ const playerHand = (state = m.playerHandInitialState, action) => {
     return action.cards;
   }
   return state;
-}
+};
+
+const selectedCards = (state = m.selectedCardsInitialState, action) => {
+  if (action.type === t.ADD_CARD_TO_SELECTED) {
+    return [...state, action.card];
+  }
+  return state;
+};
 
 export default combineReducers({
   username,
   playerHand,
+  selectedCards,
 });
