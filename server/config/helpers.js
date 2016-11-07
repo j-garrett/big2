@@ -31,7 +31,7 @@ const dealCards = (deck, numPlayers) => {
     const endIndex = startIndex + handSize;
     hands[`player${i + 1}`] = deck.slice(startIndex, endIndex);
   }
-
+  console.log('hands variable to be returned by dealCards(): ', hands);
   return hands;
 };
 
