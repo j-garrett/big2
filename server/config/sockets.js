@@ -3,7 +3,7 @@ const big2Rooms = require('./../models/big2Rooms');
 
 // This is looking like some spaghetti
 module.exports = (io) => {
-  io
+  const big2 = io
     .of('big2')
     .on('connection', (socket) => {
       // console.log('new big2 game socket connected');
@@ -30,8 +30,8 @@ module.exports = (io) => {
             'The room you\'re trying to join is full.'
           );
         }
-      });
-      socket.on('play cards', (room, user, cards) => {
+      })
+      .on('play cards', (room, user, cards) => {
         console.log('play cards socket: ', cards);
         const roomObj = big2Rooms[room];
         const pot = roomObj.pot;
@@ -41,9 +41,9 @@ module.exports = (io) => {
         const curRound = roomObj.pot[pot.length - 1];
         const roundsTuple = [prevRound, curRound];
         // TODO: fix namespace
-        socket.emit('hand played to pot', roundsTuple);
-      });
-      socket.on('disconnect', () => {
+        big2.to(room).emit('hand played to pot', roundsTuple);
+      })
+      .on('disconnect', () => {
         // TODO: track socket.id to remove players from room?
         // console.log('user disconnected: ', socket.id);
       });
