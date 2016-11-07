@@ -32,9 +32,10 @@ module.exports = (io) => {
         }
       });
       socket.on('play cards', (room, user, cards) => {
+        console.log('play cards socket: ', cards);
         const roomKey = big2Rooms[room];
         socket.emit('player cards', roomKey.hands[roomKey.players[user]]);
-        socket.to(room).emit('cards played', cards);
+        socket.to(room).emit('hand played to pot', cards);
       });
       socket.on('disconnect', () => {
         // TODO: track socket.id to remove players from room?

@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 
+// Access socket emitters directly since they don't pass to reducers
 import * as a from './../actions';
 import CardGroup from './CardGroup';
 
@@ -12,9 +13,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   addCardToSelection: card => (
     dispatch(a.addCardToSelection(card))
-  ),
-  playSelectedCards: cards => (
-    dispatch(a.playSelectedCards(cards))
   ),
 });
 
@@ -44,7 +42,12 @@ export const GameRoom = ({
           addCardToSelection(event);
         }}
       />
-      <button>
+      <button
+        onClick={() => {
+          console.log('submit selection clicked with selection: ', selectedCards);
+          a.playSelectedCards(selectedCards);
+        }}
+      >
         Play Hand
       </button>
       <h4>Pot</h4>
@@ -79,6 +82,7 @@ GameRoom.propTypes = {
   playerHand: PropTypes.array,
   selectedCards: PropTypes.array,
   addCardToSelection: PropTypes.func,
+  playSelectedCards: PropTypes.func,
 };
 
 const GameRoomContainer = connect(
