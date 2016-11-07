@@ -33,8 +33,16 @@ const selectedCards = (state = m.selectedCardsInitialState, action) => {
   return state;
 };
 
+const cardsInPot = (state = m.potInitialState, action) => {
+  if (action.type === t.UPDATE_CARDS_IN_POT) {
+    return action.cards;
+  }
+  return state;
+};
+
 export default combineReducers({
   username,
   playerHand,
   selectedCards,
+  cardsInPot,
 });
