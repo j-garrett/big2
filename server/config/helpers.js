@@ -14,7 +14,7 @@ const createCardDeck = () => {
 
 const shuffleCardDeck = () => {
   const deck = createCardDeck();
-  for (let i = 0; i < deck.length; i += 1) {
+  for (var i = 0; i < deck.length; i += 1) {
     const swapCardIndex = Math.floor(Math.random() * (deck.length - i)) + i;
     const newCard = deck[swapCardIndex];
     deck[swapCardIndex] = deck[i];
@@ -26,7 +26,7 @@ const shuffleCardDeck = () => {
 const dealCards = (deck, numPlayers) => {
   const handSize = deck.length / numPlayers;
   const hands = {};
-  for (let i = 0; i < numPlayers; i += 1) {
+  for (var i = 0; i < numPlayers; i += 1) {
     const startIndex = i * handSize;
     const endIndex = startIndex + handSize;
     hands[`player${i + 1}`] = deck.slice(startIndex, endIndex);
