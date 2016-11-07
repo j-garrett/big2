@@ -1,3 +1,5 @@
+const big2Rooms = require('./../models/big2Rooms');
+
 const createCardDeck = () => {
   const deck = [];
   const suits = ['♥', '♣', '♠', '♦'];
@@ -48,9 +50,34 @@ const createGame = () => {
   };
 };
 
+const playHandToRoom = (room, playerNum, updatedHand) => {
+  // const
+  big2Rooms[room].hands[playerNum] = updatedHand;
+};
+
+const updatePlayerHand = (room, user, cards) => {
+  // Grab players hand from room object
+  const roomObj = big2Rooms[room];
+  const playerNum = roomObj.players[user];
+  const playerHand = roomObj.hands[playerNum];
+  const newPlayerHand = [];
+  // Iterate over old hand
+  playerHand.forEach((val) => {
+    // If old hand's card is not in played cards array
+    // push it to hand array
+    if (cards.indexOf(val)) {
+      newPlayerHand.push(val);
+    }
+  });
+  playHandToRoom(room, playerNum, newPlayerHand);
+  return newPlayerHand;
+};
+
 module.exports = {
   createCardDeck,
   shuffleCardDeck,
   dealCards,
   createGame,
+  updatePlayerHand,
+  playHandToRoom,
 };
