@@ -65,7 +65,7 @@ const updatePlayerHand = (room, user, cards) => {
   playerHand.forEach((val) => {
     // If old hand's card is not in played cards array
     // push it to hand array
-    if (cards.indexOf(val)) {
+    if (cards.indexOf(val) === -1) {
       newPlayerHand.push(val);
     }
   });
