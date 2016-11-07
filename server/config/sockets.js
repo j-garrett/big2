@@ -12,6 +12,8 @@ module.exports = (io) => {
         if (!big2Rooms[room]) {
           // For now, we will create a room key/ value on the rooms object
           big2Rooms[room] = helpers.createGame();
+          console.log('initial call to createGame results: ', big2Rooms[room]);
+          console.log('test calling helpers.createGame directly: ', helpers.createGame());
         }
         const numOfPlayers = Object.keys(big2Rooms[room].players).length;
         if (numOfPlayers < 4) {
