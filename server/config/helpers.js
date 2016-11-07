@@ -9,6 +9,7 @@ const createCardDeck = () => {
       deck.push(suit + value);
     });
   });
+  console.log('createCardDeck result: ', deck);
   return deck;
 };
 
@@ -20,12 +21,13 @@ const shuffleCardDeck = () => {
     deck[swapCardIndex] = deck[i];
     deck[i] = newCard;
   }
+  console.log('shuffleCardDeck result: ', deck);
   return deck;
 };
 
 const dealCards = (deck, numPlayers) => {
   const handSize = deck.length / numPlayers;
-  const hands = {};
+  var hands = {};
   for (var i = 0; i < numPlayers; i += 1) {
     const startIndex = i * handSize;
     const endIndex = startIndex + handSize;
