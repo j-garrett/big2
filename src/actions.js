@@ -43,6 +43,7 @@ export const socketDispatchers = (store) => {
     console.log(message);
   });
   big2.on('hand played to pot', (cards) => {
+    console.log('hand played to pot received from server: ', cards);
     store.dispatch(updateCardsInPot(cards));
   });
 };

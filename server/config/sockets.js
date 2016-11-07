@@ -1,5 +1,5 @@
 const helpers = require('./helpers');
-const big2Rooms = require('./big2Rooms');
+const big2Rooms = require('./../models/big2Rooms');
 
 // This is looking like some spaghetti
 module.exports = (io) => {
@@ -33,9 +33,15 @@ module.exports = (io) => {
       });
       socket.on('play cards', (room, user, cards) => {
         console.log('play cards socket: ', cards);
-        const roomKey = big2Rooms[room];
-        socket.emit('player cards', roomKey.hands[roomKey.players[user]]);
-        socket.to(room).emit('hand played to pot', cards);
+        const roomObj = big2Rooms[room];
+        const pot = roomObj.pot;
+        // move current round to previous and update current
+        pot.push(cards);
+        const prevRound = roomObj.pot[pot.length - 2];
+        const curRound = roomObj.pot[pot.length - 1];
+        const roundsTuple = [prevRound, curRound];
+        // TODO: fix namespace
+        socket.emit('hand played to pot', roundsTuple);
       });
       socket.on('disconnect', () => {
         // TODO: track socket.id to remove players from room?

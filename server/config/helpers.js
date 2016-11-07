@@ -42,9 +42,7 @@ const createGame = () => {
 
     },
     hands,
-    pot: {
-      r1: [],
-    },
+    pot: [[]],
     turn: 'player1',
     roundStartedBy: 'player1',
   };

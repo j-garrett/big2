@@ -53,7 +53,7 @@ export const GameRoom = ({
       <h4>Pot</h4>
       <h5>Previous Round</h5>
       <CardGroup
-        cards={pot.previousRound}
+        cards={pot[0]}
         onCardClick={(event) => {
           console.log('onCardClick event: ', event);
           addCardToSelection(event);
@@ -61,7 +61,7 @@ export const GameRoom = ({
       />
       <h5>Current Round</h5>
       <CardGroup
-        cards={pot.currentRound}
+        cards={pot[1]}
         onCardClick={(event) => {
           console.log('onCardClick event: ', event);
           addCardToSelection(event);
@@ -78,7 +78,7 @@ export const GameRoom = ({
 );
 
 GameRoom.propTypes = {
-  pot: PropTypes.object,
+  pot: PropTypes.array,
   playerHand: PropTypes.array,
   selectedCards: PropTypes.array,
   addCardToSelection: PropTypes.func,
