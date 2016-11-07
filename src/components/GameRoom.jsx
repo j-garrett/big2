@@ -14,6 +14,9 @@ const mapDispatchToProps = dispatch => ({
   addCardToSelection: card => (
     dispatch(a.addCardToSelection(card))
   ),
+  clearCardsFromSelection: () => (
+    dispatch(a.clearCardsFromSelection())
+  ),
 });
 
 // Export class so it can be tested w/o store
@@ -22,6 +25,7 @@ export const GameRoom = ({
   playerHand,
   selectedCards,
   addCardToSelection,
+  clearCardsFromSelection,
 }) => (
   <div>
     <h3>Big 2</h3>
@@ -45,6 +49,7 @@ export const GameRoom = ({
       <button
         onClick={() => {
           console.log('submit selection clicked with selection: ', selectedCards);
+          clearCardsFromSelection();
           a.playSelectedCards(selectedCards);
         }}
       >
@@ -67,12 +72,6 @@ export const GameRoom = ({
           addCardToSelection(event);
         }}
       />
-    </div>
-    <div>
-      <h4>Cards Played</h4>
-      <ul>
-        <li>3 of CLUBS</li>
-      </ul>
     </div>
   </div>
 );

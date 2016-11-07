@@ -22,6 +22,10 @@ export const addCardToSelection = card => ({
   card,
 });
 
+export const clearCardsFromSelection = () => ({
+  type: t.CLEAR_CARDS_FROM_SELECTION,
+});
+
 export const updatePlayerHand = cards => ({
   type: t.UPDATE_PLAYER_HAND,
   cards,

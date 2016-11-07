@@ -45,7 +45,7 @@ module.exports = (io) => {
         // TODO: fix namespace
         big2.to(room).emit('hand played to pot', roundsTuple);
         socket.emit('player cards', newHand);
-        console.log('big2Rooms[room] play cards func: ', big2Rooms[room]);
+        // console.log('big2Rooms[room] play cards func: ', big2Rooms[room]);
       })
       .on('disconnect', () => {
         // TODO: track socket.id to remove players from room?

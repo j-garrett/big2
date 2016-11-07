@@ -30,6 +30,10 @@ const selectedCards = (state = m.selectedCardsInitialState, action) => {
       ];
     }
   }
+  if (action.type === t.CLEAR_CARDS_FROM_SELECTION) {
+    console.log('selectedCards should rest to initial state~!');
+    return m.selectedCardsInitialState;
+  }
   return state;
 };
 
