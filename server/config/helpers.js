@@ -16,8 +16,8 @@ const createCardDeck = () => {
 const shuffleCardDeck = () => {
   const deck = createCardDeck();
   for (var i = 0; i < deck.length; i += 1) {
-    const swapCardIndex = Math.floor(Math.random() * (deck.length - i)) + i;
-    const newCard = deck[swapCardIndex];
+    var swapCardIndex = Math.floor(Math.random() * (deck.length - i)) + i;
+    var newCard = deck[swapCardIndex];
     deck[swapCardIndex] = deck[i];
     deck[i] = newCard;
   }
@@ -29,8 +29,8 @@ const dealCards = (deck, numPlayers) => {
   const handSize = deck.length / numPlayers;
   var hands = {};
   for (var i = 0; i < numPlayers; i += 1) {
-    const startIndex = i * handSize;
-    const endIndex = startIndex + handSize;
+    var startIndex = i * handSize;
+    var endIndex = startIndex + handSize;
     hands[`player${i + 1}`] = deck.slice(startIndex, endIndex);
   }
   console.log('hands variable to be returned by dealCards(): ', hands);
