@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import Card from './Card';
 
-const PlayerHand = ({ cards, onCardClick }) => (
+const CardGroup = ({ cards, onCardClick }) => (
   <ul>
     {cards.map(card =>
       <Card
@@ -13,9 +13,9 @@ const PlayerHand = ({ cards, onCardClick }) => (
   </ul>
 );
 
-PlayerHand.propTypes = {
+CardGroup.propTypes = {
   onCardClick: PropTypes.func,
   cards: PropTypes.array.isRequired,
 };
 
-export default PlayerHand;
+export default CardGroup;
