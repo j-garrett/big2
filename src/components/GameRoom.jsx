@@ -6,6 +6,8 @@ import * as a from './../actions';
 import CardGroup from './CardGroup';
 
 const mapStateToProps = state => ({
+  user: state.username,
+  room: state.room,
   pot: state.cardsInPot,
   playerHand: state.playerHand,
   selectedCards: state.selectedCards,
@@ -21,6 +23,8 @@ const mapDispatchToProps = dispatch => ({
 
 // Export class so it can be tested w/o store
 export const GameRoom = ({
+  user,
+  room,
   pot,
   playerHand,
   selectedCards,
@@ -50,7 +54,7 @@ export const GameRoom = ({
         onClick={() => {
           console.log('submit selection clicked with selection: ', selectedCards);
           clearCardsFromSelection();
-          a.playSelectedCards(selectedCards);
+          a.playSelectedCards(user, room, selectedCards);
         }}
       >
         Play Hand
@@ -77,6 +81,8 @@ export const GameRoom = ({
 );
 
 GameRoom.propTypes = {
+  user: PropTypes.string,
+  room: PropTypes.string,
   pot: PropTypes.array,
   playerHand: PropTypes.array,
   selectedCards: PropTypes.array,

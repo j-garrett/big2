@@ -6,8 +6,8 @@ import * as t from './actionTypes';
 const chosenGame = 'big2';
 const big2 = io(`/${chosenGame}`);
 
-const testRoom = 'hostname with hash';
-const user = `player${Math.random()}`;
+// const testRoom = 'hostname with hash';
+// const user = `player${Math.random()}`;
 // Move to listener when room is dynamic
 
 /* ------------ REGULAR ACTIONS ---------------*/
@@ -15,6 +15,11 @@ const user = `player${Math.random()}`;
 export const changeUsername = username => ({
   type: t.USERNAME_CHANGE,
   username,
+});
+
+export const changeRoom = room => ({
+  type: t.ROOM_CHANGE,
+  room,
 });
 
 export const addCardToSelection = card => ({
@@ -54,12 +59,12 @@ export const socketDispatchers = (store) => {
 
 /* ------------ SOCKET EMITTERS ---------------*/
 // These will send data to server when client dispatches actions
-export const connectToRoom = room => (
-  big2.emit('connect to room', room, user)
+export const connectToRoom = (user, room) => (
+  big2.emit('connect to room', user, room)
 );
 // Hardcoded setup
-connectToRoom(testRoom);
+// connectToRoom(testRoom);
 
-export const playSelectedCards = cards => (
-  big2.emit('play cards', testRoom, user, cards)
+export const playSelectedCards = (user, room, cards) => (
+  big2.emit('play cards', room, user, cards)
 );

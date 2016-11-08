@@ -7,7 +7,8 @@ module.exports = (io) => {
     .of('big2')
     .on('connection', (socket) => {
       // console.log('new big2 game socket connected');
-      socket.on('connect to room', (room, user) => {
+      socket.on('connect to room', (user, room) => {
+        console.log('connect to room attempted with room, user: ', room, user);
         // If there is no room, then create it and join
         if (!big2Rooms[room]) {
           // For now, we will create a room key/ value on the rooms object
@@ -20,7 +21,7 @@ module.exports = (io) => {
           // Make sure user is not already connected
           // Assign them value in rotation if they aren't
           roomKey.players[user] = roomKey.players[user] || `player${numOfPlayers + 1}`;
-          // console.log('new room created: ', big2Rooms);
+          console.log('new room created: ', big2Rooms);
           // Emit hand to player
           socket.emit('player cards', roomKey.hands[roomKey.players[user]]);
           // TODO: Make rooms decided by server and...

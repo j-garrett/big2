@@ -10,6 +10,9 @@ const mapDispatchToProps = dispatch => ({
   changeUsername: newUsername => (
     dispatch(a.changeUsername(newUsername))
   ),
+  changeRoom: room => (
+    dispatch(a.changeRoom(room))
+  ),
 });
 
 // Export class so it can be tested w/o store
@@ -17,8 +20,11 @@ export class Big2App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      room: '',
       username: props.username,
       changeUsername: props.changeUsername,
+      changeRoom: props.changeRoom,
+      connectToRoom: props.connectToRoom,
     };
   }
   render() {
@@ -27,8 +33,12 @@ export class Big2App extends React.Component {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            console.log('e target: ', e.target);
+            console.log('username: ', this.state.username);
+            console.log('room: ', this.state.room);
+            // console.log('e target: ', e.target);
             this.state.changeUsername(this.state.username);
+            this.state.changeRoom(this.state.room);
+            a.connectToRoom(this.state.username, this.state.room);
           }}
         >
           <label
@@ -40,7 +50,7 @@ export class Big2App extends React.Component {
             id="username"
             type="text"
             onChange={(e) => {
-              console.log('on change event: ', e.target.value);
+              // console.log('on change event: ', e.target.value);
               this.setState({ username: e.target.value });
             }}
           />
@@ -53,14 +63,14 @@ export class Big2App extends React.Component {
             id="roomname"
             type="text"
             onChange={(e) => {
-              console.log('on change event: ', e.target.value);
-              this.setState({ username: e.target.value });
+              // console.log('on change event: ', e.target.value);
+              this.setState({ room: e.target.value });
             }}
           />
           <button
             type="submit"
           >
-            submit
+            Enter Room
           </button>
         </form>
         <div>
@@ -75,6 +85,7 @@ export class Big2App extends React.Component {
 Big2App.propTypes = {
   username: PropTypes.string,
   changeUsername: PropTypes.func,
+  connectToRoom: PropTypes.func,
 };
 
 const Big2AppContainer = connect(
