@@ -9,7 +9,6 @@ const createCardDeck = () => {
       deck.push(suit + value);
     });
   });
-  console.log('createCardDeck result: ', deck);
   return deck;
 };
 

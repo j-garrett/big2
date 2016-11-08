@@ -24,8 +24,49 @@ export class Big2App extends React.Component {
   render() {
     return (
       <div>
-        <h2>Hi {this.state.username}</h2>
-        <GameRoomContainer />
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            console.log('e target: ', e.target);
+            this.state.changeUsername(this.state.username);
+          }}
+        >
+          <label
+            htmlFor="username"
+          >
+            Username
+          </label>
+          <input
+            id="username"
+            type="text"
+            onChange={(e) => {
+              console.log('on change event: ', e.target.value);
+              this.setState({ username: e.target.value });
+            }}
+          />
+          <label
+            htmlFor="roomname"
+          >
+            Room
+          </label>
+          <input
+            id="roomname"
+            type="text"
+            onChange={(e) => {
+              console.log('on change event: ', e.target.value);
+              this.setState({ username: e.target.value });
+            }}
+          />
+          <button
+            type="submit"
+          >
+            submit
+          </button>
+        </form>
+        <div>
+          <h2>Hi {this.state.username}</h2>
+          <GameRoomContainer />
+        </div>
       </div>
     );
   }
