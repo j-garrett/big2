@@ -66,5 +66,9 @@ export const connectToRoom = (user, room) => (
 // connectToRoom(testRoom);
 
 export const playSelectedCards = (user, room, cards) => (
-  big2.emit('play cards', room, user, cards)
+  big2.emit('play cards', user, room, cards)
+);
+
+export const undoPlayedHand = (user, room) => (
+  big2.emit('undo played hand', user, room)
 );

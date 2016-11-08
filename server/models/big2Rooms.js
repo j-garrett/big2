@@ -16,7 +16,12 @@ module.exports = {
       player4: '[object]',
     },
     // Each hand played will increment a counter to track which round
-    pot: [],
+    pot: [
+      {
+        user: 'first user',
+        cards: [],
+      },
+    ],
     // Track whose turn it is so others can't play out of turn
     turn: 'player1',
     // Track who started the round to know when they gain control

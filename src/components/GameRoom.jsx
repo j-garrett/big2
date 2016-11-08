@@ -52,12 +52,30 @@ export const GameRoom = ({
       />
       <button
         onClick={() => {
-          console.log('submit selection clicked with selection: ', selectedCards);
+          // console.log('submit selection clicked with selection: ', selectedCards);
           clearCardsFromSelection();
           a.playSelectedCards(user, room, selectedCards);
         }}
       >
         Play Hand
+      </button>
+      <button
+        onClick={() => {
+          console.log('user passed');
+          clearCardsFromSelection();
+          a.playSelectedCards(user, room, []);
+        }}
+      >
+        Pass
+      </button>
+      <button
+        onClick={() => {
+          console.log('user taking back hand');
+          clearCardsFromSelection();
+          a.undoPlayedHand(user, room);
+        }}
+      >
+        Undo Played Hand
       </button>
       <h4>Pot</h4>
       <h5>Previous Round</h5>
@@ -88,6 +106,7 @@ GameRoom.propTypes = {
   selectedCards: PropTypes.array,
   addCardToSelection: PropTypes.func,
   playSelectedCards: PropTypes.func,
+  clearCardsFromSelection: PropTypes.func,
 };
 
 const GameRoomContainer = connect(

@@ -32,21 +32,23 @@ module.exports = (io) => {
           );
         }
       })
-      .on('play cards', (room, user, cards) => {
+      .on('play cards', (user, room, cards) => {
         // console.log('user passed to socket\'s play cards func: ', user);
         // console.log('room passed to socket\'s play cards func: ', room);
         const roomObj = big2Rooms[room];
         const pot = roomObj.pot;
         const newHand = helpers.updatePlayerHand(room, user, cards);
         // move current round to previous and update current
-        pot.push(cards);
+        pot.push({ user, cards });
         const prevRound = pot[pot.length - 2];
         const curRound = pot[pot.length - 1];
         const roundsTuple = [prevRound, curRound];
-        // TODO: fix namespace
         big2.to(room).emit('hand played to pot', roundsTuple);
         socket.emit('player cards', newHand);
-        // console.log('big2Rooms[room] play cards func: ', big2Rooms[room]);
+        console.log('big2Rooms[room] play cards func: ', big2Rooms[room]);
+      })
+      .on('undo played hand', (user, room) => {
+        // find room and grab last hand played
       })
       .on('disconnect', () => {
         // TODO: track socket.id to remove players from room?
