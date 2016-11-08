@@ -29,7 +29,7 @@ const dealCards = (deck, numPlayers) => {
   for (var i = 0; i < numPlayers; i += 1) {
     var startIndex = i * handSize;
     var endIndex = startIndex + handSize;
-    hands[`player${i + 1}`] = deck.slice(startIndex, endIndex);
+    hands[i] = deck.slice(startIndex, endIndex);
   }
   return hands;
 };

@@ -28,3 +28,45 @@ module.exports = {
     roundStartedBy: 'player1',
   },
 };
+
+// Example change to playersObj where data is grouped by player
+const playerMap = {
+  user: {
+    hand: [],
+  },
+};
+// When someone disconnects, we look up their socket id
+// Should we use their socketId as their key?
+// We could create a socket map...
+// We don't NEED constant time lookup
+// Number of players won't be enough for linear to be bad
+const socketMap = {
+  '/big2#BcXhq7G1rnvehh7gAAAA': 'user name',
+  socketId: 'second user\'s name',
+};
+
+// Then we can use a turn order array to loop through
+const turnOrder = [
+  'user1',
+  'user2',
+  'user3',
+  'user4',
+];
+
+// Number tracking index that is set to 0 when it hits array length
+const turn = 0;
+
+const updatedExampleRoomObj = {
+  roomName: {
+    playerMap,
+    socketMap,
+    turnOrder,
+    turn,
+    pot: [
+      {
+        user: 'first user',
+        cards: [],
+      },
+    ],
+  },
+};

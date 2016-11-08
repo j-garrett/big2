@@ -8,7 +8,8 @@ module.exports = (io) => {
     .on('connection', (socket) => {
       // console.log('new big2 game socket connected');
       socket.on('connect to room', (user, room) => {
-        console.log('connect to room attempted with room, user: ', room, user);
+        // console.log('connect to room attempted with room, user: ', room, user);
+        console.log('connect to room socket.id: ', socket.id);
         // If there is no room, then create it and join
         if (!big2Rooms[room]) {
           // For now, we will create a room key/ value on the rooms object
@@ -20,7 +21,7 @@ module.exports = (io) => {
           const roomKey = big2Rooms[room];
           // Make sure user is not already connected
           // Assign them value in rotation if they aren't
-          roomKey.players[user] = roomKey.players[user] || `player${numOfPlayers + 1}`;
+          roomKey.players[user] = roomKey.players[user] || numOfPlayers + 1;
           console.log('new room created: ', big2Rooms);
           // Emit hand to player
           socket.emit('player cards', roomKey.hands[roomKey.players[user]]);
@@ -55,9 +56,10 @@ module.exports = (io) => {
       .on('undo played hand', (user, room) => {
         // find room and grab last hand played
       })
-      .on('disconnect', () => {
+      .on('disconnect', (data) => {
         // TODO: track socket.id to remove players from room?
-        // console.log('user disconnected: ', socket.id);
+        console.log('user disconnected: ', socket.id);
+        console.log('disconnect data passed: ', data);
       });
     });
 };
