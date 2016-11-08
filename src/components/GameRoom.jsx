@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 // Access socket emitters directly since they don't pass to reducers
 import * as a from './../actions';
 import CardGroup from './CardGroup';
+import GamePot from './GamePot';
 
 const mapStateToProps = state => ({
   user: state.username,
@@ -77,22 +78,8 @@ export const GameRoom = ({
       >
         Undo Played Hand
       </button>
-      <h4>Pot</h4>
-      <h5>Previous Round</h5>
-      <CardGroup
-        cards={pot[0]}
-        onCardClick={(event) => {
-          console.log('onCardClick event: ', event);
-          addCardToSelection(event);
-        }}
-      />
-      <h5>Current Round</h5>
-      <CardGroup
-        cards={pot[1]}
-        onCardClick={(event) => {
-          console.log('onCardClick event: ', event);
-          addCardToSelection(event);
-        }}
+      <GamePot
+        pot={pot}
       />
     </div>
   </div>
