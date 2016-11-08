@@ -24,8 +24,13 @@ module.exports = (io) => {
           console.log('new room created: ', big2Rooms);
           // Emit hand to player
           socket.emit('player cards', roomKey.hands[roomKey.players[user]]);
-          // TODO: Make rooms decided by server and...
-          // Emit room value to player for future client emits
+          const roomObj = big2Rooms[room];
+          const pot = roomObj.pot;
+          // move current round to previous and update current
+          const prevRound = pot[pot.length - 2];
+          const curRound = pot[pot.length - 1];
+          const roundsTuple = [prevRound, curRound];
+          socket.emit('hand played to pot', roundsTuple);
         } else {
           socket.emit('Room is full',
             'The room you\'re trying to join is full.'
@@ -45,7 +50,7 @@ module.exports = (io) => {
         const roundsTuple = [prevRound, curRound];
         big2.to(room).emit('hand played to pot', roundsTuple);
         socket.emit('player cards', newHand);
-        console.log('big2Rooms[room] play cards func: ', big2Rooms[room]);
+        // console.log('big2Rooms[room] play cards func: ', big2Rooms[room]);
       })
       .on('undo played hand', (user, room) => {
         // find room and grab last hand played
