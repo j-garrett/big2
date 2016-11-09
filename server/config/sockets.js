@@ -21,7 +21,7 @@ module.exports = (io) => {
           const roomKey = big2Rooms[room];
           // Make sure user is not already connected
           // Assign them value in rotation if they aren't
-          roomKey.players[user] = roomKey.players[user] || numOfPlayers + 1;
+          roomKey.players[user] = roomKey.players[user] || numOfPlayers;
           // Add user name to socket map so we can remove them on disconnect
           roomKey.socketMap[socket.id] = user;
           console.log('rooms vals at connect to room event: ', big2Rooms);
@@ -62,13 +62,20 @@ module.exports = (io) => {
         console.log('user disconnecting: ', socket.id);
         console.log('socket.rooms disconnecting: ',
         socket.rooms);
+        const gameRoomKey = Object.keys(socket.rooms)[1];
+        if(big2Rooms[gameRoomKey]) {
+          console.log('gameRoomKey: ', gameRoomKey);
+          const user = big2Rooms[gameRoomKey].socketMap[socket.id];
+          console.log('user at disconnecting event: ', user);
+          delete big2Rooms[gameRoomKey].players[user];
+        }
         // There will be two values in rooms object
         // One will match the socket.id
         // The other will be the game room they are in
         // We will eliminate the value that is equal to socket.id
         // And then use the other value to look up their room object
         // And remove the appropriate player
-          console.log('room values at disconnecting event: ', big2Rooms);
+        console.log('room values at disconnecting event: ', big2Rooms);
       })
       .on('disconnect', () => {
 
