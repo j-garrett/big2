@@ -9,7 +9,7 @@ module.exports = (io) => {
       // console.log('new big2 game socket connected');
       socket.on('connect to room', (user, room) => {
         // console.log('connect to room attempted with room, user: ', room, user);
-        console.log('connect to room socket.id: ', socket.id);
+        // console.log('connect to room socket.id: ', socket.id);
         // If there is no room, then create it and join
         if (!big2Rooms[room]) {
           // For now, we will create a room key/ value on the rooms object
@@ -22,7 +22,9 @@ module.exports = (io) => {
           // Make sure user is not already connected
           // Assign them value in rotation if they aren't
           roomKey.players[user] = roomKey.players[user] || numOfPlayers + 1;
-          console.log('new room created: ', big2Rooms);
+          // Add user name to socket map so we can remove them on disconnect
+          roomKey.socketMap[socket.id] = user;
+          console.log('rooms vals at connect to room event: ', big2Rooms);
           // Emit hand to player
           socket.emit('player cards', roomKey.hands[roomKey.players[user]]);
           const roomObj = big2Rooms[room];
@@ -56,10 +58,20 @@ module.exports = (io) => {
       .on('undo played hand', (user, room) => {
         // find room and grab last hand played
       })
-      .on('disconnect', (data) => {
-        // TODO: track socket.id to remove players from room?
-        console.log('user disconnected: ', socket.id);
-        console.log('disconnect data passed: ', data);
+      .on('disconnecting', (data) => {
+        console.log('user disconnecting: ', socket.id);
+        console.log('socket.rooms disconnecting: ',
+        socket.rooms);
+        // There will be two values in rooms object
+        // One will match the socket.id
+        // The other will be the game room they are in
+        // We will eliminate the value that is equal to socket.id
+        // And then use the other value to look up their room object
+        // And remove the appropriate player
+          console.log('room values at disconnecting event: ', big2Rooms);
+      })
+      .on('disconnect', () => {
+
       });
     });
 };

@@ -3,17 +3,17 @@ module.exports = {
   'example room name': {
     // Add players as they join the room
     players: {
-      'first user': 'player1',
-      'second user': 'player2',
-      'third user': 'player3',
-      'fourth user': 'player4',
+      'first user': '1',
+      'second user': '2',
+      'third user': '3',
+      'fourth user': '4',
     },
     // Following keys are created by createGame helper.js function
     hands: {
-      player1: '[object]',
-      player2: '[object]',
-      player3: '[object]',
-      player4: '[object]',
+      1: '[object]',
+      2: '[object]',
+      3: '[object]',
+      4: '[object]',
     },
     // Each hand played will increment a counter to track which round
     pot: [

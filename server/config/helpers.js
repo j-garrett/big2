@@ -43,6 +43,9 @@ const createGame = () => {
 
     },
     hands,
+    socketMap: {
+
+    },
     pot: [{ user: '', cards: [] }, { user: '', cards: [] }],
     turn: 'player1',
     roundStartedBy: 'player1',
