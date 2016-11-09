@@ -57,28 +57,25 @@ module.exports = (io) => {
       })
       .on('undo played hand', (user, room) => {
         // find room and grab last hand played
+        // Check that that value matches user submitted to undo played hand
+        // and that the socket.id and user match as well
+        // Then add the cards back to hand and update/emit pot and hand
       })
-      .on('disconnecting', (data) => {
-        console.log('user disconnecting: ', socket.id);
-        console.log('socket.rooms disconnecting: ',
-        socket.rooms);
-        const gameRoomKey = Object.keys(socket.rooms)[1];
-        if(big2Rooms[gameRoomKey]) {
-          console.log('gameRoomKey: ', gameRoomKey);
-          const user = big2Rooms[gameRoomKey].socketMap[socket.id];
-          console.log('user at disconnecting event: ', user);
-          delete big2Rooms[gameRoomKey].players[user];
-        }
+      .on('disconnecting', () => {
         // There will be two values in rooms object
         // One will match the socket.id
         // The other will be the game room they are in
-        // We will eliminate the value that is equal to socket.id
-        // And then use the other value to look up their room object
-        // And remove the appropriate player
-        console.log('room values at disconnecting event: ', big2Rooms);
-      })
-      .on('disconnect', () => {
-
+        // We'll use socket.id to find user value and remove that value form room they're in
+        // console.log('user disconnecting: ', socket.id);
+        // console.log('socket.rooms disconnecting: ', socket.rooms);
+        const gameRoomKey = Object.keys(socket.rooms)[1];
+        if (big2Rooms[gameRoomKey]) {
+          // console.log('gameRoomKey: ', gameRoomKey);
+          // console.log('user at disconnecting event: ', user);
+          const user = big2Rooms[gameRoomKey].socketMap[socket.id];
+          delete big2Rooms[gameRoomKey].players[user];
+        }
+        // console.log('room values at disconnecting event: ', big2Rooms);
       });
     });
 };
