@@ -26,4 +26,4 @@ app.use('/cards', routes);
 app.get('/*', (req, res) => {
   res.sendFile(home);
 });
-big2(io);
+big2(io, app);

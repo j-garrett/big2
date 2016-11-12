@@ -4,7 +4,8 @@
   "description": "Big 2 - The Card Game",
   "main": "app.jsx",
   "scripts": {
-    "dev:front": "webpack-dev-server --inline --hot --output-public-path=/dist/",
+    "dev:front": "webpack --watch",
+    "dev:webpackServer": "webpack-dev-server --inline --hot --output-public-path=/dist/",
     "dev:back": "nodemon ./server/server.js",
     "test": "mocha test/_setup.js test/**/*-test.js",
     "postinstall": "webpack -p",
@@ -19,8 +20,7 @@
     "game",
     "cards",
     "games"
-  ],
-  "author": "Jon Garrett",
+  ],  "author": "Jon Garrett",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/jon-is-learning/big2/issues"

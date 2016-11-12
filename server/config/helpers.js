@@ -57,20 +57,24 @@ const playHandToRoom = (room, playerNum, updatedHand) => {
   big2Rooms[room].hands[playerNum] = updatedHand;
 };
 
-const updatePlayerHand = (room, user, cards) => {
+const updatePlayerHand = (room, user, cards, remove) => {
   // Grab players hand from room object
   const roomObj = big2Rooms[room];
   const playerNum = roomObj.players[user];
   const playerHand = roomObj.hands[playerNum];
   const newPlayerHand = [];
   // Iterate over old hand
-  playerHand.forEach((val) => {
-    // If old hand's card is not in played cards array
-    // push it to hand array
-    if (cards.indexOf(val) === -1) {
-      newPlayerHand.push(val);
-    }
-  });
+  if (remove === true) {
+    playerHand.forEach((val) => {
+      // If old hand's card is not in played cards array
+      // push it to hand array
+      if (cards.indexOf(val) === -1) {
+        newPlayerHand.push(val);
+      }
+    });
+  } else {
+    playerHand = playerHand.concat(cards);
+  }
   playHandToRoom(room, playerNum, newPlayerHand);
   return newPlayerHand;
 };

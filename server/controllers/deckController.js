@@ -5,4 +5,4 @@ const deckController = {
 
 };
 
-export default deckController;
+module.exports = deckController;
