@@ -73,7 +73,9 @@ const updatePlayerHand = (room, user, cards, remove) => {
       }
     });
   } else {
-    playerHand = playerHand.concat(cards);
+    roomObj.hands[playerNum] = playerHand.concat(cards);
+    console.log('roomObj.hands[playerNum]: ', roomObj.hands[playerNum]);
+    return roomObj.hands[playerNum];
   }
   playHandToRoom(room, playerNum, newPlayerHand);
   return newPlayerHand;

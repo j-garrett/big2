@@ -55,6 +55,10 @@ export const socketDispatchers = (store) => {
     console.log('hand played to pot received from server: ', cards);
     store.dispatch(updateCardsInPot(cards));
   });
+  big2.on('hand removed from pot', (cards) => {
+    console.log('hand removed from pot received from server: ', cards);
+    store.dispatch(updateCardsInPot(cards));
+  });
 };
 
 /* ------------ SOCKET EMITTERS ---------------*/

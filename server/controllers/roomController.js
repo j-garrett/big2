@@ -1,26 +1,20 @@
 const big2Rooms = require('./../models/big2Rooms');
 const helpers = require('./../config/helpers');
 
-// const RoomController = {
-//   createRoom(user, room) {
-//     console.log('inside createRoom controller args');
-//     console.log('user: ', user);
-//     console.log('room: ', room);0
-//   },
-// };
-
-var createRoom = function(data) {
-  console.log('creaetRoom called in new structure');
-  console.log('creaetRoom called in new structure data; ', data);
-  this.socket.emit('player cards', 'test');
+const returnRoom = (room) => {
+  // This function will look for a room
+  // If it does not exist it will return a new room object
+  // If it does exist then it will return the existing room
+  if (big2Rooms[room] === undefined) {
+    big2Rooms[room] = helpers.createRoom();
+  }
 };
 
-var RoomController = function(socket, app) {
-  this.socket = socket;
-  this.app = app;
-  this.handler = {
-    'connect to room': createRoom.bind(this),
-  };
+const connectToRoom = () => {
+
 };
 
-module.exports = RoomController;
+module.exports = {
+  findRoom,
+  connectToRoom,
+};
