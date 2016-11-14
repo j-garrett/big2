@@ -1,39 +1,6 @@
-module.exports = {
-  // Room name key is created on room creation
-  'example room name': {
-    // Add players as they join the room
-    players: {
-      'first user': '1',
-      'second user': '2',
-      'third user': '3',
-      'fourth user': '4',
-    },
-    // Following keys are created by createGame helper.js function
-    hands: {
-      1: '[object]',
-      2: '[object]',
-      3: '[object]',
-      4: '[object]',
-    },
-    // Each hand played will increment a counter to track which round
-    pot: [
-      {
-        user: 'first user',
-        cards: [],
-      },
-    ],
-    // Track whose turn it is so others can't play out of turn
-    turn: 'player1',
-    // Track who started the round to know when they gain control
-    roundStartedBy: 'player1',
-  },
-};
-
 // Example change to playersObj where data is grouped by player
-const playerMap = {
-  user: {
-    hand: [],
-  },
+const playerHands = {
+  user: [],
 };
 // When someone disconnects, we look up their socket id
 // Should we use their socketId as their key?
@@ -56,17 +23,46 @@ const turnOrder = [
 // Number tracking index that is set to 0 when it hits array length
 const turn = 0;
 
-const updatedExampleRoomObj = {
+const model = {
   roomName: {
-    playerMap,
+    playerHands,
     socketMap,
     turnOrder,
     turn,
-    pot: [
-      {
-        user: 'first user',
-        cards: [],
-      },
-    ],
+    pot: [],
   },
+};
+
+module.exports = {
+  rooms: {
+    // Room name key is created on room creation
+    'example room name': {
+      // Add players as they join the room
+      players: {
+        'first user': '1',
+        'second user': '2',
+        'third user': '3',
+        'fourth user': '4',
+      },
+      // Following keys are created by createGame helper.js function
+      hands: {
+        1: '[object]',
+        2: '[object]',
+        3: '[object]',
+        4: '[object]',
+      },
+      // Each hand played will increment a counter to track which round
+      pot: [
+        {
+          user: 'first user',
+          cards: [],
+        },
+      ],
+      // Track whose turn it is so others can't play out of turn
+      turn: 'player1',
+      // Track who started the round to know when they gain control
+      roundStartedBy: 'player1',
+    },
+  },
+  model,
 };
