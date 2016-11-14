@@ -14,6 +14,12 @@ const gameController = {
       roundsTuple,
     };
   },
+  createGame() {
+    // TODO: Shuffle deck and deal cards
+    // Check for which player has lowest card
+    // Change turn value to their index in turnOrder
+    // Emit to each socket their cards
+  },
 };
 
 module.exports = gameController;

@@ -13,56 +13,58 @@ const socketMap = {
 };
 
 // Then we can use a turn order array to loop through
-const turnOrder = [
+const turnOrderExample = [
   'user1',
   'user2',
   'user3',
   'user4',
 ];
 
+const turnOrder = [];
+
 // Number tracking index that is set to 0 when it hits array length
 const turn = 0;
 
 const model = {
-  roomName: {
-    playerHands,
-    socketMap,
-    turnOrder,
-    turn,
-    pot: [],
-  },
+  playerHands,
+  socketMap,
+  turnOrder,
+  turn,
+  pot: [],
 };
 
 module.exports = {
-  rooms: {
-    // Room name key is created on room creation
-    'example room name': {
-      // Add players as they join the room
-      players: {
-        'first user': '1',
-        'second user': '2',
-        'third user': '3',
-        'fourth user': '4',
-      },
-      // Following keys are created by createGame helper.js function
-      hands: {
-        1: '[object]',
-        2: '[object]',
-        3: '[object]',
-        4: '[object]',
-      },
-      // Each hand played will increment a counter to track which round
-      pot: [
-        {
-          user: 'first user',
-          cards: [],
-        },
-      ],
-      // Track whose turn it is so others can't play out of turn
-      turn: 'player1',
-      // Track who started the round to know when they gain control
-      roundStartedBy: 'player1',
-    },
-  },
+  rooms: {},
   model,
+};
+
+// Room name key is created on room creation
+const naiveExample = {
+  'example room name': {
+    // Add players as they join the room
+    players: {
+      'first user': '1',
+      'second user': '2',
+      'third user': '3',
+      'fourth user': '4',
+    },
+    // Following keys are created by createGame helper.js function
+    hands: {
+      1: '[object]',
+      2: '[object]',
+      3: '[object]',
+      4: '[object]',
+    },
+    // Each hand played will increment a counter to track which round
+    pot: [
+      {
+        user: 'first user',
+        cards: [],
+      },
+    ],
+    // Track whose turn it is so others can't play out of turn
+    turn: 'player1',
+    // Track who started the round to know when they gain control
+    roundStartedBy: 'player1',
+  },
 };

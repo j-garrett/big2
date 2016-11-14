@@ -1,6 +1,7 @@
 const helpers = require('./helpers');
 const big2Rooms = require('./../models/big2Rooms');
 const gameController = require('./../controllers/gameController');
+const roomController = require('./../controllers/roomController');
 
 // This is looking like some spaghetti
 module.exports = (io, app) => {
@@ -8,36 +9,43 @@ module.exports = (io, app) => {
   big2
   .on('connection', (socket) => {
     socket
-      .on('connect to room', (user, room) => {
-        if (!big2Rooms[room]) {
-          big2Rooms[room] = helpers.createGame();
-        }
-        const numOfPlayers = Object.keys(big2Rooms[room].players).length;
-        if (big2Rooms[room].players[user] !== undefined) {
-          socket.emit('Room is full', 'That name is already taken.');
-          return;
-        }
-        if (numOfPlayers < 4) {
-          socket.join(room);
-          const roomKey = big2Rooms[room];
-          // Assign them value in rotation if they aren't
-          roomKey.players[user] = numOfPlayers;
-          // Add user name to socket map so we can remove them on disconnect
-          roomKey.socketMap[socket.id] = user;
-          // Emit hand to player
-          socket.emit('player cards', roomKey.hands[roomKey.players[user]]);
-          const pot = big2Rooms[room].pot;
-          const roundsTuple = [
-            pot[pot.length - 2],
-            pot[pot.length - 1],
-          ];
-          socket.emit('hand played to pot', roundsTuple);
-        } else {
-          socket.emit('Room is full',
-            'The room you\'re trying to join is full.'
-          );
-        }
-      })
+    .on('connect to room', (user, room) => {
+      const connectToRoom = roomController.joinRoom(user, room, socket.id);
+      socket.emit(connectToRoom.event, connectToRoom.data);
+
+      // if (!big2Rooms[room]) {
+      //   big2Rooms[room] = helpers.createGame();
+      // }
+      // const numOfPlayers = Object.keys(big2Rooms[room].players).length;
+      // if (big2Rooms[room].players[user] !== undefined) {
+      //   socket.emit('Room is full', 'That name is already taken.');
+      //   return;
+      // }
+      // if (numOfPlayers < 4) {
+      //   socket.join(room);
+      //   const roomKey = big2Rooms[room];
+      //   // Assign them value in rotation if they aren't
+      //   roomKey.players[user] = numOfPlayers;
+      //   // Add user name to socket map so we can remove them on disconnect
+      //   roomKey.socketMap[socket.id] = user;
+      //   // Emit hand to player
+      //   socket.emit('player cards', roomKey.hands[roomKey.players[user]]);
+      //   const pot = big2Rooms[room].pot;
+      //   const roundsTuple = [
+      //     pot[pot.length - 2],
+      //     pot[pot.length - 1],
+      //   ];
+      //   socket.emit('hand played to pot', roundsTuple);
+      // } else {
+      //   socket.emit('Room is full',
+      //     'The room you\'re trying to join is full.'
+      //   );
+      // }
+    })
+    .on('create game', () => {
+      // TODO: hook up to gameController
+
+    })
     .on('play cards', (user, room, cards) => {
       const played = gameController.playCards(user, room, cards);
       big2.to(room).emit('hand played to pot', played.roundsTuple);

@@ -5,39 +5,38 @@ const rooms = big2Rooms.rooms;
 const roomModel = big2Rooms.model;
 
 const roomController = {
-  createRoom(room) {
-    rooms[room] = Object.assign({}, roomModel);
+  createRoom() {
+    return Object.assign({}, roomModel);
   },
   joinRoom(user, room, socketId) {
     // If room doesn't exist we create it
     if (rooms[room] === undefined) {
-      this.createRoom();
+      rooms[room] = this.createRoom();
     }
     // If it does exist, we do some checks before adding
     // Check if username is taken
     if (rooms[room].playerHands[user] !== undefined) {
-      return ['Room is full', 'That name is already taken.'];
+      return {
+        event: 'Room is full',
+        data: 'That name is already taken. Please pick another.',
+      };
     }
-    if (rooms[room].turnOrder.length < 4) {
-      // And add a player if there is an open spot
-      rooms[room].playerHands[user] = [];
-      rooms[room].socketMap[socketId] = user;
-      rooms[room].turnOrder.push(user);
+    // Check if we already have 4 players
+    if (rooms[room].turnOrder.length >= 4) {
+      return {
+        event: 'Room is full',
+        data: 'This room is already full. Please pick another.',
+      };
     }
+    // And add a player if there is an open spot
+    rooms[room].playerHands[user] = [];
+    rooms[room].socketMap[socketId] = user;
+    rooms[room].turnOrder.push(user);
+    return {
+      event: 'players in room',
+      data: rooms[room].turnOrder,
+    };
   },
-};
-
-const returnRoom = (room) => {
-  // This function will look for a room
-  // If it does not exist it will return a new room object
-  // If it does exist then it will return the existing room
-  if (big2Rooms[room] === undefined) {
-    return helpers.createRoom();
-  }
-};
-
-const connectToRoom = () => {
-
 };
 
 module.exports = roomController;
