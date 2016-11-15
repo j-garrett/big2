@@ -23,13 +23,14 @@ const shuffleCardDeck = () => {
   return deck;
 };
 
-const dealCards = (deck, numPlayers) => {
+const dealCards = (numPlayers) => {
+  const deck = shuffleCardDeck();
   const handSize = deck.length / numPlayers;
-  var hands = {};
+  var hands = [];
   for (var i = 0; i < numPlayers; i += 1) {
     var startIndex = i * handSize;
     var endIndex = startIndex + handSize;
-    hands[i] = deck.slice(startIndex, endIndex);
+    hands.push(deck.slice(startIndex, endIndex));
   }
   return hands;
 };

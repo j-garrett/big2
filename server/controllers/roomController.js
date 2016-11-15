@@ -32,6 +32,7 @@ const roomController = {
       rooms[room].playerHands[user] = [];
       rooms[room].socketMap[socketId] = user;
       rooms[room].turnOrder.push(user);
+      console.log('rooms: ', rooms);
       resolve({
         event: 'players in room',
         data: rooms[room].turnOrder,

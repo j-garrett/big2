@@ -1,16 +1,11 @@
 // Example change to playersObj where data is grouped by player
-const playerHands = {
-  user: [],
-};
+const playerHands = {};
 // When someone disconnects, we look up their socket id
 // Should we use their socketId as their key?
 // We could create a socket map...
 // We don't NEED constant time lookup
 // Number of players won't be enough for linear to be bad
-const socketMap = {
-  '/big2#BcXhq7G1rnvehh7gAAAA': 'user name',
-  socketId: 'second user\'s name',
-};
+const socketMap = {};
 
 // Then we can use a turn order array to loop through
 const turnOrderExample = [

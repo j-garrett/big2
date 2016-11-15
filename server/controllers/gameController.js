@@ -14,8 +14,19 @@ const gameController = {
       roundsTuple,
     };
   },
-  createGame() {
-    // TODO: Shuffle deck and deal cards
+  createGame(room) {
+    // Grab connected users form turnOrder array
+    let players = big2Rooms[room].turnOrder;
+    // Call deal cards with number of users
+    const cardHands = helpers.dealCards(players.length);
+    // turn the two arrays into object key/value pairs
+    players = players.reduce((obj, val, idx) => {
+      const copy = Object.assign({}, obj);
+      copy[val] = cardHands[idx];
+      return copy;
+    }, {});
+    // set room's player object to the newly created object
+    big2Rooms[room].players = players;
     // Check for which player has lowest card
     // Change turn value to their index in turnOrder
     // Emit to each socket their cards

@@ -59,7 +59,8 @@ export const socketDispatchers = (store) => {
   .on('hand removed from pot', (cards) => {
     console.log('hand removed from pot received from server: ', cards);
     store.dispatch(updateCardsInPot(cards));
-  });
+  })
+  .on('players in room', (turnOrder => console.log('turnOrder needs dispatch: ', turnOrder)));
 };
 
 /* ------------ SOCKET EMITTERS ---------------*/
