@@ -34,6 +34,14 @@ export const GameRoom = ({
 }) => (
   <div>
     <h3>Big 2</h3>
+    <button
+      onClick={() => {
+        console.log('game start button clicke for room: ', room);
+        a.beginGame(room);
+      }}
+    >
+      Start Game
+    </button>
     <div>
       <h4>Player Hand</h4>
       <CardGroup

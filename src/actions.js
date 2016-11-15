@@ -78,3 +78,7 @@ export const playSelectedCards = (user, room, cards) => (
 export const undoPlayedHand = (user, room) => (
   big2.emit('undo played hand', user, room)
 );
+
+export const beginGame = room => (
+  big2.emit('create game', room)
+);

@@ -3,7 +3,7 @@ const helpers = require('./../config/helpers');
 
 const gameController = {
   playCards(user, room, cards) {
-    const pot = big2Rooms[room].pot;
+    const pot = big2Rooms.rooms[room].pot;
     const newHand = helpers.updatePlayerHand(room, user, cards, true);
     pot.push({ user, cards });
     const prevRound = pot[pot.length - 2];
@@ -16,20 +16,23 @@ const gameController = {
   },
   createGame(room) {
     // Grab connected users form turnOrder array
-    let players = big2Rooms[room].turnOrder;
+    let players = big2Rooms.rooms[room].turnOrder;
     // Call deal cards with number of users
     const cardHands = helpers.dealCards(players.length);
     // turn the two arrays into object key/value pairs
     players = players.reduce((obj, val, idx) => {
       const copy = Object.assign({}, obj);
       copy[val] = cardHands[idx];
+      // Check for which player has lowest card
+      if (cardHands[idx].indexOf('♣3') !== -1) {
+        // Change turn value to their index in turnOrder
+        big2Rooms.rooms[room].turn = idx;
+      }
       return copy;
     }, {});
     // set room's player object to the newly created object
-    big2Rooms[room].players = players;
-    // Check for which player has lowest card
-    // Change turn value to their index in turnOrder
-    // Emit to each socket their cards
+    big2Rooms.rooms[room].playerHands = players;
+    return big2Rooms.rooms[room].socketMap;
   },
 };
 

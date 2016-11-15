@@ -55,12 +55,12 @@ const createGame = () => {
 
 const playHandToRoom = (room, playerNum, updatedHand) => {
   // const
-  big2Rooms[room].hands[playerNum] = updatedHand;
+  big2Rooms.rooms[room].hands[playerNum] = updatedHand;
 };
 
 const updatePlayerHand = (room, user, cards, remove) => {
   // Grab players hand from room object
-  const roomObj = big2Rooms[room];
+  const roomObj = big2Rooms.rooms[room];
   const playerNum = roomObj.players[user];
   const playerHand = roomObj.hands[playerNum];
   const newPlayerHand = [];
