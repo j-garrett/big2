@@ -64,6 +64,15 @@ module.exports = (io, app) => {
               played.newHand
             );
         });
+      const turn = rooms[room].turn;
+      rooms[room].turn = turn >= 4 ? 0 : turn + 1;
+      console.log('rooms[room].turnOrder[rooms[room].turn]: ', rooms[room].turnOrder[rooms[room].turn]);
+      big2
+        .to(room)
+        .emit(
+          'player turn',
+          rooms[room].turnOrder[rooms[room].turn]
+        );
     })
     .on('undo played hand', (user, room) => {
       if (rooms[room] === undefined) {
@@ -84,6 +93,14 @@ module.exports = (io, app) => {
               played.newHand
             );
         });
+      const turn = rooms[room].turn;
+      rooms[room].turn = turn <= 0 ? 4 : turn - 1;
+      big2
+        .to(room)
+        .emit(
+          'player turn',
+          rooms[room].turnOrder[rooms[room].turn]
+        );
     })
     .on('disconnecting', () => {
       // There will be two values in rooms object
