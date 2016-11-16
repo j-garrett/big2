@@ -43,29 +43,23 @@ module.exports = (io, app) => {
       if (rooms[room] === undefined) {
         return null;
       }
-      big2.to(room).emit('hand played to pot',
-        [
-          { user: 'jon', cards: ['Object'] },
-          { user: 'jon', cards: ['adf'] },
-        ]);
-      // const played = gameController.playCards(user, room, cards);
-      // gameController
-      //   .playCards(user, room, cards)
-      //   .then((played) => {
-      //     console.log('played var: ', played);
-      //     console.log('room: ', room);
-      //     big2
-      //       .to(room)
-      //       .emit(
-      //         'hand played to pot',
-      //         played.roundsTuple
-      //       );
-      //     socket
-      //       .emit(
-      //         'player cards',
-      //         played.newHand
-      //       );
-      //   });
+      gameController
+        .playCards(user, room, cards)
+        .then((played) => {
+          console.log('played var: ', played);
+          console.log('room: ', room);
+          big2
+            .to(room)
+            .emit(
+              'hand played to pot',
+              played.roundsTuple
+            );
+          socket
+            .emit(
+              'player cards',
+              played.newHand
+            );
+        });
     })
     .on('undo played hand', (user, room) => {
       if (rooms[room] === undefined) {

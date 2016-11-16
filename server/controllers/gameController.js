@@ -9,8 +9,8 @@ const gameController = {
       const pot = big2Rooms.rooms[room].pot;
       const newHand = helpers.updatePlayerHand(user, room, cards, true);
       big2Rooms.rooms[room].pot.push({ user, cards });
-      console.log('big2Rooms.rooms[room]: ', big2Rooms.rooms[room]);
-
+      // console.log('big2Rooms.rooms[room]: ', big2Rooms.rooms[room]);
+      console.log('pot from room: ', pot);
       const prevRound = pot[pot.length - 2] || { user: '', cards: [] };
       const curRound = pot[pot.length - 1] || { user: '', cards: [] };
       const roundsTuple = [prevRound, curRound];
