@@ -59,12 +59,11 @@ module.exports = (io, app) => {
           socket
             .emit(
               'player cards',
-              played.newHand
+              played.updateHand.newPlayerHand
             );
         });
       const turn = rooms[room].turn;
       rooms[room].turn = turn >= 4 ? 0 : turn + 1;
-      console.log('rooms[room].turnOrder[rooms[room].turn]: ', rooms[room].turnOrder[rooms[room].turn]);
       big2
         .to(room)
         .emit(
@@ -79,16 +78,19 @@ module.exports = (io, app) => {
       gameController
         .playCards(user, room, null, false)
         .then((played) => {
+          console.log('played object structure: ', played);
+
           big2
             .to(room)
             .emit(
               'hand played to pot',
               played.roundsTuple
             );
-          socket
+          big2
+            .to(played.updateHand.previousPlayerSocket)
             .emit(
               'player cards',
-              played.newHand
+              played.updateHand.newPlayerHand
             );
         });
       const turn = rooms[room].turn;

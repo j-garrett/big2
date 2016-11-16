@@ -8,7 +8,7 @@ const gameController = {
     // TODO: we need to validate every card being played was in players hand
     return new Promise((resolve) => {
       const pot = big2Rooms.rooms[room].pot;
-      const newHand = helpers.updatePlayerHand(user, room, cards, remove);
+      const updateHand = helpers.updatePlayerHand(user, room, cards, remove);
 
       // console.log('big2Rooms.rooms[room]: ', big2Rooms.rooms[room]);
       // console.log('pot from room: ', pot);
@@ -16,7 +16,7 @@ const gameController = {
       const curRound = pot[pot.length - 1] || { user: '', cards: [] };
       const roundsTuple = [prevRound, curRound];
       resolve({
-        newHand,
+        updateHand,
         roundsTuple,
       });
     });

@@ -101,7 +101,7 @@ const updatePlayerHand = (user, room, cards, remove) => {
   }
   return {
     previousPlayerSocket,
-    newPlayerhand,
+    newPlayerHand,
   };
 };
 
