@@ -23,7 +23,7 @@ const gameController = {
   },
   createGame(room) {
     // Grab connected users form turnOrder array
-    let players = big2Rooms.rooms[room].turnOrder;
+    var players = big2Rooms.rooms[room].turnOrder;
     // Call deal cards with number of users
     const cardHands = helpers.dealCards(players.length);
     // turn the two arrays into object key/value pairs
