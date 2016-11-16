@@ -62,6 +62,8 @@ const updatePlayerHand = (user, room, cards, remove) => {
   // Grab players hand from room object
   const playerHand = big2Rooms.rooms[room].playerHands[user];
   const newPlayerHand = [];
+  const validatedHand = [];
+  // console.log('attempted to play bad cards: ', cards);
   // Iterate over old hand
   if (remove === true) {
     playerHand.forEach((val) => {
@@ -69,13 +71,18 @@ const updatePlayerHand = (user, room, cards, remove) => {
       // push it to hand array
       if (cards.indexOf(val) === -1) {
         newPlayerHand.push(val);
+      } else {
+        // console.log('val ', val);
+        validatedHand.push(val);
       }
     });
+    big2Rooms.rooms[room].playerHands[user] = newPlayerHand;
+    big2Rooms.rooms[room].pot.push({ user, cards: validatedHand });
   } else {
-    big2Rooms.rooms[room].playerHands[user] = playerHand.concat(cards);
-    return big2Rooms.rooms[room].playerHands[user];
+    big2Rooms.rooms[room].playerHands[user] = playerHand.concat(validatedHand);
+    big2Rooms.rooms[room].pot.pop();
   }
-  return newPlayerHand;
+  return big2Rooms.rooms[room].playerHands[user];
 };
 
 module.exports = {

@@ -5,10 +5,11 @@ const helpers = require('./../config/helpers');
 
 const gameController = {
   playCards(user, room, cards) {
-    return new Promise((resolve) => {
+    // TODO: we need to validate every card being played was in players hand
+    return new Promise((resolve, reject) => {
       const pot = big2Rooms.rooms[room].pot;
       const newHand = helpers.updatePlayerHand(user, room, cards, true);
-      big2Rooms.rooms[room].pot.push({ user, cards });
+
       // console.log('big2Rooms.rooms[room]: ', big2Rooms.rooms[room]);
       console.log('pot from room: ', pot);
       const prevRound = pot[pot.length - 2] || { user: '', cards: [] };
