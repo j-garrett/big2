@@ -46,8 +46,6 @@ module.exports = (io, app) => {
       gameController
         .playCards(user, room, cards)
         .then((played) => {
-          console.log('played var: ', played);
-          console.log('room: ', room);
           big2
             .to(room)
             .emit(
