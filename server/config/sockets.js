@@ -50,6 +50,7 @@ module.exports = (io, app) => {
       gameController
         .playCards(user, room, cards, true)
         .then((played) => {
+          console.log('played val passerd tosocket: ', played);
           big2
             .to(room)
             .emit(
@@ -78,8 +79,6 @@ module.exports = (io, app) => {
       gameController
         .playCards(user, room, null, false)
         .then((played) => {
-          console.log('played object structure: ', played);
-
           big2
             .to(room)
             .emit(

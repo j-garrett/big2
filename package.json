@@ -5,7 +5,7 @@
   "main": "app.jsx",
   "scripts": {
     "dev:front": "webpack --watch",
-    "dev:webpackServer": "webpack-dev-server --inline --hot --output-public-path=/dist/",
+    "dev:hot": "webpack-dev-server --inline --hot --output-public-path=/dist/",
     "dev:back": "nodemon ./server/server.js",
     "test": "mocha test/_setup.js test/**/*-test.js",
     "postinstall": "webpack -p",
@@ -21,6 +21,9 @@
     "cards",
     "games"
   ],
+  "engines":{
+    "node": "6.1.0"
+  },
   "author": "Jon Garrett",
   "license": "MIT",
   "bugs": {

@@ -74,6 +74,7 @@ const updatePlayerHand = (user, room, cards, remove) => {
   let newPlayerHand = [];
   const playerHand = big2Rooms.rooms[room].playerHands[user];
   const validatedHand = [];
+  let prevUserSocket = '';
   // console.log('attempted to play bad cards: ', cards);
   // Iterate over old hand
   if (remove === true) {
