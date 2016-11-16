@@ -9,7 +9,7 @@ import ConnectedPlayers from './ConnectedPlayers';
 
 const mapStateToProps = state => ({
   user: state.username,
-  connectedPlayers: state.ConnectedPlayers,
+  connectedPlayers: state.connectedPlayers,
   room: state.room,
   pot: state.cardsInPot,
   playerHand: state.playerHand,
@@ -37,12 +37,10 @@ export const GameRoom = ({
 }) => (
   <div>
     <h3>Big 2</h3>
-    {Array.isArray(connectedPlayers) &&
-      <ConnectedPlayers
-        connectedPlayers={connectedPlayers}
-        room={room}
-      />
-    }
+    <ConnectedPlayers
+      players={connectedPlayers}
+      room={room}
+    />
     <button
       onClick={() => {
         clearCardsFromSelection();

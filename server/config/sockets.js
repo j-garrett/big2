@@ -18,7 +18,7 @@ module.exports = (io, app) => {
           socket.join(room);
           socket.emit(result.event, result.data);
         })
-        .catch(err => socket.emit(err.event, err.data));
+        .catch(err => console.log('there was an error with big2 connect to room socket: ', err));
     })
     .on('create game', (room) => {
       if (rooms[room] === undefined) {

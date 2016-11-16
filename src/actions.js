@@ -41,6 +41,11 @@ export const updateCardsInPot = cards => ({
   cards,
 });
 
+export const updateConnectedPlayersList = players => ({
+  type: t.UPDATE_CONNECTED_PLAYER_LIST,
+  players,
+});
+
 /* ------------ SOCKET LISTENERS ---------------*/
 // These will dispatch actions when server sends data
 export const socketDispatchers = (store) => {
@@ -59,7 +64,9 @@ export const socketDispatchers = (store) => {
     // console.log('hand removed from pot received from server: ', cards);
     store.dispatch(updateCardsInPot(cards));
   });
-  big2.on('players in room', (turnOrder => console.log('turnOrder needs dispatch: ', turnOrder)));
+  big2.on('players in room', (connectedPlayers) => {
+    store.dispatch(updateConnectedPlayersList(connectedPlayers));
+  });
 };
 
 /* ------------ SOCKET EMITTERS ---------------*/

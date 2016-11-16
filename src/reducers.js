@@ -10,6 +10,13 @@ const username = (state = m.usernameInitialState, action) => {
   return state;
 };
 
+const connectedPlayers = (state = m.connectedPlayersInitialState, action) => {
+  if (action.type === t.UPDATE_CONNECTED_PLAYER_LIST) {
+    return action.players;
+  }
+  return state;
+};
+
 const room = (state = m.roomInitialState, action) => {
   if (action.type === t.ROOM_CHANGE) {
     return action.room;
@@ -55,6 +62,7 @@ const cardsInPot = (state = m.potInitialState, action) => {
 
 export default combineReducers({
   username,
+  connectedPlayers,
   room,
   playerHand,
   selectedCards,

@@ -7,7 +7,7 @@ const roomModel = big2Rooms.model;
 
 const roomController = {
   joinRoom(user, room, socketId) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       // If room doesn't exist we create it
       if (big2Rooms.rooms[room] === undefined) {
         big2Rooms.rooms[room] = Object.assign({}, roomModel);
@@ -15,7 +15,7 @@ const roomController = {
       // If it does exist, we do some checks before adding
       // Check if username is taken
       if (big2Rooms.rooms[room].playerHands[user] !== undefined) {
-        reject({
+        resolve({
           event: 'problem joining room',
           data: 'That name is already taken. Please pick another.',
         });
@@ -23,7 +23,7 @@ const roomController = {
       }
       // Check if we already have 4 players
       if (big2Rooms.rooms[room].turnOrder.length >= 4) {
-        reject({
+        resolve({
           event: 'problem joining room',
           data: 'This room is already full. Please pick another.',
         });
