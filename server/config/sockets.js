@@ -24,8 +24,6 @@ module.exports = (io, app) => {
       if (rooms[room] === undefined) {
         return null;
       }
-      // TODO: hook up to gameController
-      // Now that you have cards dealt to players, emit to each
       const sockets = gameController.createGame(room);
       Object
         .keys(sockets)

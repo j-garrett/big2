@@ -12,11 +12,21 @@ const createCardDeck = () => {
   return deck;
 };
 
+const getPlayerSocket = (user, room) => {
+  const socketMap = big2Rooms.rooms[room].socketMap;
+  return Object.keys(socketMap).reduce((acc, val) => {
+    if (socketMap[val] === user) {
+      return acc + val;
+    }
+    return acc;
+  }, '');
+};
+
 const shuffleCardDeck = () => {
   const deck = createCardDeck();
-  for (var i = 0; i < deck.length; i += 1) {
-    var swapCardIndex = Math.floor(Math.random() * (deck.length - i)) + i;
-    var newCard = deck[swapCardIndex];
+  for (let i = 0; i < deck.length; i += 1) {
+    let swapCardIndex = Math.floor(Math.random() * (deck.length - i)) + i;
+    let newCard = deck[swapCardIndex];
     deck[swapCardIndex] = deck[i];
     deck[i] = newCard;
   }
@@ -26,10 +36,10 @@ const shuffleCardDeck = () => {
 const dealCards = (numPlayers) => {
   const deck = shuffleCardDeck();
   const handSize = deck.length / numPlayers;
-  var hands = [];
-  for (var i = 0; i < numPlayers; i += 1) {
-    var startIndex = i * handSize;
-    var endIndex = startIndex + handSize;
+  let hands = [];
+  for (let i = 0; i < numPlayers; i += 1) {
+    let startIndex = i * handSize;
+    let endIndex = startIndex + handSize;
     hands.push(deck.slice(startIndex, endIndex));
   }
   return hands;
@@ -60,8 +70,9 @@ const createGame = () => {
 
 const updatePlayerHand = (user, room, cards, remove) => {
   // Grab players hand from room object
+  let previousPlayerSocket = '';
+  let newPlayerHand = [];
   const playerHand = big2Rooms.rooms[room].playerHands[user];
-  const newPlayerHand = [];
   const validatedHand = [];
   // console.log('attempted to play bad cards: ', cards);
   // Iterate over old hand
@@ -79,10 +90,19 @@ const updatePlayerHand = (user, room, cards, remove) => {
     big2Rooms.rooms[room].playerHands[user] = newPlayerHand;
     big2Rooms.rooms[room].pot.push({ user, cards: validatedHand });
   } else {
-    const previousHand = big2Rooms.rooms[room].pot.pop();
-    big2Rooms.rooms[room].playerHands[user] = playerHand.concat(previousHand.cards);
+    const previousPot = big2Rooms.rooms[room].pot;
+    const previousHand = previousPot.pop();
+    const previousPlayer = previousHand.user;
+    const previousCards = previousHand.cards;
+    previousPlayerSocket = getPlayerSocket(previousPlayer, room);
+    const curHand = big2Rooms.rooms[room].playerHands[previousPlayer];
+    big2Rooms.rooms[room].playerHands[previousPlayer] = curHand.concat(previousCards);
+    newPlayerHand = big2Rooms.rooms[room].playerHands[previousPlayer];
   }
-  return big2Rooms.rooms[room].playerHands[user];
+  return {
+    previousPlayerSocket,
+    newPlayerhand,
+  };
 };
 
 module.exports = {
