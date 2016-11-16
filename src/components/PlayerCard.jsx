@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 
 const PlayerCard = ({ player }) => (
   <div>
-    <h1>{player}</h1>
+    <h3>{player}</h3>
   </div>
 );
 

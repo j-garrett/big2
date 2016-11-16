@@ -67,6 +67,10 @@ export const socketDispatchers = (store) => {
   big2.on('players in room', (connectedPlayers) => {
     store.dispatch(updateConnectedPlayersList(connectedPlayers));
   });
+  big2.on('player turn', (player) => {
+    console.log('it is this player\'s turn: ', player);
+    // store.dispatch(updateConnectedPlayersList(connectedPlayers));
+  });
 };
 
 /* ------------ SOCKET EMITTERS ---------------*/

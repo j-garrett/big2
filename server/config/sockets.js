@@ -16,7 +16,7 @@ module.exports = (io, app) => {
         .joinRoom(user, room, socket.id)
         .then((result) => {
           socket.join(room);
-          socket.emit(result.event, result.data);
+          socket.to(room).emit(result.event, result.data);
         })
         .catch(err => console.log('there was an error with big2 connect to room socket: ', err));
     })
@@ -36,6 +36,10 @@ module.exports = (io, app) => {
             .emit(
               'player cards',
               rooms[room].playerHands[player[1]]
+            )
+            .emit(
+              'player turn',
+              rooms[room].turnOrder[rooms[room].turn]
             );
         });
     })

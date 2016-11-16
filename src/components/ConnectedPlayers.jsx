@@ -4,7 +4,7 @@ import PlayerCard from './PlayerCard';
 
 const ConnectedPlayers = ({ players, room }) => (
   <div>
-    <h3>You are in the {room} room!</h3>
+    <h3>You are in the {room} room with</h3>
     {players.map(player => (
       <PlayerCard
         key={player}
