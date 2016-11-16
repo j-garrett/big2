@@ -79,8 +79,8 @@ const updatePlayerHand = (user, room, cards, remove) => {
     big2Rooms.rooms[room].playerHands[user] = newPlayerHand;
     big2Rooms.rooms[room].pot.push({ user, cards: validatedHand });
   } else {
-    big2Rooms.rooms[room].playerHands[user] = playerHand.concat(validatedHand);
-    big2Rooms.rooms[room].pot.pop();
+    const previousHand = big2Rooms.rooms[room].pot.pop();
+    big2Rooms.rooms[room].playerHands[user] = playerHand.concat(previousHand.cards);
   }
   return big2Rooms.rooms[room].playerHands[user];
 };
