@@ -44,23 +44,22 @@ export const updateCardsInPot = cards => ({
 /* ------------ SOCKET LISTENERS ---------------*/
 // These will dispatch actions when server sends data
 export const socketDispatchers = (store) => {
-  big2
-  .on('player cards', (cards) => {
+  big2.on('player cards', (cards) => {
     console.log('cards dealt: ', cards);
     store.dispatch(updatePlayerHand(cards));
-  })
-  .on('problem joining room', (message) => {
+  });
+  big2.on('problem joining room', (message) => {
     console.log(message);
-  })
-  .on('hand played to pot', (cards) => {
+  });
+  big2.on('hand played to pot', (cards) => {
     console.log('hand played to pot received from server: ', cards);
     store.dispatch(updateCardsInPot(cards));
-  })
-  .on('hand removed from pot', (cards) => {
+  });
+  big2.on('hand removed from pot', (cards) => {
     console.log('hand removed from pot received from server: ', cards);
     store.dispatch(updateCardsInPot(cards));
-  })
-  .on('players in room', (turnOrder => console.log('turnOrder needs dispatch: ', turnOrder)));
+  });
+  big2.on('players in room', (turnOrder => console.log('turnOrder needs dispatch: ', turnOrder)));
 };
 
 /* ------------ SOCKET EMITTERS ---------------*/

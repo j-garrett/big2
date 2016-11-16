@@ -14,7 +14,10 @@ module.exports = (io, app) => {
     .on('connect to room', (user, room) => {
       roomController
         .joinRoom(user, room, socket.id)
-        .then(result => socket.emit(result.event, result.data))
+        .then(result => {
+          socket.join(room);
+          socket.emit(result.event, result.data);
+        })
         .catch(err => socket.emit(err.event, err.data));
     })
     .on('create game', (room) => {
@@ -40,9 +43,29 @@ module.exports = (io, app) => {
       if (rooms[room] === undefined) {
         return null;
       }
-      const played = gameController.playCards(user, room, cards);
-      big2.to(room).emit('hand played to pot', played.roundsTuple);
-      socket.emit('player cards', played.newHand);
+      big2.to(room).emit('hand played to pot',
+        [
+          { user: 'jon', cards: ['Object'] },
+          { user: 'jon', cards: ['adf'] },
+        ]);
+      // const played = gameController.playCards(user, room, cards);
+      // gameController
+      //   .playCards(user, room, cards)
+      //   .then((played) => {
+      //     console.log('played var: ', played);
+      //     console.log('room: ', room);
+      //     big2
+      //       .to(room)
+      //       .emit(
+      //         'hand played to pot',
+      //         played.roundsTuple
+      //       );
+      //     socket
+      //       .emit(
+      //         'player cards',
+      //         played.newHand
+      //       );
+      //   });
     })
     .on('undo played hand', (user, room) => {
       if (rooms[room] === undefined) {

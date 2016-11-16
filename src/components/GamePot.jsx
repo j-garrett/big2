@@ -4,7 +4,9 @@ import CardGroup from './CardGroup';
 
 export const GamePot = ({
   pot,
-}) => (
+}) => {
+  console.log('pot given to GamePot: ', pot);
+  return(
   <div>
     <h4>Pot</h4>
     <h5>Previous Round</h5>
@@ -21,6 +23,7 @@ export const GamePot = ({
     />
   </div>
 );
+};
 
 GamePot.propTypes = {
   pot: PropTypes.array,

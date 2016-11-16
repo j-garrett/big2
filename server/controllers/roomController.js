@@ -31,6 +31,7 @@ const roomController = {
       big2Rooms.rooms[room].playerHands[user] = [];
       big2Rooms.rooms[room].socketMap[socketId] = user;
       big2Rooms.rooms[room].turnOrder.push(user);
+      console.log('big2Rooms.rooms: ', big2Rooms.rooms);
       resolve({
         event: 'players in room',
         data: big2Rooms.rooms[room].turnOrder,

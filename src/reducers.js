@@ -45,7 +45,9 @@ const selectedCards = (state = m.selectedCardsInitialState, action) => {
 };
 
 const cardsInPot = (state = m.potInitialState, action) => {
+
   if (action.type === t.UPDATE_CARDS_IN_POT) {
+    console.log('cardsInPot reducer action.cards: ', action.cards);
     return action.cards;
   }
   return state;

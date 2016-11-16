@@ -53,16 +53,14 @@ const createGame = () => {
   };
 };
 
-const playHandToRoom = (room, playerNum, updatedHand) => {
-  // const
-  big2Rooms.rooms[room].hands[playerNum] = updatedHand;
-};
+// const playHandToRoom = (room, playerNum, updatedHand) => {
+//   // const
+//   big2Rooms.rooms[room].hands[playerNum] = updatedHand;
+// };
 
-const updatePlayerHand = (room, user, cards, remove) => {
+const updatePlayerHand = (user, room, cards, remove) => {
   // Grab players hand from room object
-  const roomObj = big2Rooms.rooms[room];
-  const playerNum = roomObj.players[user];
-  const playerHand = roomObj.hands[playerNum];
+  const playerHand = big2Rooms.rooms[room].playerHands[user];
   const newPlayerHand = [];
   // Iterate over old hand
   if (remove === true) {
@@ -74,11 +72,9 @@ const updatePlayerHand = (room, user, cards, remove) => {
       }
     });
   } else {
-    roomObj.hands[playerNum] = playerHand.concat(cards);
-    console.log('roomObj.hands[playerNum]: ', roomObj.hands[playerNum]);
-    return roomObj.hands[playerNum];
+    big2Rooms.rooms[room].playerHands[user] = playerHand.concat(cards);
+    return big2Rooms.rooms[room].playerHands[user];
   }
-  playHandToRoom(room, playerNum, newPlayerHand);
   return newPlayerHand;
 };
 
@@ -88,5 +84,4 @@ module.exports = {
   dealCards,
   createGame,
   updatePlayerHand,
-  playHandToRoom,
 };
