@@ -10,6 +10,7 @@ import ConnectedPlayers from './ConnectedPlayers';
 const mapStateToProps = state => ({
   user: state.username,
   connectedPlayers: state.connectedPlayers,
+  currentPlayersTurn: state.currentPlayersTurn,
   room: state.room,
   pot: state.cardsInPot,
   playerHand: state.playerHand,
@@ -28,6 +29,7 @@ const mapDispatchToProps = dispatch => ({
 export const GameRoom = ({
   user,
   connectedPlayers,
+  currentPlayersTurn,
   room,
   pot,
   playerHand,
@@ -39,6 +41,7 @@ export const GameRoom = ({
     <h3>Big 2</h3>
     <ConnectedPlayers
       players={connectedPlayers}
+      currentPlayer={currentPlayersTurn}
       room={room}
     />
     <button
@@ -99,6 +102,7 @@ export const GameRoom = ({
 GameRoom.propTypes = {
   user: PropTypes.string,
   connectedPlayers: PropTypes.array,
+  currentPlayersTurn: PropTypes.string,
   room: PropTypes.string,
   pot: PropTypes.array,
   playerHand: PropTypes.array,

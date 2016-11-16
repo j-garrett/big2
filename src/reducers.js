@@ -17,6 +17,15 @@ const connectedPlayers = (state = m.connectedPlayersInitialState, action) => {
   return state;
 };
 
+const currentPlayersTurn = (state = m.currentPlayersTurnInitialState, action) => {
+  console.log('currentPlayersTurn called with action: ', action.type);
+  if (action.type === t.UPDATE_CURRENT_PLAYER_TURN) {
+    console.log('inside currentPlayersTurn')
+    return action.player;
+  }
+  return state;
+};
+
 const room = (state = m.roomInitialState, action) => {
   if (action.type === t.ROOM_CHANGE) {
     return action.room;
@@ -63,6 +72,7 @@ const cardsInPot = (state = m.potInitialState, action) => {
 export default combineReducers({
   username,
   connectedPlayers,
+  currentPlayersTurn,
   room,
   playerHand,
   selectedCards,

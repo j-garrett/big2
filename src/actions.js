@@ -46,6 +46,11 @@ export const updateConnectedPlayersList = players => ({
   players,
 });
 
+export const currentPlayersTurn = player => ({
+  type: t.UPDATE_CURRENT_PLAYER_TURN,
+  player,
+});
+
 /* ------------ SOCKET LISTENERS ---------------*/
 // These will dispatch actions when server sends data
 export const socketDispatchers = (store) => {
@@ -69,7 +74,7 @@ export const socketDispatchers = (store) => {
   });
   big2.on('player turn', (player) => {
     console.log('it is this player\'s turn: ', player);
-    // store.dispatch(updateConnectedPlayersList(connectedPlayers));
+    store.dispatch(currentPlayersTurn(player));
   });
 };
 

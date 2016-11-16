@@ -16,7 +16,7 @@ module.exports = (io, app) => {
         .joinRoom(user, room, socket.id)
         .then((result) => {
           socket.join(room);
-          socket.to(room).emit(result.event, result.data);
+          big2.to(room).emit(result.event, result.data);
         })
         .catch(err => console.log('there was an error with big2 connect to room socket: ', err));
     })
@@ -27,7 +27,7 @@ module.exports = (io, app) => {
       // TODO: hook up to gameController
       // Now that you have cards dealt to players, emit to each
       const sockets = gameController.createGame(room);
-      return Object
+      Object
         .keys(sockets)
         .map(key => [key, sockets[key]])
         .forEach((player) => {
@@ -36,12 +36,14 @@ module.exports = (io, app) => {
             .emit(
               'player cards',
               rooms[room].playerHands[player[1]]
-            )
-            .emit(
-              'player turn',
-              rooms[room].turnOrder[rooms[room].turn]
             );
         });
+      big2
+        .to(room)
+        .emit(
+          'player turn',
+          rooms[room].turnOrder[rooms[room].turn]
+        );
     })
     .on('play cards', (user, room, cards) => {
       if (rooms[room] === undefined) {
