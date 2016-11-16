@@ -33,9 +33,6 @@ export class Big2App extends React.Component {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            console.log('username: ', this.state.username);
-            console.log('room: ', this.state.room);
-            // console.log('e target: ', e.target);
             this.state.changeUsername(this.state.username);
             this.state.changeRoom(this.state.room);
             a.connectToRoom(this.state.username, this.state.room);
@@ -50,7 +47,6 @@ export class Big2App extends React.Component {
             id="username"
             type="text"
             onChange={(e) => {
-              // console.log('on change event: ', e.target.value);
               this.setState({ username: e.target.value });
             }}
           />
@@ -63,7 +59,6 @@ export class Big2App extends React.Component {
             id="roomname"
             type="text"
             onChange={(e) => {
-              // console.log('on change event: ', e.target.value);
               this.setState({ room: e.target.value });
             }}
           />

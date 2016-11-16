@@ -4,14 +4,14 @@ const big2Rooms = require('./../models/big2Rooms');
 const helpers = require('./../config/helpers');
 
 const gameController = {
-  playCards(user, room, cards) {
+  playCards(user, room, cards, remove) {
     // TODO: we need to validate every card being played was in players hand
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       const pot = big2Rooms.rooms[room].pot;
-      const newHand = helpers.updatePlayerHand(user, room, cards, true);
+      const newHand = helpers.updatePlayerHand(user, room, cards, remove);
 
       // console.log('big2Rooms.rooms[room]: ', big2Rooms.rooms[room]);
-      console.log('pot from room: ', pot);
+      // console.log('pot from room: ', pot);
       const prevRound = pot[pot.length - 2] || { user: '', cards: [] };
       const curRound = pot[pot.length - 1] || { user: '', cards: [] };
       const roundsTuple = [prevRound, curRound];

@@ -19,6 +19,7 @@ const roomController = {
           event: 'problem joining room',
           data: 'That name is already taken. Please pick another.',
         });
+        return;
       }
       // Check if we already have 4 players
       if (big2Rooms.rooms[room].turnOrder.length >= 4) {
@@ -26,6 +27,7 @@ const roomController = {
           event: 'problem joining room',
           data: 'This room is already full. Please pick another.',
         });
+        return;
       }
       // And add a player if there is an open spot
       big2Rooms.rooms[room].playerHands[user] = [];
