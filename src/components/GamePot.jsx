@@ -2,9 +2,7 @@ import React, { PropTypes } from 'react';
 
 import CardGroup from './CardGroup';
 
-export const GamePot = ({
-  pot,
-}) => (
+const GamePot = ({ pot }) => (
   <div>
     <h4>Pot</h4>
     <h5>Previous Round</h5>

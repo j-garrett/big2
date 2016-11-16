@@ -5,9 +5,11 @@ import { connect } from 'react-redux';
 import * as a from './../actions';
 import CardGroup from './CardGroup';
 import GamePot from './GamePot';
+import ConnectedPlayers from './ConnectedPlayers';
 
 const mapStateToProps = state => ({
   user: state.username,
+  connectedPlayers: state.ConnectedPlayers,
   room: state.room,
   pot: state.cardsInPot,
   playerHand: state.playerHand,
@@ -25,6 +27,7 @@ const mapDispatchToProps = dispatch => ({
 // Export class so it can be tested w/o store
 export const GameRoom = ({
   user,
+  connectedPlayers,
   room,
   pot,
   playerHand,
@@ -34,9 +37,15 @@ export const GameRoom = ({
 }) => (
   <div>
     <h3>Big 2</h3>
+    {Array.isArray(connectedPlayers) &&
+      <ConnectedPlayers
+        connectedPlayers={connectedPlayers}
+        room={room}
+      />
+    }
     <button
       onClick={() => {
-        console.log('game start button clicke for room: ', room);
+        clearCardsFromSelection();
         a.beginGame(room);
       }}
     >
@@ -47,7 +56,6 @@ export const GameRoom = ({
       <CardGroup
         cards={playerHand}
         onCardClick={(event) => {
-          console.log('onCardClick event: ', event);
           addCardToSelection(event);
         }}
       />
@@ -55,7 +63,6 @@ export const GameRoom = ({
       <CardGroup
         cards={selectedCards}
         onCardClick={(event) => {
-          console.log('onCardClick event: ', event);
           addCardToSelection(event);
         }}
       />
@@ -70,7 +77,6 @@ export const GameRoom = ({
       </button>
       <button
         onClick={() => {
-          console.log('user passed');
           clearCardsFromSelection();
           a.playSelectedCards(user, room, []);
         }}
@@ -79,7 +85,6 @@ export const GameRoom = ({
       </button>
       <button
         onClick={() => {
-          console.log('user taking back hand');
           clearCardsFromSelection();
           a.undoPlayedHand(user, room);
         }}
@@ -95,6 +100,7 @@ export const GameRoom = ({
 
 GameRoom.propTypes = {
   user: PropTypes.string,
+  connectedPlayers: PropTypes.array,
   room: PropTypes.string,
   pot: PropTypes.array,
   playerHand: PropTypes.array,

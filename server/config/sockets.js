@@ -14,7 +14,7 @@ module.exports = (io, app) => {
     .on('connect to room', (user, room) => {
       roomController
         .joinRoom(user, room, socket.id)
-        .then(result => {
+        .then((result) => {
           socket.join(room);
           socket.emit(result.event, result.data);
         })
@@ -85,9 +85,6 @@ module.exports = (io, app) => {
       // The other will be the game room they are in
       // We'll use socket.id to find user value and remove that value form room they're in
       const room = Object.keys(socket.rooms)[1];
-      console.log('room: ', room);
-      console.log('socket.id: ', socket.id);
-      console.log('big2Rooms.rooms[room]: ', big2Rooms.rooms[room]);
       if (big2Rooms.rooms[room]) {
         const user = big2Rooms.rooms[room].socketMap[socket.id];
         const userIndex = big2Rooms.rooms[room].turnOrder.indexOf(user);
