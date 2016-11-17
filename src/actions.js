@@ -57,25 +57,29 @@ export const socketDispatchers = (store) => {
   big2.on('player cards', (cards) => {
     // console.log('cards dealt: ', cards);
     store.dispatch(updatePlayerHand(cards));
-  });
-  big2.on('problem joining room', (message) => {
+  })
+  .on('problem joining room', (message) => {
     console.log(message);
-  });
-  big2.on('hand played to pot', (cards) => {
+  })
+  .on('hand played to pot', (cards) => {
     // console.log('hand played to pot received from server: ', cards);
     store.dispatch(updateCardsInPot(cards));
-  });
-  big2.on('hand removed from pot', (cards) => {
+  })
+  .on('hand removed from pot', (cards) => {
     // console.log('hand removed from pot received from server: ', cards);
     store.dispatch(updateCardsInPot(cards));
-  });
-  big2.on('players in room', (connectedPlayers) => {
+  })
+  .on('players in room', (connectedPlayers) => {
     store.dispatch(updateConnectedPlayersList(connectedPlayers));
-  });
-  big2.on('player turn', (player) => {
+  })
+  .on('player turn', (player) => {
     console.log('it is this player\'s turn: ', player);
     store.dispatch(currentPlayersTurn(player));
+  })
+  .on('problem creating game', (problem) => {
+    console.log('Problem creating game: ', problem);
   });
+
 };
 
 /* ------------ SOCKET EMITTERS ---------------*/
