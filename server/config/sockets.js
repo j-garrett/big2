@@ -6,6 +6,7 @@ const roomController = require('./../controllers/roomController');
 const rooms = big2Rooms.rooms;
 
 // This is looking like some spaghetti
+// TODO: always check that user submitting turn matches socketMap val
 module.exports = (io, app) => {
   const big2 = io.of('big2');
   big2
@@ -47,10 +48,21 @@ module.exports = (io, app) => {
       if (rooms[room] === undefined) {
         return null;
       }
+      if (user !== rooms[room].turnOrder[rooms[room].turn]) {
+        // If it is not that user's turn
+        // Return cards to hand and give back to user
+        // TODO: Find a way to combine this portion with next in robust manner
+        const returnCardsToHand = helpers.getPlayersHand(user, room);
+        socket
+          .emit(
+            'player cards',
+            returnCardsToHand
+          );
+        return;
+      }
       gameController
         .playCards(user, room, cards, true)
         .then((played) => {
-          console.log('played val passerd tosocket: ', played);
           big2
             .to(room)
             .emit(
