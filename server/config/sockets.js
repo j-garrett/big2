@@ -115,8 +115,9 @@ module.exports = (io, app) => {
               played.updateHand.newPlayerHand
             );
         });
+      const turnOrder = rooms[room].turnOrder;
       const turn = rooms[room].turn;
-      rooms[room].turn = turn <= 0 ? 4 : turn - 1;
+      rooms[room].turn = turn <= 0 ? turnOrder.length - 1 : turn - 1;
       big2
         .to(room)
         .emit(

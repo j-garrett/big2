@@ -6,7 +6,7 @@ const createCardDeck = () => {
   const values = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
   suits.forEach((suit) => {
     values.forEach((value) => {
-      deck.push(suit + value);
+      deck.push(value + suit);
     });
   });
   return deck;
@@ -22,15 +22,29 @@ const getPlayerSocket = (user, room) => {
   }, '');
 };
 
-const getPlayersHand = (user, room) => {
-  return rooms[room].playerHands[user];
+const getPlayersHand = (user, room) => rooms[room].playerHands[user];
+
+const sortPlayerHand = (a, b) => {
+  let firstNum;
+  let secondNum;
+  if (a.length === 3) {
+    firstNum = a.slice(0, 2);
+  } else {
+    firstNum = a[0];
+  }
+  if (b.length === 3) {
+    secondNum = b.slice(0, 2);
+  } else {
+    secondNum = b[0];
+  }
+  return parseInt(firstNum, 10) - parseInt(secondNum, 10);
 };
 
 const shuffleCardDeck = () => {
   const deck = createCardDeck();
   for (let i = 0; i < deck.length; i += 1) {
-    let swapCardIndex = Math.floor(Math.random() * (deck.length - i)) + i;
-    let newCard = deck[swapCardIndex];
+    const swapCardIndex = Math.floor(Math.random() * (deck.length - i)) + i;
+    const newCard = deck[swapCardIndex];
     deck[swapCardIndex] = deck[i];
     deck[i] = newCard;
   }
@@ -40,11 +54,16 @@ const shuffleCardDeck = () => {
 const dealCards = (numPlayers) => {
   const deck = shuffleCardDeck();
   const handSize = deck.length / numPlayers;
-  let hands = [];
+  const hands = [];
   for (let i = 0; i < numPlayers; i += 1) {
-    let startIndex = i * handSize;
-    let endIndex = startIndex + handSize;
-    hands.push(deck.slice(startIndex, endIndex));
+    const startIndex = i * handSize;
+    const endIndex = startIndex + handSize;
+    hands
+      .push(
+        deck
+          .slice(startIndex, endIndex)
+          .sort(sortPlayerHand)
+      );
   }
   return hands;
 };
