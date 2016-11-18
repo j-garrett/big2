@@ -57,6 +57,7 @@ module.exports = (io, app) => {
       if (rooms[room] === undefined) {
         return null;
       }
+      console.log('room value at play cards time: ', rooms[room]);
       if (user !== rooms[room].turnOrder[rooms[room].turn]) {
         // If it is not that user's turn
         // Return cards to hand and give back to user
@@ -67,7 +68,7 @@ module.exports = (io, app) => {
             'player cards',
             returnCardsToHand
           );
-        return;
+        return null;
       }
       gameController
         .playCards(user, room, cards, true)
@@ -84,8 +85,9 @@ module.exports = (io, app) => {
               played.updateHand.newPlayerHand
             );
         });
+      const turnOrder = rooms[room].turnOrder;
       const turn = rooms[room].turn;
-      rooms[room].turn = turn >= 4 ? 0 : turn + 1;
+      rooms[room].turn = turn >= turnOrder.length - 1 ? 0 : turn + 1;
       big2
         .to(room)
         .emit(
