@@ -96,7 +96,7 @@ module.exports = (io, app) => {
         );
     })
     .on('undo played hand', (user, room) => {
-      if (rooms[room] === undefined) {
+      if (rooms[room] === undefined || rooms[room].pot.length < 1) {
         return null;
       }
       gameController
