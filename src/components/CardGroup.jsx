@@ -2,7 +2,9 @@ import React, { PropTypes } from 'react';
 import Card from './Card';
 
 const CardGroup = ({ cards, onCardClick }) => (
-  <ul>
+  <ul
+    className={'card-group'}
+  >
     {cards.map(card =>
       <Card
         key={card}

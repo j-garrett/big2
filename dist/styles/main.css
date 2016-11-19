@@ -1,4 +1,50 @@
-.currentPlayer{
-  color: red;
+.connected-players-list {
+
+}
+
+.flex-parent {
+  display: flex;
+  justify-content: center;
+}
+
+.flex-child {
+
+}
+
+.player-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid grey;
+  background-color: #e3e3e3;
+  flex-basis: 15%;
+  text-align: center;
+  min-height: 50px;
+}
+
+.player-card>h3{
+  margin: 0;
+}
+
+.current-player {
+  background-color: lightblue;
   font-size:250%;
+}
+
+.game-pot {
+
+}
+
+.card-group {
+  display: flex;
+  justify-content: space-around;
+  padding: 0;
+}
+
+.card {
+  border: 1px solid grey;
+  border-radius:2px;
+  list-style: none;
+  min-width: 7%;
+  min-height: 15%;
 }

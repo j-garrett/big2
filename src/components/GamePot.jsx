@@ -3,7 +3,9 @@ import React, { PropTypes } from 'react';
 import CardGroup from './CardGroup';
 
 const GamePot = ({ pot }) => (
-  <div>
+  <div
+    className={'game-pot'}
+  >
     <h4>Pot</h4>
     <h5>Previous Round</h5>
     <p>{pot[0].user} played:</p>

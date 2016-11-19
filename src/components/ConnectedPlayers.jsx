@@ -5,14 +5,19 @@ import PlayerCard from './PlayerCard';
 const ConnectedPlayers = ({ currentPlayer, players, room }) => (
   <div>
     <h3>You are in the {room} room with</h3>
-    {players.map(player => (
-      <PlayerCard
-        key={player}
-        player={player}
-        currentPlayer={currentPlayer}
-      />
-      )
-    )}
+    <div
+      className={'connected-players-list flex-parent'}
+    >
+      {players.map(player => (
+        <PlayerCard
+          className={''}
+          key={player}
+          player={player}
+          currentPlayer={currentPlayer}
+        />
+        )
+      )}
+    </div>
   </div>
 );
 

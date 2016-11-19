@@ -1,8 +1,12 @@
 import React, { PropTypes } from 'react';
 
 const PlayerCard = ({ currentPlayer, player }) => (
-  <div>
-    <h3 className={(currentPlayer === player ? 'currentPlayer' : '')}>{player}</h3>
+  <div
+    className={
+      (currentPlayer === player ? 'flex-child player-card current-player' : 'flex-child player-card')
+    }
+  >
+    <h3>{player}</h3>
   </div>
 );
 

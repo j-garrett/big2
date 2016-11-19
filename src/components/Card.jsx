@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 
 const Card = ({ value, onClick }) => (
   <li
+    className={'card'}
     onClick={onClick}
   >
     {value}
