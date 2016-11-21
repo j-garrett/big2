@@ -2,6 +2,15 @@ body {
   font-size: 16px;
   font-family: arial;
   margin: 0;
+  background-color: #;
+}
+
+h4 {
+  margin: 0;
+}
+
+ul {
+  margin: 0;
 }
 
 .nav-bar {
@@ -16,12 +25,21 @@ body {
 .nav-bar h1 {
   margin: 0;
 }
+
+.nav-bar .nav-bar-user-room-info p {
+  margin: 0;
+}
+
 .nav-bar form {
   margin: 0;
 }
 
 .game-room-container {
+  display: flex;
+  flex-direction: column;
   margin: 0 8px 0 8px;
+  min-height: 90%;
+  justify-content: space-between;
 }
 
 .connected-players-list {
@@ -32,6 +50,26 @@ body {
   display: inline;
 }
 
+.pot-with-buttons-container {
+  display: flex;
+  justify-content: space-around;
+}
+
+.game-buttons-container {
+  margin-right: auto;
+}
+
+.game-pot {
+
+}
+
+.round-buttons-container {
+  display: flex;
+  flex-direction: column;
+  margin-left: auto;
+  justify-content: flex-end;
+}
+
 .flex-parent {
   display: flex;
   justify-content: center;
@@ -39,6 +77,13 @@ body {
 
 .flex-child {
 
+}
+
+.player-hand-container {
+  text-align: center;
+  align-self: flex-end;
+  background-color: #e3e3e3;
+  width: 100%;
 }
 
 .player-card {
@@ -63,8 +108,24 @@ body {
 }
 
 .game-pot {
-
+  flex-grow: 4;
+  flex-basis: 50%;
+  flex-wrap: wrap;
+  display: flex;
+  justify-content: space-around;
 }
+
+.game-pot .current-round,
+.game-pot .previous-round {
+  border: 1px solid lightgrey;
+  background-color: #e3e3e3;
+  padding: 1%;
+  margin: 2px;
+}
+.game-pot .card-group {
+  flex-wrap: nowrap;
+}
+
 
 .card-group {
   display: flex;

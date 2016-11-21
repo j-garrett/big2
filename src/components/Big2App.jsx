@@ -89,7 +89,11 @@ export class Big2App extends React.Component {
             </button>
           </form>
         </div>
-        <GameRoomContainer />
+        {this.state.inRoom ?
+          <GameRoomContainer />
+          :
+          null
+        }
       </div>
     );
   }

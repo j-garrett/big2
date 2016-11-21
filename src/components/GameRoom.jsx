@@ -47,7 +47,7 @@ export const GameRoom = ({
       room={room}
     />
     <div
-      className={'pot-buttons-container'}
+      className={'pot-with-buttons-container'}
     >
       <div
         className={'game-buttons-container'}
@@ -73,12 +73,11 @@ export const GameRoom = ({
       >
         <button
           onClick={() => {
-            // console.log('submit selection clicked with selection: ', selectedCards);
             clearCardsFromSelection();
-            a.playSelectedCards(user, room, selectedCards);
+            a.undoPlayedHand(user, room);
           }}
         >
-          Play Hand
+          Undo Played Hand
         </button>
         <button
           onClick={() => {
@@ -90,11 +89,12 @@ export const GameRoom = ({
         </button>
         <button
           onClick={() => {
+            // console.log('submit selection clicked with selection: ', selectedCards);
             clearCardsFromSelection();
-            a.undoPlayedHand(user, room);
+            a.playSelectedCards(user, room, selectedCards);
           }}
         >
-          Undo Played Hand
+          Play Hand
         </button>
       </div>
     </div>

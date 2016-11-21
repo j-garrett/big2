@@ -6,7 +6,6 @@ const GamePot = ({ pot }) => (
   <div
     className={'game-pot'}
   >
-    <h4>Pot</h4>
     <div
       className={'current-round'}
     >
