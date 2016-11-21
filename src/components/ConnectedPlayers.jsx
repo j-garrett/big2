@@ -2,9 +2,10 @@ import React, { PropTypes } from 'react';
 
 import PlayerCard from './PlayerCard';
 
-const ConnectedPlayers = ({ currentPlayer, players, room }) => (
-  <div>
-    <h3>You are in the {room} room with</h3>
+const ConnectedPlayers = ({ user, currentPlayer, players, room }) => (
+  <div
+    className={'connected-players-container'}
+  >
     <div
       className={'connected-players-list flex-parent'}
     >
@@ -23,6 +24,7 @@ const ConnectedPlayers = ({ currentPlayer, players, room }) => (
 
 
 ConnectedPlayers.propTypes = {
+  user: PropTypes.string,
   currentPlayer: PropTypes.string,
   players: PropTypes.array,
   room: PropTypes.string,

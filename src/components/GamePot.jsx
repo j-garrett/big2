@@ -7,18 +7,26 @@ const GamePot = ({ pot }) => (
     className={'game-pot'}
   >
     <h4>Pot</h4>
-    <h5>Previous Round</h5>
-    <p>{pot[0].user} played:</p>
-    <CardGroup
-      cards={pot[0].cards}
-      onCardClick={() => {}}
-    />
-    <h5>Current Round</h5>
-    <p>{pot[1].user} played:</p>
-    <CardGroup
-      cards={pot[1].cards}
-      onCardClick={() => {}}
-    />
+    <div
+      className={'current-round'}
+    >
+      <h5>Current Round</h5>
+      <p>{pot[1].user} played:</p>
+      <CardGroup
+        cards={pot[1].cards}
+        onCardClick={() => {}}
+      />
+    </div>
+    <div
+      className={'previous-round'}
+    >
+      <h5>Previous Round</h5>
+      <p>{pot[0].user} played:</p>
+      <CardGroup
+        cards={pot[0].cards}
+        onCardClick={() => {}}
+      />
+    </div>
   </div>
 );
 

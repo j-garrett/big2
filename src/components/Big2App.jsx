@@ -4,7 +4,8 @@ import * as a from './../actions';
 import GameRoomContainer from './GameRoom';
 
 const mapStateToProps = state => ({
-  username: state.username,
+  user: state.username,
+  room: state.room,
 });
 const mapDispatchToProps = dispatch => ({
   changeUsername: newUsername => (
@@ -20,8 +21,9 @@ export class Big2App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      room: '',
-      username: props.username,
+      inRoom: false,
+      room: props.room,
+      user: props.user,
       changeUsername: props.changeUsername,
       changeRoom: props.changeRoom,
       connectToRoom: props.connectToRoom,
@@ -29,56 +31,73 @@ export class Big2App extends React.Component {
   }
   render() {
     return (
-      <div>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            this.state.changeUsername(this.state.username);
-            this.state.changeRoom(this.state.room);
-            a.connectToRoom(this.state.username, this.state.room);
-          }}
+      <div
+        className={'big2-app'}
+      >
+        <div
+          className={'nav-bar'}
         >
-          <label
-            htmlFor="username"
+          <h1>Big 2</h1>
+          <div
+            className={'nav-bar-user-room-info'}
           >
-            Username
-          </label>
-          <input
-            id="username"
-            type="text"
-            onChange={(e) => {
-              this.setState({ username: e.target.value });
+            {this.state.inRoom ?
+              <p>
+                <strong>{this.state.user}</strong> is in the <strong>{this.state.room}</strong> room with...
+              </p>
+              :
+              null
+            }
+          </div>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              this.state.changeUsername(this.state.user);
+              this.state.changeRoom(this.state.room);
+              this.setState({ inRoom: true });
+              a.connectToRoom(this.state.user, this.state.room);
             }}
-          />
-          <label
-            htmlFor="roomname"
           >
-            Room
-          </label>
-          <input
-            id="roomname"
-            type="text"
-            onChange={(e) => {
-              this.setState({ room: e.target.value });
-            }}
-          />
-          <button
-            type="submit"
-          >
-            Enter Room
-          </button>
-        </form>
-        <div>
-          <h2>Hi {this.state.username}</h2>
-          <GameRoomContainer />
+            <label
+              htmlFor="user"
+            >
+              Username
+            </label>
+            <input
+              id="user"
+              type="text"
+              onChange={(e) => {
+                this.setState({ user: e.target.value });
+              }}
+            />
+            <label
+              htmlFor="roomname"
+            >
+              Room
+            </label>
+            <input
+              id="roomname"
+                type="text"
+                onChange={(e) => {
+                this.setState({ room: e.target.value });
+              }}
+            />
+            <button
+              type="submit"
+            >
+              Enter Room
+            </button>
+          </form>
         </div>
+        <GameRoomContainer />
       </div>
     );
   }
 }
 
 Big2App.propTypes = {
-  username: PropTypes.string,
+  room: PropTypes.string,
+  user: PropTypes.string,
   changeUsername: PropTypes.func,
   connectToRoom: PropTypes.func,
 };

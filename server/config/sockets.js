@@ -136,6 +136,7 @@ module.exports = (io, app) => {
         const userIndex = big2Rooms.rooms[room].turnOrder.indexOf(user);
         big2Rooms.rooms[room].turnOrder.splice(userIndex, 1);
         delete rooms[room].playerHands[user];
+        delete big2Rooms.rooms[room].socketMap[socket.id];
       }
     });
   });

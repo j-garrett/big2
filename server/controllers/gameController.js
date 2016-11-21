@@ -31,7 +31,7 @@ const gameController = {
       const copy = Object.assign({}, obj);
       copy[val] = cardHands[idx];
       // Check for which player has lowest card
-      if (cardHands[idx].indexOf('♣3') !== -1) {
+      if (cardHands[idx].indexOf('3♣') !== -1) {
         // Change turn value to their index in turnOrder
         big2Rooms.rooms[room].turn = idx;
       }

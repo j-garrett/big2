@@ -37,29 +37,70 @@ export const GameRoom = ({
   addCardToSelection,
   clearCardsFromSelection,
 }) => (
-  <div>
-    <h3>Big 2</h3>
+  <div
+    className={'game-room-container'}
+  >
     <ConnectedPlayers
+      user={user}
       players={connectedPlayers}
       currentPlayer={currentPlayersTurn}
       room={room}
     />
-    <button
-      onClick={() => {
-        clearCardsFromSelection();
-        a.beginGame(room);
-      }}
+    <div
+      className={'pot-buttons-container'}
     >
-      Start Game
-    </button>
-    <div>
-      <h4>Player Hand</h4>
-      <CardGroup
-        cards={playerHand}
-        onCardClick={(event) => {
-          addCardToSelection(event);
-        }}
-      />
+      <div
+        className={'game-buttons-container'}
+      >
+        <button
+          onClick={() => {
+            clearCardsFromSelection();
+            a.beginGame(room);
+          }}
+        >
+          Start Game
+        </button>
+      </div>
+      <div
+        className={'game-pot-container'}
+      >
+        <GamePot
+          pot={pot}
+        />
+      </div>
+      <div
+        className={'round-buttons-container'}
+      >
+        <button
+          onClick={() => {
+            // console.log('submit selection clicked with selection: ', selectedCards);
+            clearCardsFromSelection();
+            a.playSelectedCards(user, room, selectedCards);
+          }}
+        >
+          Play Hand
+        </button>
+        <button
+          onClick={() => {
+            clearCardsFromSelection();
+            a.playSelectedCards(user, room, []);
+          }}
+        >
+          Pass
+        </button>
+        <button
+          onClick={() => {
+            clearCardsFromSelection();
+            a.undoPlayedHand(user, room);
+          }}
+        >
+          Undo Played Hand
+        </button>
+      </div>
+    </div>
+    <div
+      className={'player-hand-container'}
+    >
       <h4>Selected Cards</h4>
       <CardGroup
         cards={selectedCards}
@@ -67,33 +108,12 @@ export const GameRoom = ({
           addCardToSelection(event);
         }}
       />
-      <button
-        onClick={() => {
-          // console.log('submit selection clicked with selection: ', selectedCards);
-          clearCardsFromSelection();
-          a.playSelectedCards(user, room, selectedCards);
+      <h4>Player Hand</h4>
+      <CardGroup
+        cards={playerHand}
+        onCardClick={(event) => {
+          addCardToSelection(event);
         }}
-      >
-        Play Hand
-      </button>
-      <button
-        onClick={() => {
-          clearCardsFromSelection();
-          a.playSelectedCards(user, room, []);
-        }}
-      >
-        Pass
-      </button>
-      <button
-        onClick={() => {
-          clearCardsFromSelection();
-          a.undoPlayedHand(user, room);
-        }}
-      >
-        Undo Played Hand
-      </button>
-      <GamePot
-        pot={pot}
       />
     </div>
   </div>
