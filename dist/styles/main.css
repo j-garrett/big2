@@ -48,6 +48,7 @@ ul {
 
 .connected-players-container h3 {
   display: inline;
+  flex: 1 1 10%;
 }
 
 .pot-with-buttons-container {
