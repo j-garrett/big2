@@ -111,6 +111,7 @@ export const GameRoom = ({
       <h4>Player Hand</h4>
       <CardGroup
         cards={playerHand}
+        type={'playerHand'}
         onCardClick={(event) => {
           addCardToSelection(event);
         }}

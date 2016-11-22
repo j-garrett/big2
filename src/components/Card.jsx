@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 
-const Card = ({ value, onClick }) => (
+const Card = ({ value, type, onClick }) => (
   <li
     className={'card'}
     onClick={onClick}
@@ -9,13 +9,13 @@ const Card = ({ value, onClick }) => (
       src={`./images/cards/${value}.png`}
       alt={value}
     />
-    {value}
   </li>
 );
 
 Card.propTypes = {
   onClick: PropTypes.func,
   value: PropTypes.string.isRequired,
+  type: PropTypes.string,
 };
 
 export default Card;

@@ -133,13 +133,21 @@ ul {
   flex-wrap: wrap;
   justify-content: center;
   padding: 0;
+  padding: 0 50px 0 50px;
 }
 
+
 .card {
-  border: 1px solid grey;
-  border-radius:2px;
+  flex-basis: 100px;
   list-style: none;
-  min-width: 90px;
-  height: 150px;
-  margin: .1%
+  margin-left: -50px;
+  transform: rotate(7deg);
+}
+
+.card-group:first-child {
+  margin-left: 0px;
+}
+
+.card img {
+  max-width: 100%;
 }

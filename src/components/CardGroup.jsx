@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import Card from './Card';
 
-const CardGroup = ({ cards, onCardClick }) => (
+const CardGroup = ({ cards, type, onCardClick }) => (
   <ul
     className={'card-group'}
   >
@@ -9,6 +9,7 @@ const CardGroup = ({ cards, onCardClick }) => (
       <Card
         key={card}
         value={card}
+        type={type}
         onClick={() => onCardClick(card)}
       />
     )}
@@ -18,6 +19,7 @@ const CardGroup = ({ cards, onCardClick }) => (
 CardGroup.propTypes = {
   onCardClick: PropTypes.func,
   cards: PropTypes.array.isRequired,
+  type: PropTypes.string,
 };
 
 export default CardGroup;
