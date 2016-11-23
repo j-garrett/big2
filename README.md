@@ -21,3 +21,5 @@ TODO:
 If you would like to create a card game of your own using this code, that would be rad!
 
 Configuration of webpack will also minify code and switch React into production mode when deployed to Heroku
+
+If using webpack-dev-server (`npm run dev:hot`), the resources are served up at [http://localhost:8080/webpack-dev-server/](http://localhost:8080/webpack-dev-server/). You will still need to run `npm run dev:back` separately because it's configured to work properly with socket.io (NOTE: hot reloading page WILL disconnect socket from server and from game room.)
