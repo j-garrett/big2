@@ -2,32 +2,31 @@ import React, { PropTypes } from 'react';
 
 import CardGroup from './CardGroup';
 
-const GamePot = ({ pot }) => (
-  <div
-    className={'game-pot'}
-  >
+const GamePot = ({ pot }) => {
+  console.log('pot: ', pot);
+  return (
     <div
-      className={'current-round'}
+      className={'game-pot'}
     >
-      <h5>Current Round</h5>
-      <p>{pot[1].user} played:</p>
-      <CardGroup
-        cards={pot[1].cards}
-        onCardClick={() => {}}
-      />
+      {pot.map((round, index) => (
+        round.cards.length > 0 ?
+          <div
+            className={'round'}
+          >
+            <p>Round {index} - {round.user} played:</p>
+            <CardGroup
+              key={round.cards}
+              cards={round.cards}
+              onCardClick={() => {}}
+            />
+          </div>
+          :
+          null
+        ))
+      }
     </div>
-    <div
-      className={'previous-round'}
-    >
-      <h5>Previous Round</h5>
-      <p>{pot[0].user} played:</p>
-      <CardGroup
-        cards={pot[0].cards}
-        onCardClick={() => {}}
-      />
-    </div>
-  </div>
-);
+  );
+};
 
 GamePot.propTypes = {
   pot: PropTypes.array,

@@ -40,15 +40,15 @@ export const GameRoom = ({
   <div
     className={'game-room-container'}
   >
-    <ConnectedPlayers
-      user={user}
-      players={connectedPlayers}
-      currentPlayer={currentPlayersTurn}
-      room={room}
-    />
     <div
-      className={'pot-with-buttons-container'}
+      className={'room-header'}
     >
+      <ConnectedPlayers
+        user={user}
+        players={connectedPlayers}
+        currentPlayer={currentPlayersTurn}
+        room={room}
+      />
       <div
         className={'game-buttons-container'}
       >
@@ -61,47 +61,46 @@ export const GameRoom = ({
           Start Game
         </button>
       </div>
-      <div
-        className={'game-pot-container'}
+    </div>
+    <div
+      className={'game-pot-container'}
+    >
+      <GamePot
+        pot={pot}
+      />
+    </div>
+    <div
+      className={'round-buttons-container'}
+    >
+      <button
+        onClick={() => {
+          clearCardsFromSelection();
+          a.undoPlayedHand(user, room);
+        }}
       >
-        <GamePot
-          pot={pot}
-        />
-      </div>
-      <div
-        className={'round-buttons-container'}
+        Undo Played Hand
+      </button>
+      <button
+        onClick={() => {
+          clearCardsFromSelection();
+          a.playSelectedCards(user, room, []);
+        }}
       >
-        <button
-          onClick={() => {
-            clearCardsFromSelection();
-            a.undoPlayedHand(user, room);
-          }}
-        >
-          Undo Played Hand
-        </button>
-        <button
-          onClick={() => {
-            clearCardsFromSelection();
-            a.playSelectedCards(user, room, []);
-          }}
-        >
-          Pass
-        </button>
-        <button
-          onClick={() => {
-            // console.log('submit selection clicked with selection: ', selectedCards);
-            clearCardsFromSelection();
-            a.playSelectedCards(user, room, selectedCards);
-          }}
-        >
-          Play Hand
-        </button>
-      </div>
+        Pass
+      </button>
+      <button
+        onClick={() => {
+          // console.log('submit selection clicked with selection: ', selectedCards);
+          clearCardsFromSelection();
+          a.playSelectedCards(user, room, selectedCards);
+        }}
+      >
+        Play Hand
+      </button>
     </div>
     <div
       className={'player-hand-container'}
     >
-      <h4>Player Hand</h4>
       <CardGroup
         cards={playerHand}
         type={'playerHand'}

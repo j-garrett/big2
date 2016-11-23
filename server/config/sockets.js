@@ -58,7 +58,6 @@ module.exports = (io, app) => {
       if (rooms[room] === undefined) {
         return null;
       }
-      console.log('room value at play cards time: ', rooms[room]);
       if (user !== rooms[room].turnOrder[rooms[room].turn]) {
         // If it is not that user's turn
         // Return cards to hand and give back to user

@@ -15,7 +15,7 @@ const store = createStore(
   autoRehydrate()
 );
 
-persistStore(store);
+// persistStore(store);
 
 // Pass reference to the store to sockets for proper dispatch
 socketDispatchers(store);
