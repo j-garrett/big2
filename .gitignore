@@ -2,8 +2,8 @@
 .env
 
 # Compiled Files
-dist/bundle.js
-dist/bundle.js.map
+assets/bundle.js
+assets/bundle.js.map
 
 # Node Modules
 node_modules/
