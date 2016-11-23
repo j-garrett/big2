@@ -6,7 +6,6 @@ const Card = ({ value, type, onClick, selected }) => (
       (selected ? 'card selected-card' : 'card')
     }
     onClick={() => {
-      selected = !selected;
       onClick();
     }}
   >

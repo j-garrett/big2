@@ -17,11 +17,12 @@ const mapDispatchToProps = dispatch => ({
 });
 
 // Export class so it can be tested w/o store
+// TODO: inRoom needs to be set to false at load for prod
 export class Big2App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      inRoom: false,
+      inRoom: true,
       room: props.room,
       user: props.user,
       changeUsername: props.changeUsername,

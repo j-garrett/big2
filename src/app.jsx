@@ -3,6 +3,7 @@ import { Router, Route, browserHistory } from 'react-router';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
+import { persistStore, autoRehydrate } from 'redux-persist';
 
 import cardReducers from './reducers';
 import Big2AppContainer from './components/Big2App';
@@ -10,8 +11,11 @@ import { socketDispatchers } from './actions';
 
 const store = createStore(
   cardReducers,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+  autoRehydrate()
 );
+
+persistStore(store);
 
 // Pass reference to the store to sockets for proper dispatch
 socketDispatchers(store);

@@ -21,7 +21,7 @@
     "cards",
     "games"
   ],
-  "engines":{
+  "engines": {
     "node": "6.1.0"
   },
   "author": "Jon Garrett",
@@ -48,6 +48,7 @@
     "react-redux": "^4.4.5",
     "react-router": "^2.8.1",
     "redux": "^3.6.0",
+    "redux-persist": "^4.0.0-beta1",
     "socket.io": "^1.5.1",
     "socket.io-client": "^1.5.1",
     "webpack": "^1.13.2"
