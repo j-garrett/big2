@@ -12,7 +12,7 @@ const routes = require('./config/routes');
 const big2 = require('./config/sockets');
 
 const home = path.join(__dirname, './../dist/index.html');
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 9090;
 
 server.listen(port, () => {
   console.log('app listening on port ', port);

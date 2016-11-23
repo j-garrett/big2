@@ -4,7 +4,7 @@ import * as t from './actionTypes';
 
 // If additional games are implemented, handle it here:
 const chosenGame = 'big2';
-const big2 = io(`/${chosenGame}`);
+const big2 = io(`http://localhost:9090/${chosenGame}`);
 
 // const testRoom = 'hostname with hash';
 // const user = `player${Math.random()}`;

@@ -5,7 +5,7 @@
   "main": "app.jsx",
   "scripts": {
     "dev:front": "webpack --watch",
-    "dev:hot": "webpack-dev-server --inline --hot --output-public-path=/dist/",
+    "dev:hot": "webpack-dev-server --watch",
     "dev:back": "nodemon ./server/server.js",
     "test": "mocha test/_setup.js test/**/*-test.js",
     "postinstall": "webpack -p",
