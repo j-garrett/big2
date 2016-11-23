@@ -28853,7 +28853,7 @@
 	
 	// If additional games are implemented, handle it here:
 	var chosenGame = 'big2';
-	var big2 = (0, _socket2.default)('/' + chosenGame);
+	var big2 = (0, _socket2.default)('http://localhost:9090/' + chosenGame);
 	
 	// const testRoom = 'hostname with hash';
 	// const user = `player${Math.random()}`;
