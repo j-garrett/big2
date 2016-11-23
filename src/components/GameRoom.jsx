@@ -101,20 +101,14 @@ export const GameRoom = ({
     <div
       className={'player-hand-container'}
     >
-      <h4>Selected Cards</h4>
-      <CardGroup
-        cards={selectedCards}
-        onCardClick={(event) => {
-          addCardToSelection(event);
-        }}
-      />
       <h4>Player Hand</h4>
       <CardGroup
         cards={playerHand}
         type={'playerHand'}
-        onCardClick={(event) => {
-          addCardToSelection(event);
+        onCardClick={(card) => {
+          addCardToSelection(card);
         }}
+        selectedCards={selectedCards}
       />
     </div>
   </div>

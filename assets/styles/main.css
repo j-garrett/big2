@@ -151,3 +151,8 @@ ul {
 .card img {
   max-width: 100%;
 }
+
+.selected-card {
+  margin-top: -50px;
+  background: rgba(173, 0, 255, 0.7);
+}

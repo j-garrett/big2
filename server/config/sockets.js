@@ -26,14 +26,15 @@ module.exports = (io, app) => {
         return null;
       }
       // ensure four people are connected
-      if (rooms[room].turnOrder.length !== 4) {
-        socket
-          .emit(
-            'problem creating game',
-            'You must have four players to start a game.'
-          )
-        return null;
-      }
+      //TODO: UNCOMMENT BELOW CHECK FOR PROD
+      // if (rooms[room].turnOrder.length !== 4) {
+      //   socket
+      //     .emit(
+      //       'problem creating game',
+      //       'You must have four players to start a game.'
+      //     )
+      //   return null;
+      // }
       const sockets = gameController.createGame(room);
       Object
         .keys(sockets)

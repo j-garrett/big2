@@ -1,9 +1,14 @@
 import React, { PropTypes } from 'react';
 
-const Card = ({ value, type, onClick }) => (
+const Card = ({ value, type, onClick, selected }) => (
   <li
-    className={'card'}
-    onClick={onClick}
+    className={
+      (selected ? 'card selected-card' : 'card')
+    }
+    onClick={() => {
+      selected = !selected;
+      onClick();
+    }}
   >
     <img
       src={`./images/cards/${value}.png`}

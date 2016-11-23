@@ -36745,25 +36745,15 @@
 	      _react2.default.createElement(
 	        'h4',
 	        null,
-	        'Selected Cards'
-	      ),
-	      _react2.default.createElement(_CardGroup2.default, {
-	        cards: selectedCards,
-	        onCardClick: function onCardClick(event) {
-	          addCardToSelection(event);
-	        }
-	      }),
-	      _react2.default.createElement(
-	        'h4',
-	        null,
 	        'Player Hand'
 	      ),
 	      _react2.default.createElement(_CardGroup2.default, {
 	        cards: playerHand,
 	        type: 'playerHand',
-	        onCardClick: function onCardClick(event) {
-	          addCardToSelection(event);
-	        }
+	        onCardClick: function onCardClick(card) {
+	          addCardToSelection(card);
+	        },
+	        selectedCards: selectedCards
 	      })
 	    )
 	  );
@@ -36810,6 +36800,7 @@
 	  var cards = _ref.cards;
 	  var type = _ref.type;
 	  var onCardClick = _ref.onCardClick;
+	  var selectedCards = _ref.selectedCards;
 	  return _react2.default.createElement(
 	    'ul',
 	    {
@@ -36822,7 +36813,8 @@
 	        type: type,
 	        onClick: function onClick() {
 	          return onCardClick(card);
-	        }
+	        },
+	        selected: selectedCards && selectedCards.indexOf(card) !== -1 ? true : false
 	      });
 	    })
 	  );
@@ -36855,12 +36847,16 @@
 	var Card = function Card(_ref) {
 	  var value = _ref.value;
 	  var type = _ref.type;
-	  var onClick = _ref.onClick;
+	  var _onClick = _ref.onClick;
+	  var selected = _ref.selected;
 	  return _react2.default.createElement(
 	    'li',
 	    {
-	      className: 'card',
-	      onClick: onClick
+	      className: selected ? 'card selected-card' : 'card',
+	      onClick: function onClick() {
+	        selected = !selected;
+	        _onClick();
+	      }
 	    },
 	    _react2.default.createElement('img', {
 	      src: './images/cards/' + value + '.png',
