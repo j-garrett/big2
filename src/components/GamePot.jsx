@@ -11,9 +11,10 @@ const GamePot = ({ pot }) => {
       {pot.map((round, index) => (
         round.cards.length > 0 ?
           <div
+            key={index}
             className={'round'}
           >
-            <p>Round {index} - {round.user} played:</p>
+            <p>Turn {index + 1} - {round.user} played:</p>
             <CardGroup
               key={round.cards}
               cards={round.cards}

@@ -14,7 +14,8 @@ const gameController = {
       // console.log('pot from room: ', pot);
       // const prevRound = pot[pot.length - 2] || { user: '', cards: [] };
       // const curRound = pot[pot.length - 1] || { user: '', cards: [] };
-      const roundsTuple = pot.slice(pot.length - 4);
+      console.log('pot before roundsTuple: ', pot);
+      const roundsTuple = pot.slice(pot.length - 4 > 0 ? pot.length - 4 : 0);
       console.log('roundsTuple: ', roundsTuple);
       resolve({
         updateHand,

@@ -22,7 +22,7 @@ export class Big2App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      inRoom: true,
+      inRoom: false,
       room: props.room,
       user: props.user,
       changeUsername: props.changeUsername,
