@@ -4,7 +4,11 @@ import * as t from './actionTypes';
 
 // If additional games are implemented, handle it here:
 const chosenGame = 'big2';
-const big2 = io(`http://localhost:9090/${chosenGame}`);
+// For webpack's dev hot it needs localhost path
+// const big2 = io(`http://localhost:9090/${chosenGame}`);
+// For production we need just the namespace
+const big2 = io(`/${chosenGame}`);
+
 
 // const testRoom = 'hostname with hash';
 // const user = `player${Math.random()}`;
