@@ -12,7 +12,7 @@ import { socketDispatchers } from './actions';
 const store = createStore(
   cardReducers,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-  autoRehydrate()
+  // autoRehydrate()
 );
 
 // persistStore(store);

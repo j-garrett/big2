@@ -42,8 +42,48 @@ ul {
   justify-content: space-between;
 }
 
-.connected-players-list {
+.room-header {
+  display: flex;
+  justify-content: center;
+}
 
+game-buttons-container {
+  order: 1;
+}
+
+.connected-players-container {
+  display: inline-flex;
+  justify-content: center;
+  order: 2;
+  flex-basis: 90%;
+  margin: auto;
+}
+
+.game-pot .round{
+  display: flex;
+  margin-top: 20px;
+  border-top: 1px solid black;
+  z-index: 20;
+  background-color: hsla(95, 50%, 38%, 0.47);
+}
+
+.game-pot > .round:last-child {
+    background-color: hsla(95, 50%, 38%, 1);
+}
+
+.game-pot > .round:not(:first-child) {
+  margin-top: -100px;
+}
+
+.game-pot .round .card-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 0;
+}
+
+.connected-players-list {
+  order: 2;
 }
 
 .connected-players-container h3 {
@@ -54,10 +94,6 @@ ul {
 .pot-with-buttons-container {
   display: flex;
   justify-content: space-around;
-}
-
-.game-buttons-container {
-  margin-right: auto;
 }
 
 .game-pot {
@@ -72,7 +108,7 @@ ul {
 }
 
 .flex-parent {
-  display: flex;
+  display: inline-flex;
   justify-content: center;
 }
 
@@ -94,7 +130,8 @@ ul {
   border: 1px solid lightgrey;
   border-top: none; 
   background-color: #e3e3e3;
-  flex-basis: 15%;
+  width: 200px;
+  flex-basis: auto;
   text-align: center;
   min-height: 50px;
 }
