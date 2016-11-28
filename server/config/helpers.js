@@ -100,7 +100,7 @@ const updatePlayerHand = (user, room, cards, remove) => {
   const validatedHand = [];
   // console.log('attempted to play bad cards: ', cards);
   // Iterate over old hand
-  if (cards[0] === 'PASS') {
+  if (cards !== null && cards[0] === 'PASS') {
     rooms[room].pot.push({ user, cards });
     newPlayerHand = playerHand;
   } else if (remove === true) {
@@ -120,7 +120,7 @@ const updatePlayerHand = (user, room, cards, remove) => {
     const previousPot = rooms[room].pot;
     const previousHand = previousPot.pop();
     const previousPlayer = previousHand.user;
-    const previousCards = previousHand.cards;
+    const previousCards = previousHand.cards[0] === 'PASS' ? [] : previousHand.cards;
     previousPlayerSocket = getPlayerSocket(previousPlayer, room);
     const curHand = rooms[room].playerHands[previousPlayer];
     rooms[room].playerHands[previousPlayer] = curHand.concat(previousCards);

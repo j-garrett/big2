@@ -71,7 +71,6 @@ module.exports = (io, app) => {
         return null;
       }
       const played = gameController.playCards(user, room, cards, true);
-      console.log('played: ', played);
       big2
         .to(room)
         .emit(
