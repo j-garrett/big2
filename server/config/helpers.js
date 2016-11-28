@@ -101,18 +101,22 @@ const updatePlayerHand = (user, room, cards, remove) => {
   // console.log('attempted to play bad cards: ', cards);
   // Iterate over old hand
   if (remove === true) {
-    playerHand.forEach((val) => {
-      // If old hand's card is not in played cards array
-      // push it to hand array
-      if (cards.indexOf(val) === -1) {
-        newPlayerHand.push(val);
-      } else {
-        // console.log('val ', val);
-        validatedHand.push(val);
-      }
-    });
-    rooms[room].playerHands[user] = newPlayerHand;
-    rooms[room].pot.push({ user, cards: validatedHand });
+    if (cards[0] === 'PASS') {
+      rooms[room].pot.push({ user, cards: cards });
+    } else {
+      playerHand.forEach((val) => {
+        // If old hand's card is not in played cards array
+        // push it to hand array
+        if (cards.indexOf(val) === -1) {
+          newPlayerHand.push(val);
+        } else {
+          // console.log('val ', val);
+          validatedHand.push(val);
+        }
+      });
+      rooms[room].playerHands[user] = newPlayerHand;
+      rooms[room].pot.push({ user, cards: validatedHand });
+    }
   } else {
     const previousPot = rooms[room].pot;
     const previousHand = previousPot.pop();

@@ -83,7 +83,7 @@ export const GameRoom = ({
       <button
         onClick={() => {
           clearCardsFromSelection();
-          a.playSelectedCards(user, room, []);
+          a.playSelectedCards(user, room, ['PASS']);
         }}
       >
         Pass

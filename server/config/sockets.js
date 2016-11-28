@@ -70,21 +70,19 @@ module.exports = (io, app) => {
           );
         return null;
       }
-      gameController
-        .playCards(user, room, cards, true)
-        .then((played) => {
-          big2
-            .to(room)
-            .emit(
-              'hand played to pot',
-              played.roundsTuple
-            );
-          socket
-            .emit(
-              'player cards',
-              played.updateHand.newPlayerHand
-            );
-        });
+      const played = gameController.playCards(user, room, cards, true);
+      console.log('played: ', played);
+      big2
+        .to(room)
+        .emit(
+          'hand played to pot',
+          played.roundsTuple
+        );
+      socket
+        .emit(
+          'player cards',
+          played.updateHand.newPlayerHand
+        );
       const turnOrder = rooms[room].turnOrder;
       const turn = rooms[room].turn;
       rooms[room].turn = turn >= turnOrder.length - 1 ? 0 : turn + 1;
@@ -99,22 +97,19 @@ module.exports = (io, app) => {
       if (rooms[room] === undefined || rooms[room].pot.length < 1) {
         return null;
       }
-      gameController
-        .playCards(user, room, null, false)
-        .then((played) => {
-          big2
-            .to(room)
-            .emit(
-              'hand played to pot',
-              played.roundsTuple
-            );
-          big2
-            .to(played.updateHand.previousPlayerSocket)
-            .emit(
-              'player cards',
-              played.updateHand.newPlayerHand
-            );
-        });
+      const played = gameController.playCards(user, room, null, false);
+      big2
+        .to(room)
+        .emit(
+          'hand played to pot',
+          played.roundsTuple
+        );
+      big2
+        .to(played.updateHand.previousPlayerSocket)
+        .emit(
+          'player cards',
+          played.updateHand.newPlayerHand
+        );
       const turnOrder = rooms[room].turnOrder;
       const turn = rooms[room].turn;
       rooms[room].turn = turn <= 0 ? turnOrder.length - 1 : turn - 1;
