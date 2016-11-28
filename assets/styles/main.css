@@ -75,14 +75,18 @@ game-buttons-container {
 
 .game-pot > .round:not(:first-child) {
   margin-top: -100px;
+  
 }
 
 .game-pot .round .card-group {
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
   padding: 0;
-  width: 200px
+}
+
+.game-pot .round .card-group .card {
+  list-style: none;
+  transform: rotate(7deg);
 }
 
 .connected-players-list {

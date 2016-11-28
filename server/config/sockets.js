@@ -13,13 +13,13 @@ module.exports = (io, app) => {
   .on('connection', (socket) => {
     socket
     .on('connect to room', (user, room) => {
-      roomController
-        .joinRoom(user, room, socket.id)
-        .then((result) => {
-          socket.join(room);
-          big2.to(room).emit(result.event, result.data);
-        })
-        .catch(err => console.log('there was an error with big2 connect to room socket: ', err));
+      const joinResult = roomController.joinRoom(user, room, socket.id);
+      socket
+        .join(room, () => {
+          big2
+            .to(room)
+            .emit(joinResult.event, joinResult.data);
+        });
     })
     .on('create game', (room) => {
       if (rooms[room] === undefined) {

@@ -28,9 +28,20 @@ const model = {
   pot: [],
 };
 
+class EmptyRoom {
+  constructor() {
+    this.playerHands = {};
+    this.socketMap = {};
+    this.turnOrder = [];
+    this.turn = 0;
+    this.pot = [];
+  }
+}
+
 module.exports = {
   rooms: {},
   model,
+  EmptyRoom,
 };
 
 // Room name key is created on room creation
