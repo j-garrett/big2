@@ -11,7 +11,7 @@ const middleware = require('./config/middleware');
 const routes = require('./config/routes');
 const big2 = require('./config/sockets');
 
-const home = path.join(__dirname, './../dist/index.html');
+const home = path.join(__dirname, './../assets/index.html');
 const port = process.env.PORT || 9090;
 
 server.listen(port, () => {
