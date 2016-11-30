@@ -6,16 +6,15 @@ import gameController from '../../server/controllers/gameController';
 import roomController from '../../server/controllers/roomController';
 import big2Rooms from '../../server/models/big2Rooms';
 
-for (var i = 0; i < 4; i +=1) {
+for (let i = 0; i < 4; i +=1) {
   roomController.joinRoom(`testUser${i}`, 'testRoom', `testSocket${i}`);
 }
 gameController.createGame('testRoom');
 const testRoom = big2Rooms.rooms['testRoom'];
 // console.log('test room: ', testRoom);
-const testHand1 = ['1♦'];
-const testHand2 = ['1♣'];
-const testHand3 = ['2♦'];
-const invalidHand = ['1♦', '2♦'];
+const testHand1 = ['3♦'];
+const testHand2 = ['3♣'];
+const testHand3 = ['4♦'];
 
 describe('Validator Checks', () => {
   describe('getValue', () => {
@@ -43,6 +42,18 @@ describe('Validator Checks', () => {
       expect(isLarger).to.be.a('boolean');
       expect(isLarger).to.equal(true);
     });
+    it('should return true if card value is same and suit value is higher', () => {
+      expect(isLarger).to.equal(true);
+    });
+    it('should return true if card value is higher and suit value is same', () => {
+      expect(computer.cardIsLarger('1♦', '13♦')).to.equal(true);
+    });
+    it('should correctly identify Ace as higher than King', () => {
+      expect(computer.cardIsLarger('1♦', '13♦')).to.equal(true);
+    });
+    it('should correctly identify 2 as higher than Ace', () => {
+      expect(computer.cardIsLarger('2♦', '1♦')).to.equal(true);
+    });
   });
   describe('suitIsMatch', () => {
     const matchedSuit = computer.suitIsMatch(testHand1[0], testHand3[0]);
@@ -54,6 +65,48 @@ describe('Validator Checks', () => {
     it('should return false if cards have different suit', () => {
       expect(notMatched).to.be.a('boolean');
       expect(notMatched).to.equal(false);
+    });
+  });
+  xdescribe('handPatternCheck', () => {
+    it('should return true if hand is a single card', () => {
+      expect().to.be.a('boolean');
+      expect().to.equal(true);
+    });
+    it('should return true if hand is two cards with same number value', () => {
+      expect().to.be.a('boolean');
+      expect().to.equal(true);
+    });
+    it('should return false if hand is two cards with different number value', () => {
+      expect().to.be.a('boolean');
+      expect().to.equal(false);
+    });
+    it('should return true if hand is three cards with same number value', () => {
+      expect().to.be.a('boolean');
+      expect().to.equal(true);
+    });
+    it('should return false if hand is three cards with different number value', () => {
+      expect().to.be.a('boolean');
+      expect().to.equal(false);
+    });
+    it('should return false if hand is four cards', () => {
+      expect().to.be.a('boolean');
+      expect().to.equal(false);
+    });
+    it('should return true if hand is a straight', () => {
+      expect().to.be.a('boolean');
+      expect().to.equal(true);
+    });
+    it('should return true if hand is a flush', () => {
+      expect().to.be.a('boolean');
+      expect().to.equal(true);
+    });
+    it('should return true if hand is a full house', () => {
+      expect().to.be.a('boolean');
+      expect().to.equal(true);
+    });
+    it('should return true if hand is a four of a kind', () => {
+      expect().to.be.a('boolean');
+      expect().to.equal(true);
     });
   });
 });

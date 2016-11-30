@@ -7,6 +7,15 @@ const suitValueMap = {
   '♠': 4,
 };
 
+const handTypeMap = {
+  straight: 1,
+  flush: 2,
+  fullHouse: 3,
+  fourOfKind: 4,
+  straightFlush: 5,
+  royalFlush: 6,
+};
+
 const selectHand = (user, room) => {
   // Return hand that is valid
   const previousHand = rooms[room].pot.slice(-1, 1);
@@ -14,7 +23,9 @@ const selectHand = (user, room) => {
 };
 
 const getValue = (card) => {
-  const value = parseInt(card.slice(0, card.length - 1), 10);
+  let value = parseInt(card.slice(0, card.length - 1), 10);
+  value = value === 1 ? 14 : value;
+  value = value === 2 ? 15 : value;
   const suit = card[card.length - 1];
   const suitValue = suitValueMap[suit];
   return {
@@ -28,7 +39,7 @@ const cardIsLarger = (card1, card2) => {
   const card1Val = getValue(card1);
   const card2Val = getValue(card2);
   return card1Val.value >= card2Val.value
-        && card1Val.suitValue > card2Val.suitValue;
+        && card1Val.suitValue >= card2Val.suitValue;
 };
 
 const suitIsMatch = (card1, card2) =>
@@ -60,6 +71,7 @@ const validCheck = (hand, previousHand) =>
 
 module.exports = {
   suitValueMap,
+  handTypeMap,
   selectHand,
   getValue,
   cardIsLarger,
