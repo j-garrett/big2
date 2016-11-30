@@ -32,7 +32,7 @@ const cardIsLarger = (card1, card2) => {
 };
 
 const suitIsMatch = (card1, card2) =>
-  getValue(card1).suitValueMap === getValue(card2).suitValueMap;
+  getValue(card1).suitValue === getValue(card2).suitValue;
 
 const valueIsMatch = (card1, card2) =>
   getValue(card1).value === getValue(card2).value;

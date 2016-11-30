@@ -44,6 +44,18 @@ describe('Validator Checks', () => {
       expect(isLarger).to.equal(true);
     });
   });
+  describe('suitIsMatch', () => {
+    const matchedSuit = computer.suitIsMatch(testHand1[0], testHand3[0]);
+    const notMatched = computer.suitIsMatch(testHand2[0], testHand1[0]);
+    it('should return true if cards have same suit', () => {
+      expect(matchedSuit).to.be.a('boolean');
+      expect(matchedSuit).to.equal(true);
+    });
+    it('should return false if cards have different suit', () => {
+      expect(notMatched).to.be.a('boolean');
+      expect(notMatched).to.equal(false);
+    });
+  });
 });
 
 xdescribe('Computer Behavior', () => {
