@@ -15,17 +15,19 @@ const testRoom = big2Rooms.rooms['testRoom'];
 const testHand1 = ['3♦'];
 const testHand2 = ['3♣'];
 const testHand3 = ['4♦'];
+const testPair = ['4♦', '4♣'];
+const invalidPair = ['4♦', '2♣'];
 
 describe('Validator Checks', () => {
   describe('getValue', () => {
     const cardValue = computer.getValue(testHand1[0]);
     const diffCardValue = computer.getValue('13♠');
-    it('should find suit value for card', () => {
+    it('should find number value for card', () => {
       expect(cardValue).to.be.an('object');
-      expect(cardValue.value).to.equal(1);
+      expect(cardValue.value).to.equal(3);
       expect(diffCardValue.value).to.equal(13);
     });
-    it('should find A - K value for card', () => {
+    it('should find suit value for card', () => {
       expect(cardValue).to.be.an('object');
       expect(cardValue.suitValue).to.equal(1);
       expect(diffCardValue.suitValue).to.equal(4);
@@ -67,18 +69,21 @@ describe('Validator Checks', () => {
       expect(notMatched).to.equal(false);
     });
   });
-  xdescribe('handPatternCheck', () => {
+  describe('handPatternCheck', () => {
     it('should return true if hand is a single card', () => {
-      expect().to.be.a('boolean');
-      expect().to.equal(true);
+      const checkSingle = computer.handPatternCheck(testHand1);
+      expect(checkSingle).to.be.a('boolean');
+      expect(checkSingle).to.equal(true);
     });
     it('should return true if hand is two cards with same number value', () => {
-      expect().to.be.a('boolean');
-      expect().to.equal(true);
+      const checkDouble = computer.handPatternCheck(testPair)
+      expect(checkDouble).to.be.a('boolean');
+      expect(checkDouble).to.equal(true);
     });
     it('should return false if hand is two cards with different number value', () => {
-      expect().to.be.a('boolean');
-      expect().to.equal(false);
+      const checkDouble = computer.handPatternCheck(invalidPair)
+      expect(checkDouble).to.be.a('boolean');
+      expect(checkDouble).to.equal(false);
     });
     it('should return true if hand is three cards with same number value', () => {
       expect().to.be.a('boolean');
