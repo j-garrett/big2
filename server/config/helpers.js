@@ -68,29 +68,6 @@ const dealCards = (numPlayers) => {
   return hands;
 };
 
-const createGame = () => {
-  const deck = shuffleCardDeck();
-  const hands = dealCards(deck, 4);
-  return {
-    round: 1,
-    players: {
-
-    },
-    hands,
-    socketMap: {
-
-    },
-    pot: [{ user: '', cards: [] }, { user: '', cards: [] }, { user: '', cards: [] }, { user: '', cards: [] }],
-    turn: 'player1',
-    roundStartedBy: 'player1',
-  };
-};
-
-// const playHandToRoom = (room, playerNum, updatedHand) => {
-//   // const
-//   rooms[room].hands[playerNum] = updatedHand;
-// };
-
 const updatePlayerHand = (user, room, cards, remove) => {
   // TODO: Separate updating pot from updating player hand
   // Grab players hand from room object
@@ -136,7 +113,6 @@ module.exports = {
   createCardDeck,
   shuffleCardDeck,
   dealCards,
-  createGame,
   updatePlayerHand,
   getPlayersHand,
 };

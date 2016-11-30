@@ -6,7 +6,7 @@ import helpers from '../../server/config/helpers';
 
 const createCardDeck = helpers.createCardDeck;
 
-describe('Playing card\'s deck createer', () => {
+describe('Playing card\'s deck creator', () => {
   it('should be a function', () => {
     expect(createCardDeck).to.be.a('function');
   });

@@ -1,7 +1,7 @@
 const big2Rooms = require('./../models/big2Rooms');
 const helpers = require('./../config/helpers');
 
-const RoomModel = big2Rooms.EmptyRoom;
+const RoomModel = big2Rooms.Big2Room;
 
 const roomController = {
   joinRoom(user, room, socketId) {
