@@ -20,7 +20,12 @@ const invalidPair = ['4♦', '2♣'];
 const validTrip = ['4♦', '4♣', '4♠'];
 const invalidTrip = ['4♦', '2♣', '4♠'];
 const quadHand = ['4♦', '4♣', '4♠', '4♥'];
-
+const straight = ['3♦', '4♣', '5♠', '6♥', '7♥'];
+const flush = ['4♥', '8♥', '9♥', '11♥', '13♥'];
+const fullHouse = ['4♦', '4♣', '4♠', '5♥', '5♠'];
+const fourOfKind = ['4♦', '4♣', '4♠', '4♥', '5♥'];
+const straightFlush = ['3♥', '4♥', '5♥', '6♥', '7♥'];
+const royalFlush = ['10♥', '11♥', '12♥', '13♥', '1♥'];
 
 describe('Validator Checks', () => {
   describe('getValue', () => {
@@ -83,36 +88,52 @@ describe('Validator Checks', () => {
       expect(checkSingle).to.equal(true);
     });
     it('should return true if hand is two cards with same number value', () => {
-      const checkDouble = computer.handPatternCheck(validPair)
+      const checkDouble = computer.handPatternCheck(validPair);
       expect(checkDouble).to.equal(true);
     });
     it('should return false if hand is two cards with different number value', () => {
-      const checkDouble = computer.handPatternCheck(invalidPair)
+      const checkDouble = computer.handPatternCheck(invalidPair);
       expect(checkDouble).to.equal(false);
     });
     it('should return true if hand is three cards with same number value', () => {
-      const checkTriple = computer.handPatternCheck(validTrip)
+      const checkTriple = computer.handPatternCheck(validTrip);
       expect(checkTriple).to.equal(true);
     });
     it('should return false if hand is three cards with different number value', () => {
-      const checkTriple = computer.handPatternCheck(invalidTrip)
+      const checkTriple = computer.handPatternCheck(invalidTrip);
       expect(checkTriple).to.equal(false);
     });
     it('should return false if hand is four cards', () => {
-      const checkQuad = computer.handPatternCheck(quadHand)
+      const checkQuad = computer.handPatternCheck(quadHand);
       expect(checkQuad).to.equal(false);
     });
-    it('should return true if hand is a straight', () => {
-      expect().to.equal(true);
+    it('should return false if hand is more than five cards', () => {
+      const checkDoubleQuad = computer.handPatternCheck(quadHand.concat(quadHand));
+      expect(checkDoubleQuad).to.equal(false);
     });
-    it('should return true if hand is a flush', () => {
-      expect().to.equal(true);
+    xit('should return true if hand is a straight', () => {
+      const checkStraight = computer.handPatternCheck(straight);
+      expect(checkStraight).to.equal(true);
     });
-    it('should return true if hand is a full house', () => {
-      expect().to.equal(true);
+    xit('should return true if hand is a flush', () => {
+      const checkFlush = computer.handPatternCheck(flush);
+      expect(checkFlush).to.equal(true);
     });
-    it('should return true if hand is a four of a kind', () => {
-      expect().to.equal(true);
+    xit('should return true if hand is a full house', () => {
+      const checkFullHouse = computer.handPatternCheck(fullHouse);
+      expect(checkFullHouse).to.equal(true);
+    });
+    xit('should return true if hand is a four of a kind', () => {
+      const checkFourOfKind = computer.handPatternCheck(fourOfKind);
+      expect(checkFourOfKind).to.equal(true);
+    });
+    xit('should return true if hand is a straight flush', () => {
+      const checkStraightFlush = computer.handPatternCheck(straightFlush);
+      expect(checkStraightFlush).to.equal(true);
+    });
+    xit('should return true if hand is a royal flush', () => {
+      const checkroyalFlush = computer.handPatternCheck(royalFlush);
+      expect(checkroyalFlush).to.equal(true);
     });
   });
 });
