@@ -26,16 +26,14 @@ module.exports = (io, app) => {
         return null;
       }
       // ensure four people are connected
-      //TODO: UNCOMMENT BELOW CHECK FOR PROD
-      // if (rooms[room].turnOrder.length !== 4) {
-      //   socket
-      //     .emit(
-      //       'problem creating game',
-      //       'You must have four players to start a game.'
-      //     )
-      //   return null;
-      // }
+      // TODO: UNCOMMENT BELOW CHECK FOR PROD
+      if (rooms[room].turnOrder.length !== 4) {
+        for (let i = rooms[room].turnOrder.length; i < 4; i += 1) {
+          roomController.joinRoom(`computer${i}`, room, `computer${i}`);
+        }
+      }
       const sockets = gameController.createGame(room);
+      console.log('room with bots: ', rooms[room]);
       Object
         .keys(sockets)
         .map(key => [key, sockets[key]])

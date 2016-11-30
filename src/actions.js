@@ -58,7 +58,8 @@ export const currentPlayersTurn = player => ({
 /* ------------ SOCKET LISTENERS ---------------*/
 // These will dispatch actions when server sends data
 export const socketDispatchers = (store) => {
-  big2.on('player cards', (cards) => {
+  big2
+  .on('player cards', (cards) => {
     // console.log('cards dealt: ', cards);
     store.dispatch(updatePlayerHand(cards));
   })
