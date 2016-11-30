@@ -52,10 +52,14 @@ const valueIsMatch = (card1, card2) =>
 // TODO: Make this function check for legal poker hands
 const handPatternCheck = (hand) => {
   let result = true;
-  for (let i = 1; i < hand.length; i += 1) {
-    result = valueIsMatch(hand[i - 1], hand[i]) && result;
+  if (hand.length === 4 || hand.length > 5) {
+    return false;
+  } else {
+    for (let i = 1; i < hand.length; i += 1) {
+      result = valueIsMatch(hand[i - 1], hand[i]) && result;
+    }
+    return result;
   }
-  return result;
 };
 
 const handIsLarger = (hand, previousHand) =>

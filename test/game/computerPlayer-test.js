@@ -15,8 +15,12 @@ const testRoom = big2Rooms.rooms['testRoom'];
 const testHand1 = ['3♦'];
 const testHand2 = ['3♣'];
 const testHand3 = ['4♦'];
-const testPair = ['4♦', '4♣'];
+const validPair = ['4♦', '4♣'];
 const invalidPair = ['4♦', '2♣'];
+const validTrip = ['4♦', '4♣', '4♠'];
+const invalidTrip = ['4♦', '2♣', '4♠'];
+const quadHand = ['4♦', '4♣', '4♠', '4♥'];
+
 
 describe('Validator Checks', () => {
   describe('getValue', () => {
@@ -70,47 +74,44 @@ describe('Validator Checks', () => {
     });
   });
   describe('handPatternCheck', () => {
-    it('should return true if hand is a single card', () => {
+    it('should return a boolean', () => {
       const checkSingle = computer.handPatternCheck(testHand1);
       expect(checkSingle).to.be.a('boolean');
+    });
+    it('should return true if hand is a single card', () => {
+      const checkSingle = computer.handPatternCheck(testHand1);
       expect(checkSingle).to.equal(true);
     });
     it('should return true if hand is two cards with same number value', () => {
-      const checkDouble = computer.handPatternCheck(testPair)
-      expect(checkDouble).to.be.a('boolean');
+      const checkDouble = computer.handPatternCheck(validPair)
       expect(checkDouble).to.equal(true);
     });
     it('should return false if hand is two cards with different number value', () => {
       const checkDouble = computer.handPatternCheck(invalidPair)
-      expect(checkDouble).to.be.a('boolean');
       expect(checkDouble).to.equal(false);
     });
     it('should return true if hand is three cards with same number value', () => {
-      expect().to.be.a('boolean');
-      expect().to.equal(true);
+      const checkTriple = computer.handPatternCheck(validTrip)
+      expect(checkTriple).to.equal(true);
     });
     it('should return false if hand is three cards with different number value', () => {
-      expect().to.be.a('boolean');
-      expect().to.equal(false);
+      const checkTriple = computer.handPatternCheck(invalidTrip)
+      expect(checkTriple).to.equal(false);
     });
     it('should return false if hand is four cards', () => {
-      expect().to.be.a('boolean');
-      expect().to.equal(false);
+      const checkQuad = computer.handPatternCheck(quadHand)
+      expect(checkQuad).to.equal(false);
     });
     it('should return true if hand is a straight', () => {
-      expect().to.be.a('boolean');
       expect().to.equal(true);
     });
     it('should return true if hand is a flush', () => {
-      expect().to.be.a('boolean');
       expect().to.equal(true);
     });
     it('should return true if hand is a full house', () => {
-      expect().to.be.a('boolean');
       expect().to.equal(true);
     });
     it('should return true if hand is a four of a kind', () => {
-      expect().to.be.a('boolean');
       expect().to.equal(true);
     });
   });
