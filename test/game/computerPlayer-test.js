@@ -32,6 +32,18 @@ describe('Validator Checks', () => {
       expect(diffCardValue.suitValue).to.equal(4);
     });
   });
+  describe('cardIsLarger', () => {
+    const notLarger = computer.cardIsLarger(testHand1[0], testHand3[0]);
+    const isLarger = computer.cardIsLarger(testHand2[0], testHand1[0]);
+    it('should return false if first param is smaller', () => {
+      expect(notLarger).to.be.a('boolean');
+      expect(notLarger).to.equal(false);
+    });
+    it('should return true if first param is larger', () => {
+      expect(isLarger).to.be.a('boolean');
+      expect(isLarger).to.equal(true);
+    });
+  });
 });
 
 xdescribe('Computer Behavior', () => {

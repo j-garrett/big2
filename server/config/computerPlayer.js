@@ -23,11 +23,12 @@ const getValue = (card) => {
   };
 };
 
+// Returns true if card1 is larger than card2
 const cardIsLarger = (card1, card2) => {
   const card1Val = getValue(card1);
   const card2Val = getValue(card2);
-  return card1Val.value > card2Val.value
-        && card1Val.suitValueMap > card1Val.suitVale;
+  return card1Val.value >= card2Val.value
+        && card1Val.suitValue > card2Val.suitValue;
 };
 
 const suitIsMatch = (card1, card2) =>
