@@ -84,7 +84,6 @@ export const socketDispatchers = (store) => {
   .on('problem creating game', (problem) => {
     console.log('Problem creating game: ', problem);
   });
-
 };
 
 /* ------------ SOCKET EMITTERS ---------------*/

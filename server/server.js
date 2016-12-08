@@ -27,3 +27,9 @@ app.get('/*', (req, res) => {
   res.sendFile(home);
 });
 big2(io, app);
+
+module.exports = {
+  app,
+  big2,
+  io,
+};
