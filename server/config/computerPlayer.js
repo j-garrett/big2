@@ -54,12 +54,11 @@ const handPatternCheck = (hand) => {
   let result = true;
   if (hand.length === 4 || hand.length > 5) {
     return false;
-  } else {
-    for (let i = 1; i < hand.length; i += 1) {
-      result = valueIsMatch(hand[i - 1], hand[i]) && result;
-    }
-    return result;
   }
+  for (let i = 1; i < hand.length; i += 1) {
+    result = valueIsMatch(hand[i - 1], hand[i]) && result;
+  }
+  return result;
 };
 
 const handIsLarger = (hand, previousHand) =>

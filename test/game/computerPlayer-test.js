@@ -38,7 +38,7 @@ const playerHands = {
     '7♠',
     '9♥',
     '9♣',
-    '10♠',
+    '9♦',
     '11♥',
     '11♠',
     '12♥',
@@ -54,7 +54,7 @@ const playerHands = {
     '7♣',
     '8♠',
     '9♠',
-    '9♦',
+    '10♠',
     '10♦',
     '10♥',
     '12♣',
@@ -87,21 +87,14 @@ describe('Computer Behavior', () => {
     socket = io.connect(`http://localhost:9090/${chosenGame}`);
     socket
       .on('connect', () => {
-        console.log('successful connection');
         socket.emit('connect to room', user, room);
       })
-      .on('players in room', (data) => {
-        console.log('heard players in room event with data: ', data);
-        done();
-      });
+      .on('players in room', () => done());
   });
   afterEach((done) => {
-    // Cleanup
     if (socket.connected) {
-      console.log('disconnecting...');
       socket.disconnect();
     } else {
-      // There will not be a connection unless you have done() in beforeEach, socket.on('connect'...)
       console.log('no connection to break...');
     }
     done();
@@ -112,10 +105,10 @@ describe('Computer Behavior', () => {
   });
   describe('emulate playing a hand', () => {
     it('should receive cards', (done) => {
+      // TODO: Build out connection test more specifically
       socket.emit('create game', room);
       socket.on('player cards', (cards) => {
-        console.log('player cards received: ', cards);
-        expect(true).to.equal(true);
+        expect(cards).to.be.instanceOf(Array);
         done();
       });
     });
@@ -124,6 +117,30 @@ describe('Computer Behavior', () => {
       const computerCards = playerHands.computer1;
       const handPlayed = computer.chooseResponse(playerCards, computerCards);
       expect(handPlayed[0]).to.equal('4♣');
+    });
+    it('should play the lowest possible double to beat previous pair', () => {
+      const playerCards = ['3♣', '3♥'];
+      const computerCards = playerHands.computer1;
+      const handPlayed = computer.chooseResponse(playerCards, computerCards);
+      expect(handPlayed).to.eql(['9♥', '9♣']);
+    });
+    it('should play the lowest possible trip to beat previous trip', () => {
+      const playerCards = ['3♣', '3♥', '3♦'];
+      const computerCards = playerHands.computer1;
+      const handPlayed = computer.chooseResponse(playerCards, computerCards);
+      expect(handPlayed).to.eql(['9♥', '9♣', '9♦']);
+    });
+    it('should play the lowest possible hand to beat previous hand', () => {
+      const playerCards = ['3♣', '3♥', '3♦', '9♥', '9♣'];
+      const computerCards = playerHands.computer1;
+      const handPlayed = computer.chooseResponse(playerCards, computerCards);
+      expect(handPlayed).to.eql(['9♥', '9♣', '9♦', '11♥', '11♠']);
+    });
+    it('should pass when it can\'t beat the previous hand', () => {
+      const playerCards = ['2♠'];
+      const computerCards = playerHands.computer1;
+      const handPlayed = computer.chooseResponse(playerCards, computerCards);
+      expect(handPlayed).to.eql(['pass']);
     });
   });
 });

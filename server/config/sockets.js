@@ -22,7 +22,7 @@ module.exports = (io, app) => {
         });
     })
     .on('create game', (room) => {
-      console.log('cretae game heard');
+      console.log('create game heard');
       if (rooms[room] === undefined) {
         return null;
       }
