@@ -16,10 +16,6 @@ const user = 'jon';
 const room = 'jon';
 const playerHands = {
   jon: [
-    '1♦',
-    '1♣',
-    '1♥',
-    '2♠',
     '3♥',
     '5♦',
     '6♠',
@@ -29,10 +25,12 @@ const playerHands = {
     '10♣',
     '12♠',
     '13♣',
+    '1♦',
+    '1♣',
+    '1♥',
+    '2♠',
   ],
   computer1: [
-    '1♠',
-    '2♥',
     '4♣',
     '5♥',
     '7♠',
@@ -44,6 +42,8 @@ const playerHands = {
     '12♥',
     '13♠',
     '13♦',
+    '1♠',
+    '2♥',
   ],
   computer2: [
     '3♠',
@@ -61,8 +61,6 @@ const playerHands = {
     '12♦',
   ],
   computer3: [
-    '2♣',
-    '2♦',
     '3♣',
     '3♦',
     '4♦',
@@ -74,6 +72,8 @@ const playerHands = {
     '11♦',
     '11♣',
     '13♥',
+    '2♣',
+    '2♦',
   ],
 };
 /*
@@ -110,8 +110,10 @@ describe('Computer Behavior', () => {
         1: [['4♣'], ['5♥'], ['7♠'], ['12♥'], ['1♠'], ['2♥']],
         2: [['13♠', '13♦']],
         3: [],
+        4: [],
         5: [['9♥', '9♣', '9♦', '11♥', '11♠']],
       };
+      console.log('ORGANIZED: ', organized);
       expect(organized).to.eql(expectedOrganization);
     });
   });

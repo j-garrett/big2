@@ -54,8 +54,6 @@ module.exports = (io, app) => {
         );
     })
     .on('play cards', (user, room, cards) => {
-      console.log('test run')
-
       if (rooms[room] === undefined) {
         return null;
       }

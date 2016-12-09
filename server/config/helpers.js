@@ -1,4 +1,6 @@
 const rooms = require('./../models/big2Rooms').rooms;
+const getCardValue = require('./computerPlayer').getValue;
+
 
 const createCardDeck = () => {
   const deck = [];
@@ -24,21 +26,7 @@ const getPlayerSocket = (user, room) => {
 
 const getPlayersHand = (user, room) => rooms[room].playerHands[user];
 
-const sortPlayerHand = (a, b) => {
-  let firstNum;
-  let secondNum;
-  if (a.length === 3) {
-    firstNum = a.slice(0, 2);
-  } else {
-    firstNum = a[0];
-  }
-  if (b.length === 3) {
-    secondNum = b.slice(0, 2);
-  } else {
-    secondNum = b[0];
-  }
-  return parseInt(firstNum, 10) - parseInt(secondNum, 10);
-};
+const sortPlayerHand = (a, b) => getCardValue(a).value - getCardValue(b).value;
 
 const shuffleCardDeck = () => {
   const deck = createCardDeck();

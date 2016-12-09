@@ -73,7 +73,6 @@ const validCheck = (hand, previousHand) =>
     && handIsLarger(hand, previousHand);
 
 const organizeComputerHand = (dealtCards) => {
-  console.log('!!!!!!!!!!!!!!!!!!!!!!PRINTED!!!!!!!!!!!!!!!!!!!!!!!');
   const organized = {
     1: [],
     2: [],
@@ -87,7 +86,7 @@ const organizeComputerHand = (dealtCards) => {
   // Go through four of a kind and match to lowest single
   // Go through trips and doubles looking for hands
   // Go through singles looking for hands
-  dealtCards.reduce((acc, cur) => {
+  const finalGroup = dealtCards.reduce((acc, cur) => {
     const newRun = [cur];
     if (acc.length === 0) {
       return newRun;
@@ -98,6 +97,12 @@ const organizeComputerHand = (dealtCards) => {
     organized[acc.length].push(acc);
     return newRun;
   }, []);
+  organized[finalGroup.length].push(finalGroup);
+  if (organized['3'].length > 0 && organized['2'].length > 0) {
+    const newHand = organized['3'].shift().concat(organized['2'].shift());
+    organized['5'].push(newHand);
+  }
+
   return organized;
 };
 
