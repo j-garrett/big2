@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import io from 'socket.io-client';
 
-import computer from '../../server/config/computerPlayer';
+import { organizeComputerHand, chooseResponse } from '../../server/config/computerPlayer';
 import gameController from '../../server/controllers/gameController';
 import roomController from '../../server/controllers/roomController';
 
@@ -103,6 +103,18 @@ describe('Computer Behavior', () => {
     socket.emit('play cards', user, room, ['cards']);
     expect(true).to.equal(true);
   });
+  describe('organize computer hand', () => {
+    it('should organize cards into groups of hand type', () => {
+      const organized = organizeComputerHand(playerHands.computer1);
+      const expectedOrganization = {
+        1: [['4♣'], ['5♥'], ['7♠'], ['12♥'], ['1♠'], ['2♥']],
+        2: [['13♠', '13♦']],
+        3: [],
+        5: [['9♥', '9♣', '9♦', '11♥', '11♠']],
+      };
+      expect(organized).to.eql(expectedOrganization);
+    });
+  });
   describe('emulate playing a hand', () => {
     it('should receive cards', (done) => {
       // TODO: Build out connection test more specifically
@@ -115,31 +127,31 @@ describe('Computer Behavior', () => {
     it('should play the lowest possible single to beat previous', () => {
       const playerCards = ['3♣'];
       const computerCards = playerHands.computer1;
-      const handPlayed = computer.chooseResponse(playerCards, computerCards);
+      const handPlayed = chooseResponse(playerCards, computerCards);
       expect(handPlayed[0]).to.equal('4♣');
     });
     it('should play the lowest possible double to beat previous pair', () => {
       const playerCards = ['3♣', '3♥'];
       const computerCards = playerHands.computer1;
-      const handPlayed = computer.chooseResponse(playerCards, computerCards);
+      const handPlayed = chooseResponse(playerCards, computerCards);
       expect(handPlayed).to.eql(['9♥', '9♣']);
     });
     it('should play the lowest possible trip to beat previous trip', () => {
       const playerCards = ['3♣', '3♥', '3♦'];
       const computerCards = playerHands.computer1;
-      const handPlayed = computer.chooseResponse(playerCards, computerCards);
+      const handPlayed = chooseResponse(playerCards, computerCards);
       expect(handPlayed).to.eql(['9♥', '9♣', '9♦']);
     });
     it('should play the lowest possible hand to beat previous hand', () => {
       const playerCards = ['3♣', '3♥', '3♦', '9♥', '9♣'];
       const computerCards = playerHands.computer1;
-      const handPlayed = computer.chooseResponse(playerCards, computerCards);
+      const handPlayed = chooseResponse(playerCards, computerCards);
       expect(handPlayed).to.eql(['9♥', '9♣', '9♦', '11♥', '11♠']);
     });
     it('should pass when it can\'t beat the previous hand', () => {
       const playerCards = ['2♠'];
       const computerCards = playerHands.computer1;
-      const handPlayed = computer.chooseResponse(playerCards, computerCards);
+      const handPlayed = chooseResponse(playerCards, computerCards);
       expect(handPlayed).to.eql(['pass']);
     });
   });

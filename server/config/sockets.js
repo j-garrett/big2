@@ -22,7 +22,7 @@ module.exports = (io, app) => {
         });
     })
     .on('create game', (room) => {
-      console.log('create game heard');
+      // console.log('create game heard');
       if (rooms[room] === undefined) {
         return null;
       }
@@ -34,7 +34,7 @@ module.exports = (io, app) => {
         }
       }
       const sockets = gameController.createGame(room);
-      console.log('room with bots: ', rooms[room]);
+      // console.log('room with bots: ', rooms[room]);
       Object
         .keys(sockets)
         .map(key => [key, sockets[key]])

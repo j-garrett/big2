@@ -72,6 +72,39 @@ const validCheck = (hand, previousHand) =>
   handPatternCheck(hand)
     && handIsLarger(hand, previousHand);
 
+const organizeComputerHand = (dealtCards) => {
+  console.log('!!!!!!!!!!!!!!!!!!!!!!PRINTED!!!!!!!!!!!!!!!!!!!!!!!');
+  const organized = {
+    1: [],
+    2: [],
+    3: [],
+    4: [],
+    5: [],
+  };
+  // Start at lowest and go through making trips
+  // Start at lowest and go through making doubles
+  // Start at lowest and go through making singles
+  // Go through four of a kind and match to lowest single
+  // Go through trips and doubles looking for hands
+  // Go through singles looking for hands
+  dealtCards.reduce((acc, cur) => {
+    const newRun = [cur];
+    if (acc.length === 0) {
+      return newRun;
+    }
+    if (valueIsMatch(acc[0], newRun[0])) {
+      return acc.concat(newRun);
+    }
+    organized[acc.length].push(acc);
+    return newRun;
+  }, []);
+  return organized;
+};
+
+const chooseResponse = (cardsPlayed, compHand) => {
+
+};
+
 module.exports = {
   suitValueMap,
   handTypeMap,
@@ -83,4 +116,6 @@ module.exports = {
   handPatternCheck,
   handIsLarger,
   validCheck,
+  organizeComputerHand,
+  chooseResponse,
 };
