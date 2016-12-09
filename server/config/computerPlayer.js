@@ -73,6 +73,7 @@ const validCheck = (hand, previousHand) =>
     && handIsLarger(hand, previousHand);
 
 const organizeComputerHand = (dealtCards) => {
+  let newHand;
   const organized = {
     1: [],
     2: [],
@@ -80,12 +81,6 @@ const organizeComputerHand = (dealtCards) => {
     4: [],
     5: [],
   };
-  // Start at lowest and go through making trips
-  // Start at lowest and go through making doubles
-  // Start at lowest and go through making singles
-  // Go through four of a kind and match to lowest single
-  // Go through trips and doubles looking for hands
-  // Go through singles looking for hands
   const finalGroup = dealtCards.reduce((acc, cur) => {
     const newRun = [cur];
     if (acc.length === 0) {
@@ -98,10 +93,19 @@ const organizeComputerHand = (dealtCards) => {
     return newRun;
   }, []);
   organized[finalGroup.length].push(finalGroup);
-  if (organized['3'].length > 0 && organized['2'].length > 0) {
-    const newHand = organized['3'].shift().concat(organized['2'].shift());
+  // Check for four of a kind
+  if (organized['4'].length > 0) {
+    newHand = organized['4'].shift().concat(organized['1'].shift());
     organized['5'].push(newHand);
   }
+  // Check for full house
+  if (organized['3'].length > 0 && organized['2'].length > 0) {
+    newHand = organized['3'].shift().concat(organized['2'].shift());
+    organized['5'].push(newHand);
+  }
+  // Check for straights
+
+  // Check for flushes <-- wait until it won't break apart better options
 
   return organized;
 };
