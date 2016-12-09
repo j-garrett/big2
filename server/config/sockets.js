@@ -22,6 +22,7 @@ module.exports = (io, app) => {
         });
     })
     .on('create game', (room) => {
+      console.log('cretae game heard');
       if (rooms[room] === undefined) {
         return null;
       }
