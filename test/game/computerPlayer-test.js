@@ -182,15 +182,27 @@ describe('Computer Behavior', () => {
     });
     it('should play the lowest possible hand to beat previous hand', () => {
       const playerCards = ['3♣', '3♥', '3♦', '9♥', '9♣'];
-      const computerCards = playerHands.computer1;
-      const handPlayed = chooseResponse(playerCards, computerCards);
+      const exampleSortedHandObj = {
+        1: [['4♣'], ['5♥'], ['7♠'], ['12♥'], ['1♠'], ['2♥']],
+        2: [['13♠', '13♦']],
+        3: [],
+        4: [],
+        5: [['9♥', '9♣', '9♦', '11♥', '11♠']],
+      };
+      const handPlayed = chooseResponse(playerCards, exampleSortedHandObj);
       expect(handPlayed).to.eql(['9♥', '9♣', '9♦', '11♥', '11♠']);
     });
     it('should pass when it can\'t beat the previous hand', () => {
       const playerCards = ['2♠'];
-      const computerCards = playerHands.computer1;
-      const handPlayed = chooseResponse(playerCards, computerCards);
-      expect(handPlayed).to.eql(['pass']);
+      const exampleSortedHandObj = {
+        1: [['4♣'], ['5♥'], ['7♠'], ['12♥'], ['1♠'], ['2♥']],
+        2: [['13♠', '13♦']],
+        3: [],
+        4: [],
+        5: [['9♥', '9♣', '9♦', '11♥', '11♠']],
+      };
+      const handPlayed = chooseResponse(playerCards, exampleSortedHandObj);
+      expect(handPlayed).to.eql(['PASS']);
     });
   });
 });

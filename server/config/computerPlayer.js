@@ -38,7 +38,7 @@ const getValue = (card) => {
 const cardIsLarger = (card1, card2) => {
   const card1Val = getValue(card1);
   const card2Val = getValue(card2);
-  if (card1Val.value >= card2Val.value) {
+  if (card1Val.value > card2Val.value) {
     return true;
   } else if (card1Val.value === card2Val.value && card1Val.suitValue >= card2Val.suitValue) {
     return true;
@@ -114,11 +114,8 @@ const organizeComputerHand = (dealtCards) => {
 const chooseResponse = (cardsPlayed, sortedCompHand) => {
   // TODO: look up computer hand instead of passing sorted
   const options = sortedCompHand[cardsPlayed.length];
-  let played;
+  let played = ['PASS'];
   for (let i = 0; i < options.length; i += 1) {
-    // console.log('options i: ', options[i]);
-    // console.log('cardsPlayed: ', cardsPlayed);
-    // console.log('handIsLarger(options[i], cardsPlayed): ', handIsLarger(options[i], cardsPlayed));
     if (handIsLarger(options[i], cardsPlayed)) {
       played = options[i];
       sortedCompHand[cardsPlayed.length].splice(i, 1);
