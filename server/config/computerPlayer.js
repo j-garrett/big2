@@ -38,8 +38,12 @@ const getValue = (card) => {
 const cardIsLarger = (card1, card2) => {
   const card1Val = getValue(card1);
   const card2Val = getValue(card2);
-  return card1Val.value >= card2Val.value
-        && card1Val.suitValue >= card2Val.suitValue;
+  if (card1Val.value >= card2Val.value) {
+    return true;
+  } else if (card1Val.value === card2Val.value && card1Val.suitValue >= card2Val.suitValue) {
+    return true;
+  }
+  return false;
 };
 
 const suitIsMatch = (card1, card2) =>
@@ -63,15 +67,7 @@ const handPatternCheck = (hand) => {
 
 const handIsLarger = (hand, previousHand) =>
   hand.length === previousHand.length
-    && hand.reduce((acc, val, idx) => {
-      console.log('reduce with val: ', val);
-      console.log('reduce with idx: ', idx);
-      console.log('reduce with previousHand[idx]: ', previousHand[idx]);
-      console.log('acc: ', acc);
-      console.log('cardIsLarger(val, previousHand[idx]): ', cardIsLarger(val, previousHand[idx]));
-      return cardIsLarger(val, previousHand[idx]);
-    },
-    false);
+    && hand.reduce((acc, val, idx) => cardIsLarger(val, previousHand[idx]), false);
 
 const validCheck = (hand, previousHand) =>
   handPatternCheck(hand)
@@ -120,16 +116,15 @@ const chooseResponse = (cardsPlayed, sortedCompHand) => {
   const options = sortedCompHand[cardsPlayed.length];
   let played;
   for (let i = 0; i < options.length; i += 1) {
-    console.log('options i: ', options[i]);
-    console.log('cardsPlayed: ', cardsPlayed);
-    console.log('handIsLarger(options[i], cardsPlayed): ', handIsLarger(options[i], cardsPlayed));
+    // console.log('options i: ', options[i]);
+    // console.log('cardsPlayed: ', cardsPlayed);
+    // console.log('handIsLarger(options[i], cardsPlayed): ', handIsLarger(options[i], cardsPlayed));
     if (handIsLarger(options[i], cardsPlayed)) {
       played = options[i];
-      sortedCompHand[cardsPlayed.length] = options.splice(i, 1);
+      sortedCompHand[cardsPlayed.length].splice(i, 1);
       break;
     }
   }
-  console.log(played);
   return played;
 };
 

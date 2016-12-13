@@ -7,6 +7,7 @@ const testHand1 = ['3♦'];
 const testHand2 = ['3♣'];
 const testHand3 = ['4♦'];
 const validPair = ['4♦', '4♣'];
+const largerValidPair = ['8♦', '8♣'];
 const invalidPair = ['4♦', '2♣'];
 const validTrip = ['4♦', '4♣', '4♠'];
 const invalidTrip = ['4♦', '2♣', '4♠'];
@@ -50,6 +51,9 @@ describe('Validator Checks', () => {
     it('should return true if card value is higher and suit value is same', () => {
       expect(computer.cardIsLarger('1♦', '13♦')).to.equal(true);
     });
+    it('should return true if card value is higher and suit value is lower', () => {
+      expect(computer.cardIsLarger('1♦', '13♠')).to.equal(true);
+    });
     it('should correctly identify Ace as higher than King', () => {
       expect(computer.cardIsLarger('1♦', '13♦')).to.equal(true);
     });
@@ -68,10 +72,10 @@ describe('Validator Checks', () => {
     });
     describe('pair played', () => {
       it('returns true if first pair is larger', () => {
-        expect(computer.handIsLarger()).to.equal(true);
+        expect(computer.handIsLarger(largerValidPair, validPair)).to.equal(true);
       });
       it('returns false if first pair is smaller', () => {
-        expect(computer.handIsLarger()).to.equal(false);
+        expect(computer.handIsLarger(validPair, largerValidPair)).to.equal(false);
       });
     });
   });

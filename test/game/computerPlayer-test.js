@@ -132,7 +132,8 @@ describe('Computer Behavior', () => {
         2: [['13♠', '13♦']],
         3: [],
         4: [],
-        5: [['9♥', '9♣', '9♦', '11♥', '11♠']] };
+        5: [['9♥', '9♣', '9♦', '11♥', '11♠']],
+      };
       const handPlayed = chooseResponse(playerCards, exampleSortedHandObj);
       expect(handPlayed).to.eql(['4♣']);
     });
@@ -143,15 +144,41 @@ describe('Computer Behavior', () => {
         2: [['13♠', '13♦']],
         3: [],
         4: [],
-        5: [['9♥', '9♣', '9♦', '11♥', '11♠']] };
+        5: [['9♥', '9♣', '9♦', '11♥', '11♠']],
+      };
       const handPlayed = chooseResponse(playerCards, exampleSortedHandObj);
-      expect(handPlayed).to.eql(['9♥', '9♣']);
+      expect(handPlayed).to.eql(['13♠', '13♦']);
     });
     it('should play the lowest possible trip to beat previous trip', () => {
       const playerCards = ['3♣', '3♥', '3♦'];
-      const computerCards = playerHands.computer1;
-      const handPlayed = chooseResponse(playerCards, computerCards);
+      const exampleSortedHandObj = {
+        1: [['4♣'], ['5♥'], ['7♠'], ['11♠'], ['12♥'], ['1♠'], ['2♥']],
+        2: [],
+        3: [['9♥', '9♣', '9♦'], ['13♠', '13♦', '13♥']],
+        4: [],
+        5: [],
+      };
+      const handPlayed = chooseResponse(playerCards, exampleSortedHandObj);
       expect(handPlayed).to.eql(['9♥', '9♣', '9♦']);
+    });
+    it('should update sortedHandObj accordingly', () => {
+      const playerCards = ['3♣', '3♥', '3♦'];
+      const exampleSortedHandObj = {
+        1: [['4♣'], ['5♥'], ['7♠'], ['11♠'], ['12♥'], ['1♠'], ['2♥']],
+        2: [],
+        3: [['9♥', '9♣', '9♦'], ['13♠', '13♦', '13♥']],
+        4: [],
+        5: [],
+      };
+      const exampleUpdatedHand = {
+        1: [['4♣'], ['5♥'], ['7♠'], ['11♠'], ['12♥'], ['1♠'], ['2♥']],
+        2: [],
+        3: [['13♠', '13♦', '13♥']],
+        4: [],
+        5: [],
+      };
+      chooseResponse(playerCards, exampleSortedHandObj);
+      expect(exampleSortedHandObj).to.eql(exampleUpdatedHand);
     });
     it('should play the lowest possible hand to beat previous hand', () => {
       const playerCards = ['3♣', '3♥', '3♦', '9♥', '9♣'];
