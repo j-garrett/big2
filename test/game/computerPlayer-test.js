@@ -113,7 +113,6 @@ describe('Computer Behavior', () => {
         4: [],
         5: [['9♥', '9♣', '9♦', '11♥', '11♠']],
       };
-      console.log('ORGANIZED: ', organized);
       expect(organized).to.eql(expectedOrganization);
     });
   });
@@ -128,14 +127,24 @@ describe('Computer Behavior', () => {
     });
     it('should play the lowest possible single to beat previous', () => {
       const playerCards = ['3♣'];
-      const computerCards = playerHands.computer1;
-      const handPlayed = chooseResponse(playerCards, computerCards);
-      expect(handPlayed[0]).to.equal('4♣');
+      const exampleSortedHandObj = {
+        1: [['4♣'], ['5♥'], ['7♠'], ['12♥'], ['1♠'], ['2♥']],
+        2: [['13♠', '13♦']],
+        3: [],
+        4: [],
+        5: [['9♥', '9♣', '9♦', '11♥', '11♠']] };
+      const handPlayed = chooseResponse(playerCards, exampleSortedHandObj);
+      expect(handPlayed).to.eql(['4♣']);
     });
     it('should play the lowest possible double to beat previous pair', () => {
       const playerCards = ['3♣', '3♥'];
-      const computerCards = playerHands.computer1;
-      const handPlayed = chooseResponse(playerCards, computerCards);
+      const exampleSortedHandObj = {
+        1: [['4♣'], ['5♥'], ['7♠'], ['12♥'], ['1♠'], ['2♥']],
+        2: [['13♠', '13♦']],
+        3: [],
+        4: [],
+        5: [['9♥', '9♣', '9♦', '11♥', '11♠']] };
+      const handPlayed = chooseResponse(playerCards, exampleSortedHandObj);
       expect(handPlayed).to.eql(['9♥', '9♣']);
     });
     it('should play the lowest possible trip to beat previous trip', () => {

@@ -57,6 +57,24 @@ describe('Validator Checks', () => {
       expect(computer.cardIsLarger('2♦', '1♦')).to.equal(true);
     });
   });
+  describe('handIsLarger', () => {
+    describe('single card played', () => {
+      it('returns true if first card is larger', () => {
+        expect(computer.handIsLarger(testHand3, testHand2)).to.equal(true);
+      });
+      it('returns false if first card is smaller', () => {
+        expect(computer.handIsLarger(testHand2, testHand3)).to.equal(false);
+      });
+    });
+    describe('pair played', () => {
+      it('returns true if first pair is larger', () => {
+        expect(computer.handIsLarger()).to.equal(true);
+      });
+      it('returns false if first pair is smaller', () => {
+        expect(computer.handIsLarger()).to.equal(false);
+      });
+    });
+  });
   describe('suitIsMatch', () => {
     const matchedSuit = computer.suitIsMatch(testHand1[0], testHand3[0]);
     const notMatched = computer.suitIsMatch(testHand2[0], testHand1[0]);
