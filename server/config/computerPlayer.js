@@ -59,8 +59,12 @@ const handPatternCheck = (hand) => {
   if (hand.length === 4 || hand.length > 5) {
     return false;
   }
-  for (let i = 1; i < hand.length; i += 1) {
-    result = valueIsMatch(hand[i - 1], hand[i]) && result;
+  if (hand.length < 4) {
+    for (let i = 1; i < hand.length; i += 1) {
+      result = valueIsMatch(hand[i - 1], hand[i]) && result;
+    }
+  } else {
+    // TODO: Check for 5 card hand patterns here
   }
   return result;
 };

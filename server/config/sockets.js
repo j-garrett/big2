@@ -21,9 +21,10 @@ module.exports = (io, app) => {
             .emit(joinResult.event, joinResult.data);
         });
     })
-    .on('create game', (room) => {
+    .on('create game', (user, room) => {
+      // TODO: a user can only create a game for the room they are in
       // console.log('create game heard');
-      if (rooms[room] === undefined) {
+      if (rooms[room] === undefined || rooms[room].turnOrder.indexOf(user) === -1) {
         return null;
       }
       // ensure four people are connected
