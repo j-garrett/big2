@@ -7,12 +7,22 @@ const computerPlayerController = {
 
     // TODO: we need to validate every card being played was in players hand
     const pot = big2Rooms.rooms[room].pot;
-    const cardsToBeat = pot[pot.length - 1].cards;
+    // We need to check if previous player passed
+    // If previous did pass, we need to continue looking for last played cards
+    // If all players passed we will let computer play lowest single
+    // console.log('pot value on first play to omputerPlayCards: ', pot);
+    const cardsToBeat = pot.slice().reverse().reduce((acc, val) => {
+      if (acc === 'PASS' && val.cards !== 'PASS') {
+        return val.cards;
+      }
+      return acc;
+    }, 'PASS');
+    // console.log('reduced array for pot to find cardsToBeat in computerPlayCards: ', cardsToBeat);
     const currentSortedCompHand = big2Rooms.rooms[room].sortedComputerHands[user];
     // pick hand using computer helpers then call updateHand with result
     const computerResponse = computerPlayer.chooseResponse(cardsToBeat, currentSortedCompHand);
     big2Rooms.rooms[room].sortedComputerHands[user] = computerResponse[1];
-    console.log('computerPlayCards computerResponse: ', computerResponse);
+    // console.log('computerPlayCards computerResponse: ', computerResponse);
     const updateHand = helpers.updatePlayerHand(user, room, computerResponse[0], remove);
     // console.log('big2Rooms.rooms[room]: ', big2Rooms.rooms[room]);
     // console.log('pot from room: ', pot);

@@ -36,7 +36,7 @@ module.exports = (io, app) => {
         }
       }
       const sockets = gameController.createGame(room);
-      console.log('room with bots: ', rooms[room]);
+      // console.log('room with bots: ', rooms[room]);
       Object
         .keys(sockets)
         .map(key => [key, sockets[key]])
@@ -92,8 +92,11 @@ module.exports = (io, app) => {
           'player turn',
           rooms[room].turnOrder[rooms[room].turn]
         );
-      if (rooms[room].turnOrder[rooms[room].turn] === 'computer1') {
-        const computerPlayed = computerPlayerController.computerPlayCards('computer1', room, cards, true);
+      // While it is a computer's turn, we will loop through and continue
+      // Computer will do what player above did and then increment turn counter so eventually it will be the player's turn again
+      while (rooms[room].turnOrder[rooms[room].turn].substr(0, 8) === 'computer') {
+        let computerPlayer = rooms[room].turnOrder[rooms[room].turn];
+        const computerPlayed = computerPlayerController.computerPlayCards(computerPlayer, room, cards, true);
         big2
           .to(room)
           .emit(
@@ -110,6 +113,11 @@ module.exports = (io, app) => {
             rooms[room].turnOrder[rooms[room].turn]
           );
       }
+      console.log('after while loop room looks like: ');
+      for (let key in rooms[room].sortedComputerHands) {
+        console.log(`${key} has sorted: `, JSON.stringify(rooms[room].sortedComputerHands[key]));
+      }
+      console.log('updated player hands: ', rooms[room].playerHands);
     })
     .on('undo played hand', (user, room) => {
       if (rooms[room] === undefined || rooms[room].pot.length < 1) {
