@@ -31,6 +31,7 @@ const model = {
 class Big2Room {
   constructor() {
     this.playerHands = {};
+    this.sortedComputerHands = {};
     this.socketMap = {};
     this.turnOrder = [];
     this.turn = 0;

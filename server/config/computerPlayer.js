@@ -117,7 +117,12 @@ const organizeComputerHand = (dealtCards) => {
 
 const chooseResponse = (cardsPlayed, sortedCompHand) => {
   // TODO: look up computer hand instead of passing sorted
+  console.log('chooseResponse sortedCompHand: ', sortedCompHand);
+  console.log('chooseResponse cardsPlayed: ', cardsPlayed);
+
   const options = sortedCompHand[cardsPlayed.length];
+  console.log('chooseResponse options: ', options);
+
   let played = ['PASS'];
   for (let i = 0; i < options.length; i += 1) {
     if (handIsLarger(options[i], cardsPlayed)) {
@@ -126,7 +131,7 @@ const chooseResponse = (cardsPlayed, sortedCompHand) => {
       break;
     }
   }
-  return played;
+  return [played, sortedCompHand];
 };
 
 module.exports = {

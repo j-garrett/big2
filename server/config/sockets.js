@@ -2,6 +2,7 @@ const helpers = require('./helpers');
 const big2Rooms = require('./../models/big2Rooms');
 const gameController = require('./../controllers/gameController');
 const roomController = require('./../controllers/roomController');
+const computerPlayerController = require('./../controllers/computerPlayerController');
 
 const rooms = big2Rooms.rooms;
 
@@ -35,7 +36,7 @@ module.exports = (io, app) => {
         }
       }
       const sockets = gameController.createGame(room);
-      // console.log('room with bots: ', rooms[room]);
+      console.log('room with bots: ', rooms[room]);
       Object
         .keys(sockets)
         .map(key => [key, sockets[key]])
@@ -82,8 +83,8 @@ module.exports = (io, app) => {
           'player cards',
           played.updateHand.newPlayerHand
         );
-      const turnOrder = rooms[room].turnOrder;
-      const turn = rooms[room].turn;
+      let turnOrder = rooms[room].turnOrder;
+      let turn = rooms[room].turn;
       rooms[room].turn = turn >= turnOrder.length - 1 ? 0 : turn + 1;
       big2
         .to(room)
@@ -91,6 +92,24 @@ module.exports = (io, app) => {
           'player turn',
           rooms[room].turnOrder[rooms[room].turn]
         );
+      if (rooms[room].turnOrder[rooms[room].turn] === 'computer1') {
+        const computerPlayed = computerPlayerController.computerPlayCards('computer1', room, cards, true);
+        big2
+          .to(room)
+          .emit(
+            'hand played to pot',
+            computerPlayed.roundsTuple
+          );
+        turnOrder = rooms[room].turnOrder;
+        turn = rooms[room].turn;
+        rooms[room].turn = turn >= turnOrder.length - 1 ? 0 : turn + 1;
+        big2
+          .to(room)
+          .emit(
+            'player turn',
+            rooms[room].turnOrder[rooms[room].turn]
+          );
+      }
     })
     .on('undo played hand', (user, room) => {
       if (rooms[room] === undefined || rooms[room].pot.length < 1) {
