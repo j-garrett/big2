@@ -113,11 +113,11 @@ module.exports = (io, app) => {
             rooms[room].turnOrder[rooms[room].turn]
           );
       }
-      console.log('after while loop room looks like: ');
+      // console.log('after while loop room looks like: ');
       for (let key in rooms[room].sortedComputerHands) {
         console.log(`${key} has sorted: `, JSON.stringify(rooms[room].sortedComputerHands[key]));
       }
-      console.log('updated player hands: ', rooms[room].playerHands);
+      // console.log('updated player hands: ', rooms[room].playerHands);
     })
     .on('undo played hand', (user, room) => {
       if (rooms[room] === undefined || rooms[room].pot.length < 1) {
