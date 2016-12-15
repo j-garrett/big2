@@ -95,7 +95,7 @@ module.exports = (io, app) => {
       // While it is a computer's turn, we will loop through and continue
       // Computer will do what player above did and then increment turn counter so eventually it will be the player's turn again
       while (rooms[room].turnOrder[rooms[room].turn].substr(0, 8) === 'computer') {
-        let computerPlayer = rooms[room].turnOrder[rooms[room].turn];
+        const computerPlayer = rooms[room].turnOrder[rooms[room].turn];
         const computerPlayed = computerPlayerController.computerPlayCards(computerPlayer, room, cards, true);
         big2
           .to(room)
@@ -113,11 +113,6 @@ module.exports = (io, app) => {
             rooms[room].turnOrder[rooms[room].turn]
           );
       }
-      // console.log('after while loop room looks like: ');
-      for (let key in rooms[room].sortedComputerHands) {
-        console.log(`${key} has sorted: `, JSON.stringify(rooms[room].sortedComputerHands[key]));
-      }
-      // console.log('updated player hands: ', rooms[room].playerHands);
     })
     .on('undo played hand', (user, room) => {
       if (rooms[room] === undefined || rooms[room].pot.length < 1) {

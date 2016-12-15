@@ -118,15 +118,26 @@ const organizeComputerHand = (dealtCards) => {
 const chooseResponse = (cardsPlayed, sortedCompHand) => {
   // console.log('chooseResponse sortedCompHand: ', sortedCompHand);
   // console.log('chooseResponse cardsPlayed: ', cardsPlayed);
+  let played = ['PASS'];
 
-  const options = sortedCompHand[cardsPlayed.length];
-  // console.log('chooseResponse options: ', options);
   // We are slicing so we will only get pass if ALL other players passed
   if (cardsPlayed[0] === 'PASS') {
-
+    // Loop through possible cards to play and play the lowest
+    // Keys are based on number of cards able to play
+    // We will play our lowest single, but play bigger hands if no singles
+    for (let i = 1; i < 6; i += 1) {
+      if (sortedCompHand[i].length > 0) {
+        // set lowest card to played variable
+        played = sortedCompHand[i][0];
+        // remove it from the player hand
+        sortedCompHand[i].shift();
+        // return tuple of played and sortedHand
+        return [played, sortedCompHand];
+      }
+    }
   }
 
-  let played = ['PASS'];
+  const options = sortedCompHand[cardsPlayed.length];
   for (let i = 0; i < options.length; i += 1) {
     if (handIsLarger(options[i], cardsPlayed)) {
       played = options[i];
