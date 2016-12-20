@@ -1,5 +1,7 @@
 const rooms = require('./../models/big2Rooms').rooms;
 
+const sortCards = require('./helpers').sortPlayerHand;
+
 const suitValueMap = {
   '♦': 1,
   '♣': 2,
@@ -52,6 +54,47 @@ const suitIsMatch = (card1, card2) =>
 const valueIsMatch = (card1, card2) =>
   getValue(card1).value === getValue(card2).value;
 
+const checkStraightOrFlush = (hand) => {
+  console.log('checking if hand is straight: ', hand);
+  let isStraight = true;
+  let isFlush = true;
+  for (let i = 1; i < hand.length; i += 1) {
+    const previousCard = getValue(hand[i - 1]);
+    const currentCard = getValue(hand[i]);
+    console.log('previousCard: ', previousCard);
+    console.log('currentCard: ', currentCard);
+    console.log('previousCard + 1: ', previousCard.value + 1);
+    if (previousCard.value + 1 !== currentCard.value) {
+      isStraight = false;
+    }
+    if (previousCard.suitValue !== currentCard.suitValue) {
+      isFlush = false;
+    }
+  }
+  return [isStraight, isFlush];
+};
+
+const checkFullHouseOrFour = (hand) => {
+  // Since we know there should only be two different cards
+  // We will sort them into a tuple
+  // Then check the lengths of each pile to see if it's right
+  const handValues = hand.map(val => getValue(val));
+  const organizedCards = [[handValues[0]], [handValues[handValues.length - 1]]];
+  for (let i = 1; i < hand.length - 1; i++) {
+    if (handValues[i].value === organizedCards[0][0].value) {
+      organizedCards[0].push(handValues[i]);
+    } else if (handValues[i].value === organizedCards[1][0].value) {
+      organizedCards[1].push(handValues[i]);
+    } else {
+      return [false, false];
+    }
+  }
+  if (organizedCards[0].length === 3 || organizedCards[1].length === 3) {
+    return [true, false];
+  }
+  return [false, true];
+};
+
 // only worry about singles, pairs, and trips for now
 // TODO: Make this function check for legal poker hands
 const handPatternCheck = (hand) => {
@@ -63,10 +106,22 @@ const handPatternCheck = (hand) => {
     for (let i = 1; i < hand.length; i += 1) {
       result = valueIsMatch(hand[i - 1], hand[i]) && result;
     }
-  } else {
-    // TODO: Check for 5 card hand patterns here
+    return result;
   }
-  return result;
+  console.log('hand before sort inside handPatternCheck: ', hand);
+  hand.sort(sortCards);
+  console.log('hand after sort inside handPatternCheck: ', hand);
+  // TODO: Check for 5 card hand patterns here
+  // Check for straight
+  const isStraightOrFlush = checkStraightOrFlush(hand);
+  const isFullHouseOrFour = checkFullHouseOrFour(hand);
+  const handResult = {
+    isStraight: isStraightOrFlush[0],
+    isFlush: isStraightOrFlush[1],
+    isFullHouse: isFullHouseOrFour[0],
+    isFourOfKind: isFullHouseOrFour[1],
+  };
+  return isStraightOrFlush[0] || isStraightOrFlush[1] || isFullHouseOrFour[0] || isFullHouseOrFour[1];
 };
 
 const handIsLarger = (hand, previousHand) =>

@@ -101,6 +101,7 @@ module.exports = {
   createCardDeck,
   shuffleCardDeck,
   dealCards,
+  sortPlayerHand,
   updatePlayerHand,
   getPlayersHand,
 };

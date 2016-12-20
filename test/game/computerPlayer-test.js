@@ -135,7 +135,7 @@ describe('Computer Behavior', () => {
         5: [['9♥', '9♣', '9♦', '11♥', '11♠']],
       };
       const handPlayed = chooseResponse(playerCards, exampleSortedHandObj);
-      expect(handPlayed).to.eql(['4♣']);
+      expect(handPlayed[0]).to.eql(['4♣']);
     });
     it('should play the lowest possible double to beat previous pair', () => {
       const playerCards = ['3♣', '3♥'];
@@ -147,7 +147,7 @@ describe('Computer Behavior', () => {
         5: [['9♥', '9♣', '9♦', '11♥', '11♠']],
       };
       const handPlayed = chooseResponse(playerCards, exampleSortedHandObj);
-      expect(handPlayed).to.eql(['13♠', '13♦']);
+      expect(handPlayed[0]).to.eql(['13♠', '13♦']);
     });
     it('should play the lowest possible trip to beat previous trip', () => {
       const playerCards = ['3♣', '3♥', '3♦'];
@@ -159,7 +159,7 @@ describe('Computer Behavior', () => {
         5: [],
       };
       const handPlayed = chooseResponse(playerCards, exampleSortedHandObj);
-      expect(handPlayed).to.eql(['9♥', '9♣', '9♦']);
+      expect(handPlayed[0]).to.eql(['9♥', '9♣', '9♦']);
     });
     it('should update sortedHandObj accordingly', () => {
       const playerCards = ['3♣', '3♥', '3♦'];
@@ -190,7 +190,7 @@ describe('Computer Behavior', () => {
         5: [['9♥', '9♣', '9♦', '11♥', '11♠']],
       };
       const handPlayed = chooseResponse(playerCards, exampleSortedHandObj);
-      expect(handPlayed).to.eql(['9♥', '9♣', '9♦', '11♥', '11♠']);
+      expect(handPlayed[0]).to.eql(['9♥', '9♣', '9♦', '11♥', '11♠']);
     });
     it('should pass when it can\'t beat the previous hand', () => {
       const playerCards = ['2♠'];
@@ -202,7 +202,7 @@ describe('Computer Behavior', () => {
         5: [['9♥', '9♣', '9♦', '11♥', '11♠']],
       };
       const handPlayed = chooseResponse(playerCards, exampleSortedHandObj);
-      expect(handPlayed).to.eql(['PASS']);
+      expect(handPlayed[0]).to.eql(['PASS']);
     });
   });
 });

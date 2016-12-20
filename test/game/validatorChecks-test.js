@@ -124,27 +124,27 @@ describe('Validator Checks', () => {
       const checkDoubleQuad = computer.handPatternCheck(quadHand.concat(quadHand));
       expect(checkDoubleQuad).to.equal(false);
     });
-    xit('should return true if hand is a straight', () => {
+    it('should return true if hand is a straight', () => {
       const checkStraight = computer.handPatternCheck(straight);
       expect(checkStraight).to.equal(true);
     });
-    xit('should return true if hand is a flush', () => {
+    it('should return true if hand is a flush', () => {
       const checkFlush = computer.handPatternCheck(flush);
       expect(checkFlush).to.equal(true);
     });
-    xit('should return true if hand is a full house', () => {
+    it('should return true if hand is a full house', () => {
       const checkFullHouse = computer.handPatternCheck(fullHouse);
       expect(checkFullHouse).to.equal(true);
     });
-    xit('should return true if hand is a four of a kind', () => {
+    it('should return true if hand is a four of a kind', () => {
       const checkFourOfKind = computer.handPatternCheck(fourOfKind);
       expect(checkFourOfKind).to.equal(true);
     });
-    xit('should return true if hand is a straight flush', () => {
+    it('should return true if hand is a straight flush', () => {
       const checkStraightFlush = computer.handPatternCheck(straightFlush);
       expect(checkStraightFlush).to.equal(true);
     });
-    xit('should return true if hand is a royal flush', () => {
+    it('should return true if hand is a royal flush', () => {
       const checkroyalFlush = computer.handPatternCheck(royalFlush);
       expect(checkroyalFlush).to.equal(true);
     });
