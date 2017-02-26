@@ -24,28 +24,33 @@ module.exports = (io, app) => {
     })
     .on('create game', (user, room) => {
       // TODO: a user can only create a game for the room they are in
-      // console.log('create game heard');
       if (rooms[room] === undefined || rooms[room].turnOrder.indexOf(user) === -1) {
         return null;
       }
       // ensure four people are connected
-      // TODO: UNCOMMENT BELOW CHECK FOR PROD
       if (rooms[room].turnOrder.length !== 4) {
         for (let i = rooms[room].turnOrder.length; i < 4; i += 1) {
-          roomController.joinRoom(`computer${i}`, room, `computer${i}`);
+          const joinResult = roomController.joinRoom(`computer${i}`, room, `computer${i}`);
+          socket
+            .join(room, () => {
+              big2
+                .to(room)
+                .emit(joinResult.event, joinResult.data);
+            });
         }
       }
+
       const sockets = gameController.createGame(room);
-      // console.log('room with bots: ', rooms[room]);
       Object
         .keys(sockets)
         .map(key => [key, sockets[key]])
-        .forEach((player) => {
+        .forEach((playerSocketTuple) => {
+          console.log('player inside forEach: ', playerSocketTuple);
           big2
-            .to(player[0])
+            .to(playerSocketTuple[0])
             .emit(
               'player cards',
-              rooms[room].playerHands[player[1]]
+              rooms[room].playerHands[playerSocketTuple[1]]
             );
         });
       big2
