@@ -10,7 +10,7 @@ for (let i = 0; i < 4; i +=1) {
   roomController.joinRoom(`testUser${i}`, 'testRoom', `testSocket${i}`);
 }
 gameController.createGame('testRoom');
-const testRoom = big2Rooms.rooms['testRoom'];
+const testRoom = big2Rooms.rooms.testRoom;
 // console.log('test room: ', testRoom);
 const testHand1 = ['3♦'];
 const testHand2 = ['3♣'];
