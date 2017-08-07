@@ -1,12 +1,11 @@
 import { expect } from 'chai';
+import io from 'socket.io-client';
 
-import helpers from '../../server/config/helpers';
-import computer from '../../server/config/computerPlayer';
+import { organizeComputerHand, chooseResponse } from '../../server/config/computerPlayer';
 import gameController from '../../server/controllers/gameController';
 import roomController from '../../server/controllers/roomController';
-import big2Rooms from '../../server/models/big2Rooms';
 
-for (let i = 0; i < 4; i +=1) {
+for (let i = 0; i < 4; i += 1) {
   roomController.joinRoom(`testUser${i}`, 'testRoom', `testSocket${i}`);
 }
 gameController.createGame('testRoom');
@@ -26,118 +25,201 @@ const fullHouse = ['4♦', '4♣', '4♠', '5♥', '5♠'];
 const fourOfKind = ['4♦', '4♣', '4♠', '4♥', '5♥'];
 const straightFlush = ['3♥', '4♥', '5♥', '6♥', '7♥'];
 const royalFlush = ['10♥', '11♥', '12♥', '13♥', '1♥'];
+// Set up socket.io connection for tests
+const chosenGame = 'big2';
+let socket;
+const user = 'jon';
+const room = 'jon';
+const playerHands = {
+  jon: [
+    '3♥',
+    '5♦',
+    '6♠',
+    '7♥',
+    '8♣',
+    '8♥',
+    '10♣',
+    '12♠',
+    '13♣',
+    '1♦',
+    '1♣',
+    '1♥',
+    '2♠',
+  ],
+  computer1: [
+    '4♣',
+    '5♥',
+    '7♠',
+    '9♥',
+    '9♣',
+    '9♦',
+    '11♥',
+    '11♠',
+    '12♥',
+    '13♠',
+    '13♦',
+    '1♠',
+    '2♥',
+  ],
+  computer2: [
+    '3♠',
+    '4♠',
+    '4♥',
+    '6♥',
+    '6♣',
+    '7♣',
+    '8♠',
+    '9♠',
+    '10♠',
+    '10♦',
+    '10♥',
+    '12♣',
+    '12♦',
+  ],
+  computer3: [
+    '3♣',
+    '3♦',
+    '4♦',
+    '5♠',
+    '5♣',
+    '6♦',
+    '7♦',
+    '8♦',
+    '11♦',
+    '11♣',
+    '13♥',
+    '2♣',
+    '2♦',
+  ],
+};
+/*
+These tests will emulate a player playing and then see if the computer plays in response.
+>>>>>>> 913166c55271bf5e1b71c29c437b1b497667875c
 
-describe('Validator Checks', () => {
-  describe('getValue', () => {
-    const cardValue = computer.getValue(testHand1[0]);
-    const diffCardValue = computer.getValue('13♠');
-    it('should find number value for card', () => {
-      expect(cardValue).to.be.an('object');
-      expect(cardValue.value).to.equal(3);
-      expect(diffCardValue.value).to.equal(13);
-    });
-    it('should find suit value for card', () => {
-      expect(cardValue).to.be.an('object');
-      expect(cardValue.suitValue).to.equal(1);
-      expect(diffCardValue.suitValue).to.equal(4);
-    });
-  });
-  describe('cardIsLarger', () => {
-    const notLarger = computer.cardIsLarger(testHand1[0], testHand3[0]);
-    const isLarger = computer.cardIsLarger(testHand2[0], testHand1[0]);
-    it('should return false if first param is smaller', () => {
-      expect(notLarger).to.be.a('boolean');
-      expect(notLarger).to.equal(false);
-    });
-    it('should return true if first param is larger', () => {
-      expect(isLarger).to.be.a('boolean');
-      expect(isLarger).to.equal(true);
-    });
-    it('should return true if card value is same and suit value is higher', () => {
-      expect(isLarger).to.equal(true);
-    });
-    it('should return true if card value is higher and suit value is same', () => {
-      expect(computer.cardIsLarger('1♦', '13♦')).to.equal(true);
-    });
-    it('should correctly identify Ace as higher than King', () => {
-      expect(computer.cardIsLarger('1♦', '13♦')).to.equal(true);
-    });
-    it('should correctly identify 2 as higher than Ace', () => {
-      expect(computer.cardIsLarger('2♦', '1♦')).to.equal(true);
-    });
-  });
-  describe('suitIsMatch', () => {
-    const matchedSuit = computer.suitIsMatch(testHand1[0], testHand3[0]);
-    const notMatched = computer.suitIsMatch(testHand2[0], testHand1[0]);
-    it('should return true if cards have same suit', () => {
-      expect(matchedSuit).to.be.a('boolean');
-      expect(matchedSuit).to.equal(true);
-    });
-    it('should return false if cards have different suit', () => {
-      expect(notMatched).to.be.a('boolean');
-      expect(notMatched).to.equal(false);
-    });
-  });
-  describe('handPatternCheck', () => {
-    it('should return a boolean', () => {
-      const checkSingle = computer.handPatternCheck(testHand1);
-      expect(checkSingle).to.be.a('boolean');
-    });
-    it('should return true if hand is a single card', () => {
-      const checkSingle = computer.handPatternCheck(testHand1);
-      expect(checkSingle).to.equal(true);
-    });
-    it('should return true if hand is two cards with same number value', () => {
-      const checkDouble = computer.handPatternCheck(validPair);
-      expect(checkDouble).to.equal(true);
-    });
-    it('should return false if hand is two cards with different number value', () => {
-      const checkDouble = computer.handPatternCheck(invalidPair);
-      expect(checkDouble).to.equal(false);
-    });
-    it('should return true if hand is three cards with same number value', () => {
-      const checkTriple = computer.handPatternCheck(validTrip);
-      expect(checkTriple).to.equal(true);
-    });
-    it('should return false if hand is three cards with different number value', () => {
-      const checkTriple = computer.handPatternCheck(invalidTrip);
-      expect(checkTriple).to.equal(false);
-    });
-    it('should return false if hand is four cards', () => {
-      const checkQuad = computer.handPatternCheck(quadHand);
-      expect(checkQuad).to.equal(false);
-    });
-    it('should return false if hand is more than five cards', () => {
-      const checkDoubleQuad = computer.handPatternCheck(quadHand.concat(quadHand));
-      expect(checkDoubleQuad).to.equal(false);
-    });
-    xit('should return true if hand is a straight', () => {
-      const checkStraight = computer.handPatternCheck(straight);
-      expect(checkStraight).to.equal(true);
-    });
-    xit('should return true if hand is a flush', () => {
-      const checkFlush = computer.handPatternCheck(flush);
-      expect(checkFlush).to.equal(true);
-    });
-    xit('should return true if hand is a full house', () => {
-      const checkFullHouse = computer.handPatternCheck(fullHouse);
-      expect(checkFullHouse).to.equal(true);
-    });
-    xit('should return true if hand is a four of a kind', () => {
-      const checkFourOfKind = computer.handPatternCheck(fourOfKind);
-      expect(checkFourOfKind).to.equal(true);
-    });
-    xit('should return true if hand is a straight flush', () => {
-      const checkStraightFlush = computer.handPatternCheck(straightFlush);
-      expect(checkStraightFlush).to.equal(true);
-    });
-    xit('should return true if hand is a royal flush', () => {
-      const checkroyalFlush = computer.handPatternCheck(royalFlush);
-      expect(checkroyalFlush).to.equal(true);
-    });
-  });
-});
+First we will test the functions that will take in previous hand and respond with the computer's played cards.
+*/
 
-xdescribe('Computer Behavior', () => {
-
+describe('Computer Behavior', () => {
+  beforeEach((done) => {
+    socket = io.connect(`http://localhost:9090/${chosenGame}`);
+    socket
+      .on('connect', () => {
+        socket.emit('connect to room', user, room);
+      })
+      .on('players in room', () => done());
+  });
+  afterEach((done) => {
+    if (socket.connected) {
+      socket.disconnect();
+    } else {
+      console.log('no connection to break...');
+    }
+    done();
+  });
+  it('should recognize when it is a computer player\'s turn', () => {
+    socket.emit('play cards', user, room, ['cards']);
+    expect(true).to.equal(true);
+  });
+  describe('organize computer hand', () => {
+    it('should organize cards into groups of hand type', () => {
+      const organized = organizeComputerHand(playerHands.computer1);
+      const expectedOrganization = {
+        1: [['4♣'], ['5♥'], ['7♠'], ['12♥'], ['1♠'], ['2♥']],
+        2: [['13♠', '13♦']],
+        3: [],
+        4: [],
+        5: [['9♥', '9♣', '9♦', '11♥', '11♠']],
+      };
+      expect(organized).to.eql(expectedOrganization);
+    });
+  });
+  describe('emulate playing a hand', () => {
+    it('should receive cards', (done) => {
+      // TODO: Build out connection test more specifically
+      socket.emit('create game', room);
+      socket.on('player cards', (cards) => {
+        expect(cards).to.be.instanceOf(Array);
+        done();
+      });
+    });
+    it('should play the lowest possible single to beat previous', () => {
+      const playerCards = ['3♣'];
+      const exampleSortedHandObj = {
+        1: [['4♣'], ['5♥'], ['7♠'], ['12♥'], ['1♠'], ['2♥']],
+        2: [['13♠', '13♦']],
+        3: [],
+        4: [],
+        5: [['9♥', '9♣', '9♦', '11♥', '11♠']],
+      };
+      const handPlayed = chooseResponse(playerCards, exampleSortedHandObj);
+      expect(handPlayed[0]).to.eql(['4♣']);
+    });
+    it('should play the lowest possible double to beat previous pair', () => {
+      const playerCards = ['3♣', '3♥'];
+      const exampleSortedHandObj = {
+        1: [['4♣'], ['5♥'], ['7♠'], ['12♥'], ['1♠'], ['2♥']],
+        2: [['13♠', '13♦']],
+        3: [],
+        4: [],
+        5: [['9♥', '9♣', '9♦', '11♥', '11♠']],
+      };
+      const handPlayed = chooseResponse(playerCards, exampleSortedHandObj);
+      expect(handPlayed[0]).to.eql(['13♠', '13♦']);
+    });
+    it('should play the lowest possible trip to beat previous trip', () => {
+      const playerCards = ['3♣', '3♥', '3♦'];
+      const exampleSortedHandObj = {
+        1: [['4♣'], ['5♥'], ['7♠'], ['11♠'], ['12♥'], ['1♠'], ['2♥']],
+        2: [],
+        3: [['9♥', '9♣', '9♦'], ['13♠', '13♦', '13♥']],
+        4: [],
+        5: [],
+      };
+      const handPlayed = chooseResponse(playerCards, exampleSortedHandObj);
+      expect(handPlayed[0]).to.eql(['9♥', '9♣', '9♦']);
+    });
+    it('should update sortedHandObj accordingly', () => {
+      const playerCards = ['3♣', '3♥', '3♦'];
+      const exampleSortedHandObj = {
+        1: [['4♣'], ['5♥'], ['7♠'], ['11♠'], ['12♥'], ['1♠'], ['2♥']],
+        2: [],
+        3: [['9♥', '9♣', '9♦'], ['13♠', '13♦', '13♥']],
+        4: [],
+        5: [],
+      };
+      const exampleUpdatedHand = {
+        1: [['4♣'], ['5♥'], ['7♠'], ['11♠'], ['12♥'], ['1♠'], ['2♥']],
+        2: [],
+        3: [['13♠', '13♦', '13♥']],
+        4: [],
+        5: [],
+      };
+      chooseResponse(playerCards, exampleSortedHandObj);
+      expect(exampleSortedHandObj).to.eql(exampleUpdatedHand);
+    });
+    it('should play the lowest possible hand to beat previous hand', () => {
+      const playerCards = ['3♣', '3♥', '3♦', '9♥', '9♣'];
+      const exampleSortedHandObj = {
+        1: [['4♣'], ['5♥'], ['7♠'], ['12♥'], ['1♠'], ['2♥']],
+        2: [['13♠', '13♦']],
+        3: [],
+        4: [],
+        5: [['9♥', '9♣', '9♦', '11♥', '11♠']],
+      };
+      const handPlayed = chooseResponse(playerCards, exampleSortedHandObj);
+      expect(handPlayed[0]).to.eql(['9♥', '9♣', '9♦', '11♥', '11♠']);
+    });
+    it('should pass when it can\'t beat the previous hand', () => {
+      const playerCards = ['2♠'];
+      const exampleSortedHandObj = {
+        1: [['4♣'], ['5♥'], ['7♠'], ['12♥'], ['1♠'], ['2♥']],
+        2: [['13♠', '13♦']],
+        3: [],
+        4: [],
+        5: [['9♥', '9♣', '9♦', '11♥', '11♠']],
+      };
+      const handPlayed = chooseResponse(playerCards, exampleSortedHandObj);
+      expect(handPlayed[0]).to.eql(['PASS']);
+    });
+  });
 });

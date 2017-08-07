@@ -1,5 +1,6 @@
 const big2Rooms = require('./../models/big2Rooms');
 const helpers = require('./../config/helpers');
+const { organizeComputerHand } = require('./../config/computerPlayer');
 
 const gameController = {
   playCards(user, room, cards, remove) {
@@ -24,16 +25,23 @@ const gameController = {
     // turn the two arrays into object key/value pairs
     players = players.reduce((obj, val, idx) => {
       const copy = Object.assign({}, obj);
-      copy[val] = cardHands[idx];
+      copy.playerHands[val] = cardHands[idx];
+      // Look for computer players and sort their hand for them
+      if (val.substr(0, 8) === 'computer') {
+        // then we need to add something else here...
+        // add a key for sorted computer hands
+        copy.sortedComputerHands[val] = organizeComputerHand(cardHands[idx]);
+      }
       // Check for which player has lowest card
       if (cardHands[idx].indexOf('3♣') !== -1) {
         // Change turn value to their index in turnOrder
         big2Rooms.rooms[room].turn = idx;
       }
       return copy;
-    }, {});
+    }, { playerHands: {}, sortedComputerHands: {} });
     // set room's player object to the newly created object
-    big2Rooms.rooms[room].playerHands = players;
+    big2Rooms.rooms[room].playerHands = players.playerHands;
+    big2Rooms.rooms[room].sortedComputerHands = players.sortedComputerHands;
     return big2Rooms.rooms[room].socketMap;
   },
 };

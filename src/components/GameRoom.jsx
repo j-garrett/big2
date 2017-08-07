@@ -55,7 +55,7 @@ export const GameRoom = ({
         <button
           onClick={() => {
             clearCardsFromSelection();
-            a.beginGame(room);
+            a.beginGame(user, room);
           }}
         >
           Start Game

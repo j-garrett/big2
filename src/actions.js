@@ -84,7 +84,6 @@ export const socketDispatchers = (store) => {
   .on('problem creating game', (problem) => {
     console.log('Problem creating game: ', problem);
   });
-
 };
 
 /* ------------ SOCKET EMITTERS ---------------*/
@@ -103,6 +102,6 @@ export const undoPlayedHand = (user, room) => (
   big2.emit('undo played hand', user, room)
 );
 
-export const beginGame = room => (
-  big2.emit('create game', room)
+export const beginGame = (user, room) => (
+  big2.emit('create game', user, room)
 );

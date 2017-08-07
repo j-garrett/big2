@@ -2,6 +2,7 @@ const helpers = require('./helpers');
 const big2Rooms = require('./../models/big2Rooms');
 const gameController = require('./../controllers/gameController');
 const roomController = require('./../controllers/roomController');
+const computerPlayerController = require('./../controllers/computerPlayerController');
 
 const rooms = big2Rooms.rooms;
 
@@ -21,28 +22,35 @@ module.exports = (io, app) => {
             .emit(joinResult.event, joinResult.data);
         });
     })
-    .on('create game', (room) => {
-      if (rooms[room] === undefined) {
+    .on('create game', (user, room) => {
+      // TODO: a user can only create a game for the room they are in
+      if (rooms[room] === undefined || rooms[room].turnOrder.indexOf(user) === -1) {
         return null;
       }
       // ensure four people are connected
-      // TODO: UNCOMMENT BELOW CHECK FOR PROD
       if (rooms[room].turnOrder.length !== 4) {
         for (let i = rooms[room].turnOrder.length; i < 4; i += 1) {
-          roomController.joinRoom(`computer${i}`, room, `computer${i}`);
+          const joinResult = roomController.joinRoom(`computer${i}`, room, `computer${i}`);
+          socket
+            .join(room, () => {
+              big2
+                .to(room)
+                .emit(joinResult.event, joinResult.data);
+            });
         }
       }
+
       const sockets = gameController.createGame(room);
-      console.log('room with bots: ', rooms[room]);
       Object
         .keys(sockets)
         .map(key => [key, sockets[key]])
-        .forEach((player) => {
+        .forEach((playerSocketTuple) => {
+          console.log('player inside forEach: ', playerSocketTuple);
           big2
-            .to(player[0])
+            .to(playerSocketTuple[0])
             .emit(
               'player cards',
-              rooms[room].playerHands[player[1]]
+              rooms[room].playerHands[playerSocketTuple[1]]
             );
         });
       big2
@@ -80,8 +88,8 @@ module.exports = (io, app) => {
           'player cards',
           played.updateHand.newPlayerHand
         );
-      const turnOrder = rooms[room].turnOrder;
-      const turn = rooms[room].turn;
+      let turnOrder = rooms[room].turnOrder;
+      let turn = rooms[room].turn;
       rooms[room].turn = turn >= turnOrder.length - 1 ? 0 : turn + 1;
       big2
         .to(room)
@@ -89,6 +97,27 @@ module.exports = (io, app) => {
           'player turn',
           rooms[room].turnOrder[rooms[room].turn]
         );
+      // While it is a computer's turn, we will loop through and continue
+      // Computer will do what player above did and then increment turn counter so eventually it will be the player's turn again
+      while (rooms[room].turnOrder[rooms[room].turn].substr(0, 8) === 'computer') {
+        const computerPlayer = rooms[room].turnOrder[rooms[room].turn];
+        const computerPlayed = computerPlayerController.computerPlayCards(computerPlayer, room, cards, true);
+        big2
+          .to(room)
+          .emit(
+            'hand played to pot',
+            computerPlayed.roundsTuple
+          );
+        turnOrder = rooms[room].turnOrder;
+        turn = rooms[room].turn;
+        rooms[room].turn = turn >= turnOrder.length - 1 ? 0 : turn + 1;
+        big2
+          .to(room)
+          .emit(
+            'player turn',
+            rooms[room].turnOrder[rooms[room].turn]
+          );
+      }
     })
     .on('undo played hand', (user, room) => {
       if (rooms[room] === undefined || rooms[room].pot.length < 1) {
