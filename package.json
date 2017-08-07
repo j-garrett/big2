@@ -22,7 +22,7 @@
     "games"
   ],
   "engines": {
-    "node": "6.1.0"
+    "node": "6.11.1"
   },
   "author": "Jon Garrett",
   "license": "MIT",
